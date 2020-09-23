@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 // Import Components
 import Charts from "./Charts";
 
+// Require a node module, allows access to date() funciton
+// const database = require(__dirname + "/database.js");
+
 function Title(props) {
     return (
       <div className="title">
@@ -25,10 +28,10 @@ render() {
     const title = <Title />;
 
     return (
-        <main>
-            {title}
-            <Charts/>
-        </main>
+      <main>
+          {title}
+          <Charts/>
+      </main>
     );
 }
 }

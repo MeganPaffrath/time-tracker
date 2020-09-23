@@ -2,6 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+
 // For chart from recharts.org (sample chart to later compare DB data output with)
 import { BarChart, Tooltip, Legend, Label, LabelList, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 const data = [
