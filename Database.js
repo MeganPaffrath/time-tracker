@@ -1,4 +1,5 @@
 //jshint esversion:6
+const timeCalculator = require(__dirname + "/TimeCalculator.js");
 
 // For database
 const mongoose = require('mongoose');
@@ -7,128 +8,141 @@ mongoose.connect("mongodb://localhost:27017/timeTracker", { useNewUrlParser: tru
 // Export funcitons
 module.exports.newUser = newUser;
 
+/*
+{
+  username: "someuser",
+  activities: [
+    {
+      name: "guitar",
+      times: []
+    },
+    {
+      name: "code",
+      times: []
+    }
+  ]
+}, {
+  username: "anotheruser",
+  activities: []
+}
+*/
+
 // SCHEMAS -------------------------------------------------------------------
 // Time DB Schema
 const timeRangeSchema = new mongoose.Schema ({
-    start: {
-        type: Date,
-        require: [true, "A timeRange must have a start time"]
-    },
-    end: {
-        type: Date,
-        require: [true, "A timeRange must have a end time"]
-    },
-    minutes: {
-        type: Number,
-        require: [true, "A time range must have a calculated total of minutes"]
-    }
-    })
+  start: {
+      type: Date,
+      require: [true, "A timeRange must have a start time"]
+  },
+  end: {
+      type: Date,
+      require: [true, "A timeRange must have a end time"]
+  },
+  minutes: {
+      type: Number,
+      require: [true, "A time range must have a calculated total of minutes"]
+  }
+});
+
+const TimeRange = mongoose.model("TIMERANG", timeRangeSchema);
 
 // Activity Schema
 const activitySchema = new mongoose.Schema ({
-    name: {
-      type: String,
-      required: [true, "An activity must have a name"]
-    },
-    times: [timeRangeSchema]
-})
+  name: {
+    type: String,
+    required: [true, "An activity must have a name"]
+  },
+  times: [timeRangeSchema]
+});
 
 const Activity = mongoose.model("ACTIVITY", activitySchema);
 
 // User Schema
 const userSchema = new mongoose.Schema ({
-    username: {
-      type: String,
-      required: [true, "A user must have a username."]
-    },
-    activities: [activitySchema]
-})
+  username: {
+    type: String,
+    required: [true, "A user must have a username."]
+  },
+  activities: [activitySchema]
+});
 
 const User = mongoose.model("USER", userSchema);
 
 // Functions -----------------------------------------------------------------
 // Create a user
 function newUser(newUsername) {
-    const newUser = new User ({
-        username: newUsername
-    });
+  const newUser = new User ({
+      username: newUsername
+  });
 
-    newUser.save();
-    console.log("Saved the user: " + newUser);
+  newUser.save();
+  console.log("Saved the user: " + newUser);
 }
-
 // newUser("meganpaffrath");
 
 // Create a new activity
 function newActivity(newAct) {
-    const newActivity = new Activity ({
-        name: newAct
-    });
+  const newActivity = new Activity ({
+      name: newAct
+  });
 
-    return newActivity;
+  return newActivity;
 }
 
 // Create new Activity for a user, and add to the user
 function appendActivity(username, newAct) {
-    const createdActivity = newActivity(newAct);
-    User.updateOne( {username: username}, {$push: {activities: createdActivity}}, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Successfully added activity: " + newAct)
-        }
-      });
+  const createdActivity = newActivity(newAct);
+  User.updateOne( {username: username}, {$push: {activities: createdActivity}}, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully added activity: " + newAct);
+    }
+  });
 }
-
 // appendActivity("meganpaffrath", "guitar");
 
-// Generate fake time from total minutes
-function fullDateFromTime(date, totalMinutes) {
-  hours = Math.floor(totalMinutes/60);
-  let hourStr = "";
-  if (hours == 0) {
-      hourStr = "00";
-  } else if (hours < 10) {
-      hourStr = "0" + String(hours);
-  } else {
-      hourStr = String(hours);
-  }
-  console.log("\nHOurs: " + hourStr);
 
-  minutes = totalMinutes%60;
-  console.log(minutes);
-  minutesStr = "";
-  if (minutes == 0) {
-      minutesStr = "00";
-  } else if (minutes < 10) {
-      minutesStr = "0" + String(minutes);
-  } else {
-      minutesStr = String(minutes);
-  }
 
-  console.log("minutesStr: " + minutesStr);
+// Create timeRange for unkown time range for a date
+function createUnknownTimeLog(date, totalMinutes) {
+  // Get Start and end times
+  const startDate = new Date(date);
+  const endDate = timeCalculator.getEndDateFromTime(date, totalMinutes);
+  // console.log("Start: " + startDate + "\nEnd: " + String(endDate));
 
-  endDateString = String(date) + "T" + hourStr + ":" + minutesStr + ":00Z";
-  console.log("\nEnd Date: " + endDateString);
-  const endD = new Date(endDateString);
-  return endD;
+  // Create a timeRange
+  const newTimeRange = new TimeRange({
+    start: startDate,
+    end: endDate,
+    total: totalMinutes
+  });
+
+  return newTimeRange;
 }
 
-// Insert unkown time range for a date
-function insertUnknownTimeLog(username, activity, date, totalMinutes) {
-    const startD = new Date("2020-09-20");
-    const endDate = fullDateFromTime(date, totalMinutes);
-    console.log("Generated: " + endDate);
+// test
+// {username: "meganpaffrath"}, {"username.activities.type": "guitar"}
 
-
-    // console.log("Start: " + startD + " End: " + String(endDate));
-    // const newTimeRange = newTime({
-    //     start: 0,
-    //     end: 0,
-    //     total: totalTime
-    // })
+// Append timeRange to a user for an activity
+// concept: https://stackoverflow.com/questions/38751676/insert-a-new-object-into-a-sub-document-array-field-in-mongoose/38766749
+function appendActivityTime(user, activityName, newRange) {
+  User.updateOne(
+    {username: user, 'activities.name': activityName},
+    { $push: {'activities.$.times': {newRange}},
+    function (err) {
+      if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully added time range: " + newRange);
+        }
+    }}
+  );
 }
-insertUnknownTimeLog("meganpaffrath", "guitar", "2020-09-20", 116);
+
+appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-20", 116));
+
+// Insert tiem record to a user
 
 
 
