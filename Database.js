@@ -44,7 +44,7 @@ const timeRangeSchema = new mongoose.Schema ({
   }
 });
 
-const TimeRange = mongoose.model("TIMERANG", timeRangeSchema);
+const TimeRange = mongoose.model("TIMERANGE", timeRangeSchema);
 
 // Activity Schema
 const activitySchema = new mongoose.Schema ({
@@ -100,7 +100,7 @@ function appendActivity(username, newAct) {
     }
   });
 }
-// appendActivity("meganpaffrath", "guitar");
+// appendActivity("meganpaffrath", "make tea");
 
 
 
@@ -115,38 +115,35 @@ function createUnknownTimeLog(date, totalMinutes) {
   const newTimeRange = new TimeRange({
     start: startDate,
     end: endDate,
-    total: totalMinutes
+    minutes: totalMinutes
   });
 
   return newTimeRange;
 }
 
 // test
-// {username: "meganpaffrath"}, {"username.activities.type": "guitar"}
 
 // Append timeRange to a user for an activity
 // concept: https://stackoverflow.com/questions/38751676/insert-a-new-object-into-a-sub-document-array-field-in-mongoose/38766749
-function appendActivityTime(user, activityName, newRange) {
+function appendActivityTime(uname, activityName, newRange) {
+  console.log(uname, activityName);
+  console.log("Trying to add: " + newRange);
   User.updateOne(
-    {username: user, 'activities.name': activityName},
-    { $push: {'activities.$.times': {newRange}},
+    {username: uname, "activities.name": activityName},
+    { $push: { "activities.$.times": newRange}},
     function (err) {
       if (err) {
           console.log(err);
         } else {
           console.log("Successfully added time range: " + newRange);
         }
-    }}
+    }
   );
+  console.log("end");
 }
 
+
 appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-20", 116));
-
-// Insert tiem record to a user
-
-
-
-// Date: new Date(Date.UTC(year, month, day, hour, minute, second))
 
 
 
