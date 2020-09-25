@@ -92,16 +92,36 @@ function newActivity(newAct) {
 // Create new Activity for a user, and add to the user
 function appendActivity(username, newAct) {
   const createdActivity = newActivity(newAct);
-  User.updateOne( {username: username}, {$push: {activities: createdActivity}}, function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Successfully added activity: " + newAct);
+  User.updateOne( 
+    {username: username}, 
+    {$push: {activities: createdActivity}}, 
+    function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Successfully added activity: " + newAct);
+      }
     }
-  });
+  );
 }
 // appendActivity("meganpaffrath", "make tea");
 
+// Remove Activity from user
+function removeActivity(username, activityName) {
+  User.updateOne( 
+    {username: username}, 
+    {$pull: {"activities": {"name": activityName}}}, 
+    function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Successfully remove activity: " + activityName);
+      }
+    }
+  );
+}
+
+// removeActivity("meganpaffrath", "make tea");
 
 
 // Create timeRange for unkown time range for a date
@@ -121,10 +141,7 @@ function createUnknownTimeLog(date, totalMinutes) {
   return newTimeRange;
 }
 
-// test
-
 // Append timeRange to a user for an activity
-// concept: https://stackoverflow.com/questions/38751676/insert-a-new-object-into-a-sub-document-array-field-in-mongoose/38766749
 function appendActivityTime(uname, activityName, newRange) {
   console.log(uname, activityName);
   console.log("Trying to add: " + newRange);
@@ -143,7 +160,7 @@ function appendActivityTime(uname, activityName, newRange) {
 }
 
 
-appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-20", 116));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-20", 116));
 
 
 
