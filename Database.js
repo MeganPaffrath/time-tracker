@@ -5,8 +5,9 @@ const timeCalculator = require(__dirname + "/TimeCalculator.js");
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/timeTracker", { useNewUrlParser: true, useUnifiedTopology: true});
 
-// Export funcitons
-module.exports.newUser = newUser;
+// Exports
+// module.exports.newUser = newUser;
+
 
 /*
 {
@@ -66,7 +67,9 @@ const userSchema = new mongoose.Schema ({
   activities: [activitySchema]
 });
 
-const User = mongoose.model("USER", userSchema);
+export const User = mongoose.model("USER", userSchema);
+
+// export const mongooseMatchUser = mongoose.model('users', matchSchema);
 
 // Functions -----------------------------------------------------------------
 // Create a user
@@ -180,22 +183,17 @@ function removeActivityTime(username, activityName, timeID) {
 
 
 
+// ---------------------------------------------------------------------------------------------------- Plans
 /*
-
-Later Implement:
-- Remove User
-- Remove time logged
-- Insert known time range
-
+Implement:
+- Basic db interactions
+  - Insert Known time range
+   - handle time zones for users ind differnt time zones
+- sync schema to another file:
+  - read from db to generate chart data
 */
 
-/*
-
-Figure out:
-- handling time zones for users in differing time zones
-
-*/
-
+// ---------------------------------------------------------------------------------------------------- Current State
 // Current State:
 // newUser("meganpaffrath");
 
