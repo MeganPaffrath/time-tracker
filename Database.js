@@ -142,11 +142,11 @@ function createUnknownTimeLog(date, totalMinutes) {
 }
 
 // Append timeRange to a user for an activity
-function appendActivityTime(uname, activityName, newRange) {
-  console.log(uname, activityName);
+function appendActivityTime(username, activityName, newRange) {
+  console.log(username, activityName);
   console.log("Trying to add: " + newRange);
   User.updateOne(
-    {username: uname, "activities.name": activityName},
+    {username: username, "activities.name": activityName},
     { $push: { "activities.$.times": newRange}},
     function (err) {
       if (err) {
@@ -156,11 +156,27 @@ function appendActivityTime(uname, activityName, newRange) {
         }
     }
   );
-  console.log("end");
+}
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-01", 63));
+
+
+
+// Remove a time
+function removeActivityTime(username, activityName, timeID) {
+  User.updateOne(
+    {username: username, "activities.name": activityName},
+    { $pull: { "activities.$.times": {"_id": timeID}}},
+    function (err) {
+      if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully removed ID: " + timeID);
+        }
+    }
+  );
 }
 
-
-// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-20", 116));
+// removeActivityTime("meganpaffrath", "guitar", "5f6da620f978ba14ea1fad49");
 
 
 
@@ -168,7 +184,6 @@ function appendActivityTime(uname, activityName, newRange) {
 
 Later Implement:
 - Remove User
-- Remove activity from user
 - Remove time logged
 - Insert known time range
 
@@ -180,3 +195,26 @@ Figure out:
 - handling time zones for users in differing time zones
 
 */
+
+// Current State:
+// newUser("meganpaffrath");
+
+// appendActivity("meganpaffrath", "guitar");
+
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-01", 63));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-02", 73));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-03", 64));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-04", 63));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-05", 67));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-06", 62));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-07", 60));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-08", 61));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-09", 66));
+// appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-10", 60));
+
+
+// Full reset:
+// db.users.remove({})
+
+// Pretty View:
+// db.users.find().pretty()
