@@ -1,80 +1,19 @@
 //jshint esversion:6
-const timeCalculator = require(__dirname + "/TimeCalculator.js");
+const timeCalculator = require(__dirname + "/time-calculator.js");
 
-// For database
+// For database ------------------------------------
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/timeTracker", { useNewUrlParser: true, useUnifiedTopology: true});
 
-var userSchema = require('./User');
-var userSchema = mongoose.model('User', userSchema);
+var UserSchema = require('./user');
+var User = mongoose.model('USER', UserSchema);
+var ActivitySchema = require('./activity');
+var Activity = mongoose.model('ACTIVITY', ActivitySchema);
+var TimeRangeSchema = require('./time-range');
+var TimeRange = mongoose.model('TIMERANGE', TimeRangeSchema);
 
-// Exports
-// module.exports.newUser = newUser;
+// Interacting with Database ------------------------
 
-
-/*
-{
-  username: "someuser",
-  activities: [
-    {
-      name: "guitar",
-      times: []
-    },
-    {
-      name: "code",
-      times: []
-    }
-  ]
-}, {
-  username: "anotheruser",
-  activities: []
-}
-*/
-
-// // SCHEMAS -------------------------------------------------------------------
-// // Time DB Schema
-// const timeRangeSchema = new mongoose.Schema ({
-//   start: {
-//       type: Date,
-//       require: [true, "A timeRange must have a start time"]
-//   },
-//   end: {
-//       type: Date,
-//       require: [true, "A timeRange must have a end time"]
-//   },
-//   minutes: {
-//       type: Number,
-//       require: [true, "A time range must have a calculated total of minutes"]
-//   }
-// });
-
-// const TimeRange = mongoose.model("TIMERANGE", timeRangeSchema);
-
-// // Activity Schema
-// const activitySchema = new mongoose.Schema ({
-//   name: {
-//     type: String,
-//     required: [true, "An activity must have a name"]
-//   },
-//   times: [timeRangeSchema]
-// });
-
-// const Activity = mongoose.model("ACTIVITY", activitySchema);
-
-// // User Schema
-// const userSchema = new mongoose.Schema ({
-//   username: {
-//     type: String,
-//     required: [true, "A user must have a username."]
-//   },
-//   activities: [activitySchema]
-// });
-
-// export const User = mongoose.model("USER", userSchema);
-
-// export const mongooseMatchUser = mongoose.model('users', matchSchema);
-
-// Functions -----------------------------------------------------------------
 // Create a user
 function newUser(newUsername) {
   const newUser = new User ({
@@ -95,7 +34,11 @@ function newActivity(newAct) {
   return newActivity;
 }
 
-// Create new Activity for a user, and add to the user
+/*
+  * Creates a new activity for a user and adds it to the user
+  * @param {string} username to which the activity belongs to
+  * @param {string} the name of the activity
+*/
 function appendActivity(username, newAct) {
   const createdActivity = newActivity(newAct);
   User.updateOne( 
@@ -110,9 +53,12 @@ function appendActivity(username, newAct) {
     }
   );
 }
-// appendActivity("meganpaffrath", "make tea");
 
-// Remove Activity from user
+/*
+  * Removes an activity from a user
+  * @param {string} username to which the activity belongs to
+  * @param {string} the name of the activity to remove
+*/
 function removeActivity(username, activityName) {
   User.updateOne( 
     {username: username}, 
@@ -127,10 +73,12 @@ function removeActivity(username, activityName) {
   );
 }
 
-// removeActivity("meganpaffrath", "make tea");
-
-
-// Create timeRange for unkown time range for a date
+/*
+  * Create timeRange for unkown time range for a date
+  * @param {date} iso8061 date in format: "YYYY-MM-DD"
+  * @param {intager} the amount of minutes
+  * @returns {object} a new time range object
+*/
 function createUnknownTimeLog(date, totalMinutes) {
   // Get Start and end times
   const startDate = new Date(date);
@@ -147,7 +95,12 @@ function createUnknownTimeLog(date, totalMinutes) {
   return newTimeRange;
 }
 
-// Append timeRange to a user for an activity
+/*
+  * Append timeRange to a user for an activity
+  * @param {string} username to append activity to
+  * @param {string} the name of the activity
+  * @param {object} a new time range object
+*/
 function appendActivityTime(username, activityName, newRange) {
   console.log(username, activityName);
   console.log("Trying to add: " + newRange);
@@ -166,8 +119,12 @@ function appendActivityTime(username, activityName, newRange) {
 // appendActivityTime("meganpaffrath", "guitar", createUnknownTimeLog("2020-09-01", 63));
 
 
-
-// Remove a time
+/*
+  * Remove a time
+  * @param {string} username to remove time from
+  * @param {string} the name of the activity to remove from
+  * @param {ID} the id of the object to remove -- IMPROVE LATER
+*/
 function removeActivityTime(username, activityName, timeID) {
   User.updateOne(
     {username: username, "activities.name": activityName},
@@ -185,18 +142,7 @@ function removeActivityTime(username, activityName, timeID) {
 // removeActivityTime("meganpaffrath", "guitar", "5f6da620f978ba14ea1fad49");
 
 
-
-// ---------------------------------------------------------------------------------------------------- Plans
-/*
-Implement:
-- Basic db interactions
-  - Insert Known time range
-   - handle time zones for users ind differnt time zones
-- sync schema to another file:
-  - read from db to generate chart data
-*/
-
-// ---------------------------------------------------------------------------------------------------- Current State
+// ---------------------------------------------------------------------------------------------------- Current State & reset
 // Current State:
 // newUser("meganpaffrath");
 

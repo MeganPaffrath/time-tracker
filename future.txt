@@ -1,0 +1,5 @@
+* Database: 
+    - Insert KNOWN time range (starting at any time in iso8061 date time)
+    - handle time zones for users in differnt time zones
+* Charts:
+    - read from db to generate chart data
