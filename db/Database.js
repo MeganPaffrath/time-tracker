@@ -5,6 +5,9 @@ const timeCalculator = require(__dirname + "/TimeCalculator.js");
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/timeTracker", { useNewUrlParser: true, useUnifiedTopology: true});
 
+var userSchema = require('./User');
+var userSchema = mongoose.model('User', userSchema);
+
 // Exports
 // module.exports.newUser = newUser;
 
@@ -28,46 +31,46 @@ mongoose.connect("mongodb://localhost:27017/timeTracker", { useNewUrlParser: tru
 }
 */
 
-// SCHEMAS -------------------------------------------------------------------
-// Time DB Schema
-const timeRangeSchema = new mongoose.Schema ({
-  start: {
-      type: Date,
-      require: [true, "A timeRange must have a start time"]
-  },
-  end: {
-      type: Date,
-      require: [true, "A timeRange must have a end time"]
-  },
-  minutes: {
-      type: Number,
-      require: [true, "A time range must have a calculated total of minutes"]
-  }
-});
+// // SCHEMAS -------------------------------------------------------------------
+// // Time DB Schema
+// const timeRangeSchema = new mongoose.Schema ({
+//   start: {
+//       type: Date,
+//       require: [true, "A timeRange must have a start time"]
+//   },
+//   end: {
+//       type: Date,
+//       require: [true, "A timeRange must have a end time"]
+//   },
+//   minutes: {
+//       type: Number,
+//       require: [true, "A time range must have a calculated total of minutes"]
+//   }
+// });
 
-const TimeRange = mongoose.model("TIMERANGE", timeRangeSchema);
+// const TimeRange = mongoose.model("TIMERANGE", timeRangeSchema);
 
-// Activity Schema
-const activitySchema = new mongoose.Schema ({
-  name: {
-    type: String,
-    required: [true, "An activity must have a name"]
-  },
-  times: [timeRangeSchema]
-});
+// // Activity Schema
+// const activitySchema = new mongoose.Schema ({
+//   name: {
+//     type: String,
+//     required: [true, "An activity must have a name"]
+//   },
+//   times: [timeRangeSchema]
+// });
 
-const Activity = mongoose.model("ACTIVITY", activitySchema);
+// const Activity = mongoose.model("ACTIVITY", activitySchema);
 
-// User Schema
-const userSchema = new mongoose.Schema ({
-  username: {
-    type: String,
-    required: [true, "A user must have a username."]
-  },
-  activities: [activitySchema]
-});
+// // User Schema
+// const userSchema = new mongoose.Schema ({
+//   username: {
+//     type: String,
+//     required: [true, "A user must have a username."]
+//   },
+//   activities: [activitySchema]
+// });
 
-export const User = mongoose.model("USER", userSchema);
+// export const User = mongoose.model("USER", userSchema);
 
 // export const mongooseMatchUser = mongoose.model('users', matchSchema);
 
