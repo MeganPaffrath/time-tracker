@@ -173,10 +173,6 @@ function getHours(username, activityName, month, year) {
 getHours("meganpaffrath", "guitar", "09", "2020");
 
 
-
-
-
-
 // ---------------------------------------------------------------------------------------------------- Current State & reset
 // Current State:
 // newUser("meganpaffrath");
@@ -201,4 +197,3 @@ getHours("meganpaffrath", "guitar", "09", "2020");
 // User.find(function (err, users) {
 //   if (err) return console.error(err);
 //   console.log(users);
-// })
