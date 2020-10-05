@@ -144,33 +144,61 @@ function removeActivityTime(username, activityName, timeID) {
 
 // Reading from database
 
-// For a user, get hours
-function getHours(username, activityName, month, year) {
+/*
+  * Remove a time
+  * @param {string} username to get minutes for
+  * @param {string} the name of the activity to get minutes for
+  * @param {string} month to get minutes for (note: JAN = "00", DEC = "11")
+  * @param {string} year "yyyy"
+  * @param {callback} function handling the generated monthMinutes array
+*/
+function getHours(username, activityName, findMonth, findYear, callback) {
   User.findOne({username: username}, 
     function (err, results) {
       if (err) {
           console.log(err);
         } else {
-          // console.log("Found user: " + results.activities);
-          results.activities.forEach(function(item) {
-            // console.log(item);
-            if (item.name == activityName) {
-              item.times.forEach(function(time) {
-                console.log("Start: " + time.minutes + " ON " + time.start);
+          let monthMinutes = [];
+          monthMinutes.length = 31;
+          results.activities.forEach(function(item) { // go through all activities
+            if (item.name == activityName) { // find specified activity
+              item.times.forEach(function(time) { // for each time log of this activity
+                let month = time.start.getMonth(); // January gives 0
+                let year = time.start.getFullYear();
+
+                if (month == findMonth && year == findYear) {
+                  let minutes = time.minutes;
+                  let date = time.start.getDate();
+                  console.log(minutes + " min " + 
+                    " ON " + month + " / " + date + " / " + year);
+                  console.log("\t FOR" + time.start);
+                  if (monthMinutes[date-1] != null) {
+                    console.log("Date: " + date + " is null");
+                    monthMinutes[date-1] += minutes;
+                  } else {
+                    monthMinutes[date-1] = minutes;
+                  }
+                }
               });
             }
           });
+          callback(monthMinutes);
         }
     }
   );
-
-  // User.find(function (err, users) {
-  //   if (err) return console.error(err);
-  //   console.log(users);
-  // })
 }
 
-getHours("meganpaffrath", "guitar", "09", "2020");
+const Months = {
+  JAN: "00", FEB: "01", MAR: "02", APR: "03", 
+  MAY: "04", JUN: "05", JUL: "06", AUG: "07", 
+  SEP: "08", OCT: "09", NOV: "10", DEC: "11"
+}
+
+let minArray = getHours("meganpaffrath", "guitar", Months.OCT, "2020", (minutes) => {
+  console.log(minutes);
+  minutes.forEach(element => console.log(element));
+});
+// console.log("ARRAY: " + minArray);
 
 
 // ---------------------------------------------------------------------------------------------------- Current State & reset
