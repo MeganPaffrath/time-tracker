@@ -17,23 +17,28 @@ function Title(props) {
   
 
 class App extends React.Component {
-constructor(props) {
-    super(props); // Must call
-    this.state = {
-        item: 'value'
-    };
-}
+  constructor(props) {
+      super(props); // Must call
+      
+      this.state = {
+          item: 'value',
+          view: "month"
+      };
+  }
 
-render() {
-    const title = <Title />;
-
-    return (
-      <main>
-          {title}
-          <Charts/>
-      </main>
-    );
-}
+  render() {
+      const title = <Title />;
+      
+      return (
+        <main>
+            {title}
+            <Charts
+              view={"month"}
+              currMonth={new Date().getMonth()}
+              currYear={new Date().getFullYear()}/>
+        </main>
+      );
+  }
 }
 
 ReactDOM.render(<App/>,

@@ -1,4 +1,8 @@
 //jshint esversion:6
+
+// For app
+module.exports.testFunction = testFunction;
+
 const timeCalculator = require(__dirname + "/time-calculator.js");
 
 // For database ------------------------------------
@@ -199,6 +203,10 @@ let minArray = getHours("meganpaffrath", "guitar", Months.OCT, "2020", (minutes)
   minutes.forEach(element => console.log(element));
 });
 // console.log("ARRAY: " + minArray);
+
+export function testFunction() {
+  return "Test Function was called";
+}
 
 
 // ---------------------------------------------------------------------------------------------------- Current State & reset

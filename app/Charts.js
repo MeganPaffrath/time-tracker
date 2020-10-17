@@ -2,6 +2,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+// database connection
+// import {testFunction} from '../db/database';
+import {testFunc} from '../db/test.js'
+
 
 // For chart from recharts.org (sample chart to later compare DB data output with)
 import { BarChart, Tooltip, Legend, Label, LabelList, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
@@ -70,36 +74,66 @@ const data = [
 
   class TimeChart extends React.Component {
 
+    monthNames(month) {
+      let months = ["January", "February", "March", "April", "May", "June", "Julu", "August", "September", "October", "November", "December"];
+      return months[month];
+    }
+
+    getData(month, year) {
+  
+      return "haha not yet"
+    }
+
     render() {
+      testFunc();
       return (
-        <BarChart width={730} height={500} data={data}>
-          <XAxis dataKey="date">
-              <Label value="Date" offset={0} position="insideBottom" />
-          </XAxis>
-          <YAxis label={{ value: 'Minutes Spent Practicing', angle: -90, position: 'Left' }} />
-          <Tooltip />
-          <Bar dataKey="minutes" fill="#8884d8"/>
-      </BarChart>
+        <div>
+          <h2>{this.props.type} {this.monthNames(this.props.month)} {this.props.year}</h2>
+          <BarChart width={730} height={500} data={data}>
+            <XAxis dataKey="date">
+                <Label value="Date" offset={0} position="insideBottom" />
+            </XAxis>
+            <YAxis label={{ value: 'Minutes Spent Practicing', angle: -90}} />
+            <Tooltip />
+            <Bar dataKey="minutes" fill="#8884d8"/>
+          </BarChart>
+        </div>
+        
       )
     }
   }
            
-  
 
-class MyComponent extends React.Component {
+class TempComponent extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        item: "value"
+        item: "value",
+        view: props.view,
+        month: props.currMonth,
+        year: props.currYear
       };
     }
 
     render() {
+      let graphContent;
+      if (this.state.view == "month") {
+        graphContent = 
+          <TimeChart 
+            type={"Guitar"}
+            month={this.state.month}
+            year={this.state.year}/>
+      } else if (this.state.view == "year") {
+        graphContent = "Year view not complete"
+      } else {
+        graphContent = "Well this was a mistake in Charts.js"
+      }
+
       return <div>
-          <h1>September 1-15th Guitar Log:</h1>
-          <TimeChart />
+        {graphContent}
+        
         </div>
     }
 }
 
-export default MyComponent;
+export default TempComponent;
