@@ -68,17 +68,22 @@ const data = [
     }
   ]
 
-  const timeChart = (
-    <BarChart width={730} height={500} data={data}>
-        <XAxis dataKey="date">
-            <Label value="Date" offset={0} position="insideBottom" />
-        </XAxis>
-        <YAxis label={{ value: 'Minutes Spent Practicing', angle: -90, position: 'Left' }} />
-        <Tooltip />
-        <Bar dataKey="minutes" fill="#8884d8"/>
-    </BarChart>
-  );
-                           
+  class TimeChart extends React.Component {
+
+    render() {
+      return (
+        <BarChart width={730} height={500} data={data}>
+          <XAxis dataKey="date">
+              <Label value="Date" offset={0} position="insideBottom" />
+          </XAxis>
+          <YAxis label={{ value: 'Minutes Spent Practicing', angle: -90, position: 'Left' }} />
+          <Tooltip />
+          <Bar dataKey="minutes" fill="#8884d8"/>
+      </BarChart>
+      )
+    }
+  }
+           
   
 
 class MyComponent extends React.Component {
@@ -88,10 +93,11 @@ class MyComponent extends React.Component {
         item: "value"
       };
     }
+
     render() {
       return <div>
           <h1>September 1-15th Guitar Log:</h1>
-          {timeChart}
+          <TimeChart />
         </div>
     }
 }
