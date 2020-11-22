@@ -1,5 +1,10 @@
-* Database: 
-    - Insert KNOWN time range (starting at any time in iso8061 date time)
-    - handle time zones for users in differnt time zones
-* Charts:
-    - read from db to generate chart data
+- Backend
+    - user registration
+        - don't return hashed password from db in response
+
+* Old Future:
+    * Database: 
+        - Insert KNOWN time range (starting at any time in iso8061 date time)
+        - handle time zones for users in differnt time zones
+    * Charts:
+        - read from db to generate chart data
