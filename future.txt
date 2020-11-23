@@ -2,6 +2,7 @@
     - ...
 - Frontend
     - user registration, login, & home
+    - Notify user of bad login attempts
 
 * Old Future:
     * Database: 

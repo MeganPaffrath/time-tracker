@@ -19,19 +19,26 @@ export default function Login() {
       const userLogin = {username, password};
 
       // try to log user in & get login result
-      const loginRes = Axios.post(
+      const loginRes = await Axios.post(
         "http://localhost:5000/users/login",
         userLogin
       );
 
       // if valid user, set token...
+      setUserData({
+        token: loginRes.token,
+        user: loginRes.username
+      });
+      // update local storage
+      localStorage.setItem("auth-token", loginRes.data.token);
 
       // change to home page
+      history.push("/");
       
     } catch (err) {
-      console.log(err.message);
       // set error
-      // setError(err.)
+      setError(err.message);
+      console.log(err.message);
     }
   }
 

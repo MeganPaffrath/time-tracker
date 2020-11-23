@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+// Pages/content:
 import Header from './components/layout/Header';
 import Home from './components/pages/Home';
 import Login from "./components/pages/Login";
