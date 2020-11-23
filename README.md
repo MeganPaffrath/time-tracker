@@ -74,10 +74,10 @@
   - `public/`
     - `index.html` : html skeleton for React
   - `src/`
+    - `App.js` : holds react router and the user context
+    - `index.js` : Renders the App into html
+    - `style.css` : styles for the whole page
     - `components/`
-      - `App.js` : holds react router and the user context
-      - `index.js` : Renders the App into html
-      - `style.css` : styles for the whole page
       - `auth/`
         - `Login.js` : used to log in user
         - `Register.js` : used to register a user
@@ -118,7 +118,7 @@ Users backend/api/users/
 - username
 - email
 - password
-- event log categories
+- event log topic array?
 
 ## Event Log:
 
