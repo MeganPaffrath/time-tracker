@@ -20,20 +20,26 @@ export default function Register() {
 
     try {
       const userRegister = {username, password, verifyPassword, email};
-
-      // try to log user in & get login result
-      const registerRes = await Axios.post(
+      // try to create user
+      await Axios.post(
         "http://localhost:5000/users/register",
         userRegister
       );
 
+      // try to log user in & get login result
+      const loginRes = await Axios.post(
+        "http://localhost:5000/users/login",
+        userRegister
+      );
+
       // if valid user, set token...
-      setUserData({
-        token: registerRes.token,
-        user: registerRes.username
+      await setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user.username,
+        userID: loginRes.data.user.id
       });
       // update local storage
-      localStorage.setItem("auth-token", registerRes.data.token);
+      localStorage.setItem("auth-token", loginRes.data.token);
 
       // change to home page
       history.push("/");
