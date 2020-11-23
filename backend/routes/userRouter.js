@@ -1,7 +1,7 @@
+const User = require("../models/userModel");
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
 
 // register a user
 router.post("/register", async (req, res) => {
@@ -53,12 +53,64 @@ router.post("/register", async (req, res) => {
     console.log("Saved User:");
 
     console.log(savedUser);
-    res.json(savedUser);
+    // res.json(savedUser);
+
+
+    res.json({
+        id: savedUser._id,
+        username: savedUser.username
+      })
+
+
   } catch (err) {
     // internal server error
     return res 
       .status(500)
       .json({error: err.message});
+  }
+});
+
+// sign in
+router.post("/login", async (req, res) => {
+  try {
+    const {username, password} = req.body;
+
+    // any empty fields?
+    if (!username || !password) {
+      return res
+        .send(400)
+        .json({msg: "Please fill out all fields."});
+    }
+
+    console.log("finding user");
+    // find user
+    const user = await User.findOne({username: username});
+    // see if password is correct
+    const validLogin =  await bcrypt.compare(password, user.password);
+
+    console.log("Validlogin? : ", validLogin);
+
+    // if not valid
+    if (!validLogin) {
+      return res
+        .send(400)
+        .json({msg: "Invalid login"});
+    }
+
+    // otherwise valid, res w/ user data
+    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+    console.log("token made");
+    console.log("TOkne: " + token);
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username
+      }
+    });
+
+  } catch (err) {
+    return res.status(500).json({error: err.message});
   }
 });
 

@@ -1,6 +1,7 @@
 - Backend
-    - user registration
-        - don't return hashed password from db in response
+    - ...
+- Frontend
+    - user registration, login, & home
 
 * Old Future:
     * Database: 
