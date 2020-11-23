@@ -41,6 +41,8 @@
 ## Frontend
 
 - React app
+  - createContext: to keep track of user & how page should display
+  - axios: for http req/res
 
 ## Backend
 

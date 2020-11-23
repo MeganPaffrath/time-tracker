@@ -75,10 +75,12 @@ router.post("/login", async (req, res) => {
   try {
     const {username, password} = req.body;
 
+    console.log(username);
+
     // any empty fields?
     if (!username || !password) {
       return res
-        .send(400)
+        .status(400)
         .json({msg: "Please fill out all fields."});
     }
 
@@ -93,7 +95,7 @@ router.post("/login", async (req, res) => {
     // if not valid
     if (!validLogin) {
       return res
-        .send(400)
+        .status(400)
         .json({msg: "Invalid login"});
     }
 
