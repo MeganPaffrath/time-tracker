@@ -23,13 +23,13 @@ export default function Log() {
     <section>
       <table>
       <tr>
-        <th>Category</th>
+        <th>Activity</th>
         <th>Date</th>
         <th>Minutes</th>
       </tr>
         {logs.map(log => (
           <tr key={log._id}>
-            <th>{log.logCategory}</th>
+            <th>{log.activity}</th>
             <th>{new Date(log.date).getMonth()}/{new Date(log.date).getDate()}/{new Date(log.date).getFullYear()}</th>
             <th>{log.minutes}</th>
           </tr>

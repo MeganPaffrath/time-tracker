@@ -5,7 +5,7 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   }, 
-  logCategory: {
+  activity: {
     type: String,
     required: true
   },

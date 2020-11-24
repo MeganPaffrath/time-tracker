@@ -7,7 +7,11 @@ const jwt = require("jsonwebtoken");
 
 router.post("/new", async (req, res) => {
   try {
-    const { logCategory, date, minutes} = req.body;
+    console.log("NEW");
+    const { activity, date, minutes} = req.body;
+    console.log("Act:", activity);
+    console.log("Date:", date);
+    console.log("Min:", minutes);
 
     const utcDate = new Date(date);
 
@@ -32,6 +36,8 @@ router.post("/new", async (req, res) => {
         .json({msg: "Token verification failure."});
     }
 
+    console.log("p5");
+
     // verify user
     const user = await User.findById(verified.id);
     if (!user) {
@@ -40,13 +46,17 @@ router.post("/new", async (req, res) => {
         .json({msg: "User not found"});
     }
 
+    console.log("p6");
+
     // create log for user
     const newLog = new Log({
       username: user.username,
-      logCategory,
+      activity,
       date,
       minutes
     });
+
+    console.log(newLog);
 
     // return res.json(true);
 
@@ -55,8 +65,8 @@ router.post("/new", async (req, res) => {
       savedLog
     });
 
-
   } catch (err) {
+    console.log("wooops");
     res.status(500).json({error: err.message});
   }
   
@@ -97,20 +107,20 @@ router.get("/getlogs", async (req, res) => {
     // return all logs for that user
     const items = await Log.find({"username": user.username});
 
-    var jsonData = [];
+    // var jsonData = [];
 
-    items.forEach(element => {
-      console.log(element.date);
-      var singleLog = {
-        "logCategory": element.logCategory,
-        "date": element.date,
-        "minutes": element.minutes
-      }
-      jsonData.push(singleLog);
-    });
+    // items.forEach(element => {
+    //   console.log(element.date);
+    //   var singleLog = {
+    //     "activity": element.activity,
+    //     "date": element.date,
+    //     "minutes": element.minutes
+    //   }
+    //   jsonData.push(singleLog);
+    // });
 
-    console.log("Data: ");
-    console.log(jsonData);
+    // console.log("Data: ");
+    // console.log(jsonData);
     
     return res
       .status(200)
