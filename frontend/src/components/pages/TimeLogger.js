@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
 import { useHistory } from 'react-router-dom';
@@ -6,8 +6,10 @@ import { useHistory } from 'react-router-dom';
 export default function TimeLogger() {
   const [date, setDate] = useState();
   const [minutes, setMinutes] = useState();
-  const [activity, setActivity] = useState("");
+  const [activity, setActivity] = useState();
+  const [updated, setUpdated] = useState(false);
   const {setUserData} = useContext(UserContext);
+  const history = useHistory();
 
   const logTime = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ export default function TimeLogger() {
       );
 
       console.log(loginRes);
+      setUpdated(true);
 
     } catch (err) {
       console.log(err.message);

@@ -7,6 +7,10 @@ export default function AuthMenu() {
   const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
+  if (userData.user) {
+    history.push("/");
+  }
+
   const register = () => { history.push("/register")};
   const login = () => { history.push("/login")};
   const logout = () => {
@@ -24,7 +28,10 @@ export default function AuthMenu() {
     <nav>
       {
         userData.user ? (
-          <button onClick={logout}>Logout</button>
+          <>
+            <button>Hi {userData.user.username}!</button>
+            <button onClick={logout}>Logout</button>
+          </>
         ) : (
           <>
             <button onClick={register}>Register</button>
