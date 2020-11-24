@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   text-decoration: none;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 /* header */
@@ -47,6 +47,13 @@ form {
 form input {
   width: 100%;
   margin-bottom: 1rem;
+}
+
+/* Time Logger */
+section {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
 }
 
 /* results */

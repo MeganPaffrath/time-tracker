@@ -21,7 +21,7 @@ export default function Log() {
 
 
   return (
-    <div>
+    <section>
       <table>
       <tr>
         <th>Category</th>
@@ -36,6 +36,6 @@ export default function Log() {
           </tr>
         ))}
       </table>
-    </div>
+    </section>
   )
 }
