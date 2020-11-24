@@ -1,6 +1,10 @@
+import Axios from 'axios';
 import React, {useEffect, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from "../../context/UserContext";
+import Log from './Log';
+// import Axios from "axios";
+
 
 export default function Home() {
   const {userData} = useContext(UserContext);
@@ -9,10 +13,15 @@ export default function Home() {
   useEffect(() => {
     if (!userData.user) history.push("/login");
   });
-  
+
   return (
     <div>
-      Home Page
+      {/* Hello <strong>{userData.user.username}</strong>, your logs are: */}
+      <Log />
+
     </div>
   )
+
+  
 }
+

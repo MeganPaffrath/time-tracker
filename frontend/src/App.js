@@ -4,7 +4,6 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 // Pages/content:
 import Header from './components/layout/Header';
 import Home from './components/pages/Home';
-import UserHome from './components/pages/UserHome';
 import Login from "./components/pages/Login";
 import Register from './components/pages/Register';
 // to keep track of user:

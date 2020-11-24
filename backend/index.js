@@ -33,3 +33,4 @@ app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 
 // set up routes
 app.use("/users", require("./routes/userRouter"));
+app.use("/log", require("./routes/logRouter"));

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function UserHome() {
+export default function TimeLogger() {
   return (
     <div>
-      user home
+      
     </div>
   )
 }

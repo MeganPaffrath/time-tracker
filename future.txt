@@ -3,6 +3,7 @@
 - Frontend
     - user registration, login, & home
     - Notify user of bad login attempts
+    - remove reference to id?
 
 * Old Future:
     * Database: 

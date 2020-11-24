@@ -7,7 +7,6 @@ const auth = require("../middleware/auth");
 // register a user
 router.post("/register", async (req, res) => {
   try {
-    console.log(req.body);
     // gather request
     const {username, password, verifyPassword, email} = req.body;
 
@@ -103,7 +102,7 @@ router.post("/login", async (req, res) => {
     // otherwise valid, res w/ user data
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
     console.log("token made");
-    console.log("TOkne: " + token);
+    console.log("Token: " + token);
     res.json({
       token,
       user: {
