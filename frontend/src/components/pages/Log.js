@@ -16,7 +16,6 @@ export default function Log() {
       console.log(err);
     })
   
-
   }, []);
 
 
