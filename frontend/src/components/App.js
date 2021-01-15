@@ -2,12 +2,12 @@ import Axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 // Pages/content:
-import Header from './components/layout/Header';
-import Home from './components/pages/Home';
-import Login from "./components/pages/Login";
-import Register from './components/pages/Register';
+import Header from './layout/Header';
+import Home from './pages/Home';
+import Login from "./pages/Login";
+import Register from './pages/Register';
 // to keep track of user:
-import UserContext from './context/UserContext';
+import UserContext from '../context/UserContext';
 
 
 
