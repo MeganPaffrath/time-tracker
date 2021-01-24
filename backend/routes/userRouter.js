@@ -144,4 +144,66 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
+router.get("/activities", async(req, res) => {
+  // try {
+  //   // verify token
+  //   const token = req.header("x-auth-token");
+  //   if (!token) return res.json(false);
+
+  //   const verified = jwt.verify(token, process.env.JWT_SECRET);
+  //   if (!verified) {
+  //     return res.json(false)
+  //   }
+
+  //   // verify user
+  //   const user = await User.findById(verified.id);
+  //   if (!user) {
+  //     return res.json(false);
+  //   } else {
+  //     // GET ACTIVITIES HERE ------------------------------------------------------------
+  //     console.log(user);
+  //     return res.json(true);
+  //   }
+  // } catch (err) {
+  //   return res.status(500).json({error: err.message});
+  // }
+});
+
+// append/update user activity
+router.put("/addactivity", async (req, res) => {
+  // console.log("ADD");
+  // try {
+  //   // verify token
+  //   const token = req.header("x-auth-token");
+  //   if (!token) return res.json(false);
+
+  //   const verified = jwt.verify(token, process.env.JWT_SECRET);
+  //   if (!verified) {
+  //     return res.json(false)
+  //   }
+
+  //   // verify user
+  //   const user = await User.findById(verified.id);
+  //   if (!user) {
+  //     console.log("not a user");
+  //     return res.json(false);
+  //   } else {
+  //     // APPEDND ACTIVITY HERE- ---------------------------------------
+  //     console.log(user);
+  //     if (user.activities) {
+  //       console.log("HAS ACT");
+
+  //     } else {
+  //       console.log("NO ACT - update user here");
+
+  //       // create activites
+  //     }
+  //     return res.json(true);
+  //   }
+  // } catch (err) {
+  //   return res.status(500).json({error: err.message});
+  // }
+});
+
+
 module.exports = router;

@@ -73,7 +73,7 @@
   - DONE ✅
     - register, login, validateToken
   - TO DO ❌
-    - delete, edituser
+    - delete, edituser, activities, addactivity
 - POST
   - api/users/register : Create a new account ✅
     - body
@@ -86,6 +86,17 @@
       - username: \<string>
       - password: \<string>
   - /users/validateToken ✅
+    - header
+      - key: x-auth-token
+      - value: \<string>
+  - /users/addactivity
+    - header
+      - key: x-auth-token
+      - value: \<string>
+    - body
+      - activity: \<string>
+- GET
+  - api/users/activities 🏁:
     - header
       - key: x-auth-token
       - value: \<string>
@@ -111,7 +122,7 @@
       - key: x-auth-token
       - value: \<string>
     - body
-      - logCategory: \<string>
+      - activity: \<string>
       - date: UTC time
       - minutes: \<int>
 - GET
@@ -121,6 +132,8 @@
       - value: \<string>
 
 ## Project Organization
+
+#### NEEDS UPDATING
 
 - `backend/`
   - `index.js ` : sets up server and routes
