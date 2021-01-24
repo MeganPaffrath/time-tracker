@@ -1,15 +1,15 @@
-import React, { useEffect, useContext, useState } from 'react';
-import UserContext from '../../context/UserContext';
+import React, {useState } from 'react';
+// import UserContext from '../../context/UserContext';
 import Axios from "axios";
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 export default function TimeLogger() {
   const [date, setDate] = useState();
   const [minutes, setMinutes] = useState();
   const [activity, setActivity] = useState();
-  const [updated, setUpdated] = useState(false);
-  const {setUserData} = useContext(UserContext);
-  const history = useHistory();
+  // const [updated, setUpdated] = useState(false);
+  // const {setUserData} = useContext(UserContext);
+  // const history = useHistory();
 
   const logTime = async (e) => {
     e.preventDefault();
@@ -19,7 +19,8 @@ export default function TimeLogger() {
       
       // make sure all logs were filled
       if (!date || !minutes || !activity) {
-        throw("Missing field");
+        // throw("Missing field");
+        throw new Error("missing field");
       }
 
       // convert date to utc time
@@ -35,7 +36,7 @@ export default function TimeLogger() {
       );
 
       console.log(loginRes);
-      setUpdated(true);
+      // setUpdated(true);
 
     } catch (err) {
       console.log(err.message);
@@ -48,6 +49,7 @@ export default function TimeLogger() {
       <div>
         <h1>Start Logging!</h1>
         <form onSubmit={logTime}>
+          {/* <form> */}
           <label htmlFor="date">Date:</label>
           <input 
             type="date" 

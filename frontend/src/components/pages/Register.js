@@ -9,7 +9,7 @@ export default function Register() {
   const [email, setEmail] = useState();
   const [verifyPassword, setVerifyPassword] = useState();
 
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const {setUserData} = useContext(UserContext);
   const history = useHistory();
   
@@ -35,8 +35,8 @@ export default function Register() {
       // if valid user, set token...
       await setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user.username,
-        userID: loginRes.data.user.id
+        username: loginRes.data.user.username
+        // userID: loginRes.data.user.id
       });
       // update local storage
       localStorage.setItem("auth-token", loginRes.data.token);
@@ -46,7 +46,7 @@ export default function Register() {
       
     } catch (err) {
       // set error
-      setError(err.message);
+      // setError(err.message);
       console.log(err.message);
     }
   }

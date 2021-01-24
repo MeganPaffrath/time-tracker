@@ -6,7 +6,7 @@ import Axios from "axios";
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const {setUserData} = useContext(UserContext);
   const history = useHistory();
   
@@ -27,8 +27,7 @@ export default function Login() {
       // if valid user, set token...
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user.username,
-        userID: loginRes.data.user.id
+        username: loginRes.data.user.username
       });
       // update local storage
       localStorage.setItem("auth-token", loginRes.data.token);
@@ -38,7 +37,7 @@ export default function Login() {
       
     } catch (err) {
       // set error
-      setError(err.message);
+      // setError(err.message);
       console.log(err.message);
     }
   }

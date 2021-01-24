@@ -41,7 +41,7 @@ export default function App() {
         );
         setUserData({
           token,
-          user: userRes.data
+          username: userRes.data.username
         });
       }
     }

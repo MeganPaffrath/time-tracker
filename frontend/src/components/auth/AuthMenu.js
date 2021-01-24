@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 
@@ -7,13 +7,18 @@ export default function AuthMenu() {
   const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
-  if (userData.user) {
-    history.push("/");
-  }
+
+  useEffect(() => {
+    console.log("USER DATA from AUTH: " + userData.username);
+    if (!userData.username) {
+      history.push("/login");
+    }
+  });
 
   const register = () => { history.push("/register")};
   const login = () => { history.push("/login")};
   const logout = () => {
+    console.log("attempt to log out")
     // reset user context
     setUserData({
       token: undefined,
@@ -27,9 +32,9 @@ export default function AuthMenu() {
   return (
     <nav>
       {
-        userData.user ? (
+        userData.username ? (
           <>
-            <button>Hi {userData.user.username}!</button>
+            <button>Hi {userData.username}!</button>
             <button onClick={logout}>Logout</button>
           </>
         ) : (
