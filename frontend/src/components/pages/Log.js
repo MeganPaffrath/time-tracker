@@ -4,6 +4,7 @@ import Axios from "axios";
 
 export default function Log() {
   const [logs, setLogs] = useState([]);
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -14,6 +15,10 @@ export default function Log() {
     ).then(res => {
       if (isMounted) {
         setLogs(res.data);
+        // console.log(res.data);
+        // res.data.forEach( (item) =>{
+        //   console.log("Item: " + item.activity);
+        // })
       }
     }).catch(err => {
       console.log(err);

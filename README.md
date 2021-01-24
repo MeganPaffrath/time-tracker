@@ -5,29 +5,34 @@
 - [Plan](#Plan)
 - [Stack](#Stack)
 - [Design](#Design)
-  - [Functionality](#Functionality)
-  - [Project Organization](#Project-Organization)
   - [Routes](#Routes)
+  - [Project Organization](#Project-Organization)
 - [Models](#Models)
+- [Functionality](#Functionality)
+
+# Key
+
+- 🏁 : in progress
+- ❌ : not done
+- ✅ : complete
 
 # Plan
 
-- User application
-  - Handle users (utilize jwt & bcryptjs)
-    - Login
-      - username
-      - email
-      - password
-    - Logout
-    - Delete Account
-- Functionality
-  - \<user> can log times for an \<activity>
-  - \<user> can view charts of times recorded for various \<activity>
+- User application 🏁
+  - Handle users 🏁
+    - utilizes JWTs & bcryptjs ✅
+    - Login: username & password ✅
+    - Logout ✅
+    - Delete Account ❌
+    - Edit account ❌
+- Functionality 🏁
+  - \<user> can log times for an \<activity> 🏁
+  - \<user> can view charts of times recorded for various \<activity> 🏁
     - month view
       - view past months
-    - year view
+    - year view ❌
       - view past years
-  - \<user> can create and delete \<activity>
+  - \<user> can create and delete \<activity> ❌
 
 # Stack
 
@@ -41,8 +46,10 @@
 ## Frontend
 
 - React app
-  - createContext: to keep track of user & how page should display
+  - useContext: to keep track of user & how page should display
+    - userContext
   - axios: for http req/res
+  - useHistory: to keep track of routes
 
 ## Backend
 
@@ -51,14 +58,67 @@
 - mongoose
 - cors : cross origin resource sharing
   - can specify which origins can access the api
-  - only secure throught browser, not command line
+  - only secure through browser, not command line
 - detenv
 - bcryptjs
 - jsonwebtoken
 
 # Design
 
-## Functionality
+## Routes
+
+#### api/users/
+
+- ALL 🏁:
+  - DONE ✅
+    - register, login, validateToken
+  - TO DO ❌
+    - delete, edituser
+- POST
+  - api/users/register : Create a new account ✅
+    - body
+      - username: \<string>
+      - password: \<string>
+      - verifyPassword: \<string>
+      - email: \<email>
+  - /users/login : Log in ✅
+    - body
+      - username: \<string>
+      - password: \<string>
+  - /users/validateToken ✅
+    - header
+      - key: x-auth-token
+      - value: \<string>
+- DELETE
+  - api/delete : Delete a user ❌
+    - header
+      - key: x-auth-token
+      - value: \<string>
+    - body
+      - username: \<string>
+  - api/edituser : edit user info ❌
+    - header
+      - key: x-auth-token
+      - value: \<string>
+    - body
+      - to be determined
+
+#### api/log ✅
+
+- POST
+  - api/log/new: creates new log ✅
+    - header
+      - key: x-auth-token
+      - value: \<string>
+    - body
+      - logCategory: \<string>
+      - date: UTC time
+      - minutes: \<int>
+- GET
+  - api/log/getlogs: gets all logs for the user ✅
+    - header
+      - key: x-auth-token
+      - value: \<string>
 
 ## Project Organization
 
@@ -92,26 +152,14 @@
     - context /
       - `UserContext.js` : initializes and holds context
 
-## Routes
-
-Users backend/api/users/
-
-- POST
-  - /users/register : Create a new account
-  - /login : Log in
-- DELETE
-  - /delete : Delete a user
-    - header contains auth-token
-- ?
-  - /edituser : edit user info
-
 # UI Design
 
 - Example utilizing the Recharts API to create a graph:
+  - refer to old file for implementation
 
 ![Time Log](readme-content/first-sample.png)
 
-[See Design Here](https://www.figma.com/file/hqnRBUyQbHOPRZnKp6D2Df/Time-Tracker)
+[See Future Design Concept Here](https://www.figma.com/file/hqnRBUyQbHOPRZnKp6D2Df/Time-Tracker)
 
 # Models
 
@@ -128,3 +176,13 @@ Users backend/api/users/
 - startTime
 - endTime
 - eventType
+
+# Functionality
+
+- Users handling
+  - login
+  - register
+  - logout
+- Log handling
+  - add time log
+  - view time logs
