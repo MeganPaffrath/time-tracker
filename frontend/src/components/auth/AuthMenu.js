@@ -7,7 +7,6 @@ export default function AuthMenu() {
   const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
-
   useEffect(() => {
     console.log("USER DATA from AUTH: " + userData.username);
     if (!userData.username) {

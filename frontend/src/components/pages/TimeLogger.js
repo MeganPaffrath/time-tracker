@@ -12,14 +12,13 @@ export default function TimeLogger() {
   // const history = useHistory();
 
   const logTime = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       const logInput = {date, minutes, activity};
       console.log(date, " ", minutes, " ", activity);
       
       // make sure all logs were filled
       if (!date || !minutes || !activity) {
-        // throw("Missing field");
         throw new Error("missing field");
       }
 
@@ -33,7 +32,7 @@ export default function TimeLogger() {
         "http://localhost:5000/log/new",
         logInput,
         {headers: {"x-auth-token": token}}
-      );
+      )
 
       console.log(loginRes);
       // setUpdated(true);

@@ -1,34 +1,32 @@
-import React, {useState} from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 // import UserContext from "../../context/UserContext";
-// import Axios from "axios";
+import Axios from "axios";
 
 export default function Log() {
   const [logs, setLogs] = useState([]);
-  // const history = useHistory();
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   let token = localStorage.getItem("auth-token");
-  //   Axios.get(
-  //     "http://localhost:5000/log/getlogs",
-  //     {headers: {"x-auth-token": token}}
-  //   ).then(res => {
-  //     if (isMounted) {
-  //       setLogs(res.data);
-  //     }
-  //   }). catch(err => {
-  //     console.log(err);
-  //   })
-  //   return () => {
-  //     isMounted = false;
-  //   }
-  
-  // }, []);
+  useEffect(() => {
+    let isMounted = true;
+    let token = localStorage.getItem("auth-token");
+    Axios.get(
+      "http://localhost:5000/log/getlogs",
+      {headers: {"x-auth-token": token}}
+    ).then(res => {
+      if (isMounted) {
+        setLogs(res.data);
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+    return () => {
+      isMounted = false;
+    }
+  }, []);
 
 
   return (
     <section>
+      <br />
       <table>
       <thead>
         <tr>

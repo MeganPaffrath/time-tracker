@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
@@ -7,8 +7,16 @@ export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   // const [error, setError] = useState();
-  const {setUserData} = useContext(UserContext);
+  // const {setUserData} = useContext(UserContext);
+  const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
+
+  useEffect(() => {
+    console.log("USER DATA from LOGIN: " + userData.username);
+    if (userData.username) {
+      history.push("/")
+    }
+  });
   
 
   // called when user clicks login
