@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const { update } = require("../models/userModel");
+const { json } = require("express");
 
 // register a user
 router.post("/register", async (req, res) => {
@@ -146,29 +147,34 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
+
+/*
+Get user activities
+header:
+  key: x-auth-token
+  value: <token>
+returns: json array list of activity names
+*/
 router.get("/activities", async(req, res) => {
-  // try {
-  //   // verify token
-  //   const token = req.header("x-auth-token");
-  //   if (!token) return res.json(false);
+  try {
+    console.log("get acts");
+    // verify token
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
 
-  //   const verified = jwt.verify(token, process.env.JWT_SECRET);
-  //   if (!verified) {
-  //     return res.json(false)
-  //   }
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+      return res.json(false)
+    }
 
-  //   // verify user
-  //   const user = await User.findById(verified.id);
-  //   if (!user) {
-  //     return res.json(false);
-  //   } else {
-  //     // GET ACTIVITIES HERE ------------------------------------------------------------
-  //     console.log(user);
-  //     return res.json(true);
-  //   }
-  // } catch (err) {
-  //   return res.status(500).json({error: err.message});
-  // }
+    // get user, then activities
+    const user = await User.findById(verified.id);
+    let activities = user.activities.map( i => i.activity);
+
+    return res.json(activities);
+  } catch (err) {
+    return res.status(500).json({error: err.message});
+  }
 });
 
 /*
@@ -180,6 +186,7 @@ body:
 {
   "activity": "<name>"
 }
+returns: activity name added
 */
 router.put("/addactivity", async (req, res) => {
   const {activity} = req.body;
