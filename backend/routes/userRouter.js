@@ -1,8 +1,10 @@
 const User = require("../models/userModel");
+const Activity = require("../models/activityModel");
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const { update } = require("../models/userModel");
 
 // register a user
 router.post("/register", async (req, res) => {
@@ -169,40 +171,53 @@ router.get("/activities", async(req, res) => {
   // }
 });
 
-// append/update user activity
+/*
+Update user activity
+header:
+  key: x-auth-token
+  value: <token>
+body:
+{
+  "activity": "<name>"
+}
+*/
 router.put("/addactivity", async (req, res) => {
-  // console.log("ADD");
-  // try {
-  //   // verify token
-  //   const token = req.header("x-auth-token");
-  //   if (!token) return res.json(false);
+  // gather request
+  const {activity} = req.body;
 
-  //   const verified = jwt.verify(token, process.env.JWT_SECRET);
-  //   if (!verified) {
-  //     return res.json(false)
-  //   }
+    console.log("adding: " + activity);
 
-  //   // verify user
-  //   const user = await User.findById(verified.id);
-  //   if (!user) {
-  //     console.log("not a user");
-  //     return res.json(false);
-  //   } else {
-  //     // APPEDND ACTIVITY HERE- ---------------------------------------
-  //     console.log(user);
-  //     if (user.activities) {
-  //       console.log("HAS ACT");
+  try {
+    // verify token
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
 
-  //     } else {
-  //       console.log("NO ACT - update user here");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+      return res.json(false)
+    }
 
-  //       // create activites
-  //     }
-  //     return res.json(true);
-  //   }
-  // } catch (err) {
-  //   return res.status(500).json({error: err.message});
-  // }
+    // update this user
+    let user = await User.findById(verified.id);
+
+    const newAct = new Activity({
+      activity: "test"
+    });
+
+    User.updateOne(
+      {_id: verified.id},
+      { $push: {activities: newAct}},
+      function (error, User) {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({error: err.message});
+        } else {
+          res.json(activity);
+        }
+    });
+  } catch (err) {
+    return res.status(500).json({error: err.message});
+  }
 });
 
 

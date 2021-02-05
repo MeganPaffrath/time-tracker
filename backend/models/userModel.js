@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+const ActivitySchema = require("./activityModel").schema;
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -13,6 +15,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 7
+  },
+  activities: {
+    type: [ActivitySchema],
+    required: true
   }
 });
 
