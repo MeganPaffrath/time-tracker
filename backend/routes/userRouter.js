@@ -182,11 +182,7 @@ body:
 }
 */
 router.put("/addactivity", async (req, res) => {
-  // gather request
   const {activity} = req.body;
-
-    console.log("adding: " + activity);
-
   try {
     // verify token
     const token = req.header("x-auth-token");
@@ -201,20 +197,30 @@ router.put("/addactivity", async (req, res) => {
     let user = await User.findById(verified.id);
 
     const newAct = new Activity({
-      activity: "test"
+      activity: activity
     });
 
-    User.updateOne(
-      {_id: verified.id},
-      { $push: {activities: newAct}},
-      function (error, User) {
-        if (error) {
-            console.log(error);
-            return res.status(400).json({error: err.message});
-        } else {
-          res.json(activity);
-        }
-    });
+    let userHasAct = user.activities.some(act => {
+      return act.activity === activity
+    })
+
+    if (userHasAct) {
+      return res
+        .status(400)
+        .json({msg: `${activity} activity already exists`});
+    } else {
+      User.updateOne(
+        {_id: verified.id},
+        { $push: {activities: newAct}},
+        function (error, User) {
+          if (error) {
+              console.log(error);
+              return res.status(400).json({error: err.message});
+          } else {
+            res.json(activity);
+          }
+      });
+    }
   } catch (err) {
     return res.status(500).json({error: err.message});
   }
