@@ -160,6 +160,7 @@ router.get("/activities", async(req, res) => {
     console.log("get acts");
     // verify token
     const token = req.header("x-auth-token");
+    console.log("token" +  token);
     if (!token) return res.json(false);
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);

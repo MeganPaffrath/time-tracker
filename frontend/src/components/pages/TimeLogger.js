@@ -1,31 +1,36 @@
-import React, {useState } from 'react';
-// import UserContext from '../../context/UserContext';
+import React, {useState, useEffect, useContext} from 'react';
+import UserContext from "../../context/UserContext";
 import Axios from "axios";
 // import { useHistory } from 'react-router-dom';
 
 export default function TimeLogger() {
-  const [date, setDate] = useState();
+  const {userData} = useContext(UserContext);
+  let [date, setDate] = useState();
   const [minutes, setMinutes] = useState();
   const [activity, setActivity] = useState();
-  // const [updated, setUpdated] = useState(false);
+  const [activities, setActivities] = useState( {hits: []} );
   // const {setUserData} = useContext(UserContext);
   // const history = useHistory();
 
+
+  //https://www.robinwieruch.de/react-hooks-fetch-data
+  useEffect(() => {
+    // const result = await Axios.get(
+    //     "http://localhost:5000/users/activities",
+    //     {headers: {"x-auth-token": userData.token}}
+    //   )
+
+    // setActivities(result.data);
+  }, []);
+
   const logTime = async (e) => {
-    // e.preventDefault();
     try {
-      const logInput = {date, minutes, activity};
-      console.log(date, " ", minutes, " ", activity);
-      
       // make sure all logs were filled
       if (!date || !minutes || !activity) {
         throw new Error("missing field");
       }
 
-      // convert date to utc time
-      var dateUTC = new Date(date);
-      console.log(dateUTC);
-
+      let logInput = {date, minutes, activity};
       // make a new log
       let token = localStorage.getItem("auth-token");
       const loginRes = await Axios.post(
@@ -33,10 +38,8 @@ export default function TimeLogger() {
         logInput,
         {headers: {"x-auth-token": token}}
       )
-
       console.log(loginRes);
-      // setUpdated(true);
-
+      return loginRes;
     } catch (err) {
       console.log(err.message);
     }
@@ -55,8 +58,13 @@ export default function TimeLogger() {
             id="date"
             onChange={e => setDate(e.target.value)}
           />
+          {/* {activities.map(a => <h1>{a}</h1>)} */}
           <label htmlFor="activity">Activity:</label><br></br>
           <select value={activity} id="activity" name="activity" onChange={e => setActivity(e.target.value)}>
+            {activities.hits.map(
+              i =>
+              <option value={i}>{i}</option>
+            )}
             <option value="Cow tipping">Cow Tipping</option>
             <option value="Bingo">Bingo</option>
             <option value="Igloo Building">Igloo Building</option>

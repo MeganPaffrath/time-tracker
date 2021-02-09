@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div>
       {/* Hello <strong>{userData.user.username}</strong>, your logs are: */}
-      <TimeLogger />
+      <TimeLogger userData={userData}/>
       <Log />
 
     </div>

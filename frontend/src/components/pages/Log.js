@@ -6,6 +6,12 @@ export default function Log() {
   const [logs, setLogs] = useState([]);
   const [activities, setActivities] = useState([]);
 
+  function showLogs() {
+    logs.forEach(log => {
+      console.log(log);
+    })
+  }
+
   useEffect(() => {
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
@@ -14,11 +20,8 @@ export default function Log() {
       {headers: {"x-auth-token": token}}
     ).then(res => {
       if (isMounted) {
-        setLogs(res.data);
-        // console.log(res.data);
-        // res.data.forEach( (item) =>{
-        //   console.log("Item: " + item.activity);
-        // })
+        setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
+        // console.log(logs);
       }
     }).catch(err => {
       console.log(err);
@@ -44,7 +47,7 @@ export default function Log() {
           {logs.map(log => (
             <tr key={log._id}>
               <th>{log.activity}</th>
-              <th>{new Date(log.date).getMonth()}/{new Date(log.date).getDate()}/{new Date(log.date).getFullYear()}</th>
+              <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
               <th>{log.minutes}</th>
             </tr>
           ))}
