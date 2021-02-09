@@ -2,21 +2,22 @@
 
 # Index
 
-- [Plan](#Plan)
+- [Progress and Plan](#Progress-and-Plan)
 - [Stack](#Stack)
 - [Design](#Design)
   - [Routes](#Routes)
   - [Project Organization](#Project-Organization)
 - [Models](#Models)
-- [Functionality](#Functionality)
 
-# Key
+# Progress and Plan
+
+## Key
 
 - 🏁 : in progress
 - ❌ : not done
 - ✅ : complete
 
-# Plan
+## Outline
 
 - User application 🏁
   - Handle users 🏁
@@ -26,13 +27,18 @@
     - Delete Account ❌
     - Edit account ❌
 - Functionality 🏁
-  - \<user> can log times for an \<activity> 🏁
-  - \<user> can view charts of times recorded for various \<activity> 🏁
-    - month view
-      - view past months
-    - year view ❌
-      - view past years
-  - \<user> can create and delete \<activity> ❌
+  - Activity handling
+    - \<user> can create new \<activity> types ✅
+    - \<user> can delete \<activity> types ❌
+  - Logger
+    - \<user> can log times for an \<activity> ✅
+  - Log View
+    - \<user> can view all of their time logs in chronological order ✅
+    - \<user> can view charts of times recorded for various \<activity> 🏁
+      - month view ❌
+        - view past months ❌
+      - year view ❌
+        - view past years ❌
 
 # Stack
 
@@ -181,7 +187,7 @@
 - username
 - email
 - password
-- event log topic array?
+- activities[]
 
 ## Event Log:
 
@@ -189,13 +195,3 @@
 - startTime
 - endTime
 - eventType
-
-# Functionality
-
-- Users handling
-  - login
-  - register
-  - logout
-- Log handling
-  - add time log
-  - view time logs
