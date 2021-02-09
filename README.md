@@ -73,7 +73,9 @@
 
 ## Routes
 
-#### api/users/
+### File: `routes/userRouter`
+
+### Route: `api/users/`
 
 - ALL 🏁:
   - DONE ✅
@@ -81,33 +83,37 @@
   - TO DO ❌
     - delete, edituser, activities, addactivity
 - POST
-  - api/users/register : Create a new account ✅
+  - `api/users/register` : Create a new account ✅
     - body
       - username: \<string>
       - password: \<string>
       - verifyPassword: \<string>
       - email: \<email>
-  - /users/login : Log in ✅
+  - `/users/login` : Log in ✅
     - body
       - username: \<string>
       - password: \<string>
-  - /users/validateToken ✅
+  - `/users/validateToken` : validates if user logged in ✅
     - header
       - key: x-auth-token
       - value: \<string>
-  - /users/addactivity
+  - `/users/addactivity` : add new activity type ✅
     - header
       - key: x-auth-token
       - value: \<string>
     - body
       - activity: \<string>
 - GET
-  - api/users/activities 🏁:
+  - `api/users/` : get user data from jwt ✅
+    - header
+      - key: x-auth-token
+      - value: \<string>
+  - `api/users/activities` : returns users activity types ✅
     - header
       - key: x-auth-token
       - value: \<string>
 - DELETE
-  - api/delete : Delete a user ❌
+  - api/delete : delete a user ❌
     - header
       - key: x-auth-token
       - value: \<string>
@@ -120,7 +126,9 @@
     - body
       - to be determined
 
-#### api/log ✅
+### File: `routes/logRouter`
+
+### Route: `api/log/`
 
 - POST
   - api/log/new: creates new log ✅
