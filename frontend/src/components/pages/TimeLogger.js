@@ -48,38 +48,16 @@ export default function TimeLogger() {
         throw new Error("missing field");
       }
 
-      let loginRes = null;
+      // make a new log
+      let logInput = {date, minutes, activity};
+      let token = localStorage.getItem("auth-token");
+      return await Axios.post(
+        "http://localhost:5000/log/new",
+        logInput,
+        {headers: {"x-auth-token": token}}
+      )
 
-      if (newActivity == null) {
-        // make a new log
-        let logInput = {date, minutes, activity};
-        let token = localStorage.getItem("auth-token");
-        loginRes = await Axios.post(
-          "http://localhost:5000/log/new",
-          logInput,
-          {headers: {"x-auth-token": token}}
-        )
-      } else {
-        let token = localStorage.getItem("auth-token");
-        // // make new activity type
-        let newActInput = {date, minutes, activity: newActivity};
-        // let newAct = await Axios.post(
-        //   "http://localhost:5000/users/addactivity",
-        //   {activity: newActivity},
-        //   {headers: {"x-auth-token": token}}
-        // )
-
-        // make a new activity log
-        // let token = localStorage.getItem("auth-token");
-        loginRes = await Axios.post(
-          "http://localhost:5000/log/new",
-          newActInput,
-          {headers: {"x-auth-token": token}}
-        )
-      }
-      
-      console.log(loginRes);
-      return loginRes;
+      // return loginRes;
     } catch (err) {
       console.log(err.message);
     }
@@ -89,6 +67,10 @@ export default function TimeLogger() {
     setActivity(item);
   }
 
+  function reset() {
+    setNewActivity(null);
+  }
+
 
   return (
     <section className="time-logger form">
@@ -96,51 +78,66 @@ export default function TimeLogger() {
         <h1>Start Logging!</h1>
         <form onSubmit={logTime}>
           {/* <form> */}
-          <label htmlFor="date">Date:</label>
-          <input 
-            type="date" 
-            id="date"
-            onChange={e => setDate(e.target.value)}
-          />
-          <label htmlFor="activity">Activity:</label><br></br>
           { (activity == "new") ? (
             <div>
+              <label htmlFor="activity">Activity:</label><br></br>
               {/* <h1>Add Activity: </h1> */}
               <input 
                 type="string" 
                 id="activity"
                 onChange={e => setNewActivity(e.target.value)}
               />
-              <center><button onClick={newAct}>+ Create</button></center>
+              <center>
+                <button onClick={newAct}>+ Add</button>
+                <button onClick={reset}>Cancel</button>
+              </center>
               
             </div>
-            
-            
+          ) : (activities.length == 0) ? (
+            <div>
+              <label htmlFor="activity">Activity:</label><br></br>
+              <input 
+                type="string" 
+                id="activity"
+                onChange={e => setNewActivity(e.target.value)}
+              />
+              <center>
+                <button onClick={newAct}>+ Add</button>
+              </center>
+              
+            </div>
           ) : (
             <div>
-            <h1>not new</h1>
+              <label htmlFor="activity">Activity:</label><br></br>
               <select value={activity} id="activity" name="activity" onChange={e => selectActivity(e.target.value)}>
                 {activities.map(
                   i =>
                   <option key={i.activity} value={i.activity}>{i.activity}</option>
                 )}
-              <option key="new" value="new" >new</option>
-              </select><br></br>
+                <option key="new" value="new" >new</option>
+              </select><br></br><br></br>
+              <label htmlFor="date">Date:</label>
+              <input 
+                type="date" 
+                id="date"
+                onChange={e => setDate(e.target.value)}
+              /><br></br>
+              <label htmlFor="minutes">Minutes:</label>
+              <input 
+                type="number" 
+                id="minutes" 
+                min="0" 
+                onChange={e => setMinutes(e.target.value)}
+              />
+              <input 
+                type="submit" 
+                value="Log It!" 
+              />
             </div>
             
           )}
           
-          <label htmlFor="minutes">Minutes:</label>
-          <input 
-            type="number" 
-            id="minutes" 
-            min="0" 
-            onChange={e => setMinutes(e.target.value)}
-          />
-          <input 
-            type="submit" 
-            value="Log It!" 
-          />
+          
         </form>
       </div>
     </section>
