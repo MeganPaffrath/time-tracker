@@ -8,22 +8,18 @@ export default function TimeLogger() {
   let [date, setDate] = useState();
   const [minutes, setMinutes] = useState();
   const [activity, setActivity] = useState();
-  const [activities, setActivities] = useState( {hits: []} );
-  // const {setUserData} = useContext(UserContext);
-  // const history = useHistory();
+  const [activities, setActivities] = useState([]);
 
-  console.log(userData);
-
-
-  //https://www.robinwieruch.de/react-hooks-fetch-data
   useEffect(() => {
-    // const result = await Axios.get(
-    //     "http://localhost:5000/users/activities",
-    //     {headers: {"x-auth-token": userData.token}}
-    //   )
-
-    // setActivities(result.data);
+    if (userData != null && userData.activities != null && userData.activities.length > 0) {
+      setActivity(userData.activities[0].activity);
+      setActivities(userData.activities);
+      console.log(activity);
+      console.log(activities);
+    }
   }, []);
+
+  console.log(activities);
 
   const logTime = async (e) => {
     try {
@@ -63,13 +59,11 @@ export default function TimeLogger() {
           {/* {activities.map(a => <h1>{a}</h1>)} */}
           <label htmlFor="activity">Activity:</label><br></br>
           <select value={activity} id="activity" name="activity" onChange={e => setActivity(e.target.value)}>
-            {activities.hits.map(
+            {activities.map(
               i =>
-              <option value={i}>{i}</option>
+              <option value={i.activity}>{i.activity}</option>
             )}
-            <option value="Cow tipping">Cow Tipping</option>
-            <option value="Bingo">Bingo</option>
-            <option value="Igloo Building">Igloo Building</option>
+          <button>+</button>
           </select><br></br>
           <label htmlFor="minutes">Minutes:</label>
           <input 

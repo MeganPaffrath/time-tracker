@@ -35,7 +35,8 @@ export default function Login() {
       // if valid user, set token...
       setUserData({
         token: loginRes.data.token,
-        username: loginRes.data.user.username
+        username: loginRes.data.user.username,
+        activities: loginRes.data.user.activities
       });
       // update local storage
       localStorage.setItem("auth-token", loginRes.data.token);
