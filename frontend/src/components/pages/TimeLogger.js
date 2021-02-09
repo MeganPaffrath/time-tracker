@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import UserContext from "../../context/UserContext";
 import Axios from "axios";
-// import { useHistory } from 'react-router-dom';
 
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);

@@ -6,8 +6,6 @@ import Axios from "axios";
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  // const [error, setError] = useState();
-  // const {setUserData} = useContext(UserContext);
   const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
@@ -45,8 +43,6 @@ export default function Login() {
       history.push("/");
       
     } catch (err) {
-      // set error
-      // setError(err.message);
       console.log(err.message);
     }
   }
