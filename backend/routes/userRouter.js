@@ -195,7 +195,9 @@ body:
 returns: activity name added
 */
 router.put("/addactivity", async (req, res) => {
+  console.log("add act called");
   const {activity} = req.body;
+  console.log("adding" + activity);
   try {
     // verify token
     const token = req.header("x-auth-token");

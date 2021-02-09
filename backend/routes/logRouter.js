@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 
 router.post("/new", async (req, res) => {
   try {
-    console.log("NEW");
     const { activity, date, minutes} = req.body;
     console.log("Act:", activity);
     console.log("Date:", date);
     console.log("Min:", minutes);
+    console.log("new", req.body.newActivity);
 
     const utcDate = new Date(date);
 
