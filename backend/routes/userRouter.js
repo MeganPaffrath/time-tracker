@@ -7,6 +7,16 @@ const auth = require("../middleware/auth");
 const { update } = require("../models/userModel");
 const { json } = require("express");
 
+// find user by id
+router.get("/", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    username: user.username,
+    id: user._id,
+    activities: user.activities
+  });
+});
+
 // register a user
 router.post("/register", async (req, res) => {
   try {
@@ -110,7 +120,8 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        username: user.username
+        username: user.username,
+        activities: user.activities
       }
     });
 
@@ -139,13 +150,7 @@ router.post("/validateToken", async (req,res) => {
   }
 });
 
-router.get("/", auth, async (req, res) => {
-  const user = await User.findById(req.user);
-  res.json({
-    username: user.username,
-    id: user._id
-  });
-});
+
 
 
 /*

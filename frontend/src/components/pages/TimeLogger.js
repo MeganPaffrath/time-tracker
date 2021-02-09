@@ -12,6 +12,8 @@ export default function TimeLogger() {
   // const {setUserData} = useContext(UserContext);
   // const history = useHistory();
 
+  console.log(userData);
+
 
   //https://www.robinwieruch.de/react-hooks-fetch-data
   useEffect(() => {

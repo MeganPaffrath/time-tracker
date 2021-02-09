@@ -21,7 +21,6 @@ export default function Log() {
     ).then(res => {
       if (isMounted) {
         setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-        // console.log(logs);
       }
     }).catch(err => {
       console.log(err);

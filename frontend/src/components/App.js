@@ -15,7 +15,8 @@ export default function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     username: undefined,
-    id: undefined
+    id: undefined,
+    activities: undefined
   });
 
   useEffect(() => {
@@ -41,7 +42,8 @@ export default function App() {
         );
         setUserData({
           token,
-          username: userRes.data.username
+          username: userRes.data.username,
+          activities: userRes.data.activities
         });
       }
     }
