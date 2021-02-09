@@ -77,7 +77,7 @@ export default function TimeLogger() {
         <h1>Start Logging!</h1>
         <form onSubmit={logTime}>
           {/* <form> */}
-          { (activity == "new") ? (
+          { (activity === "new") ? (
             <div>
               <label htmlFor="activity">Activity:</label><br></br>
               {/* <h1>Add Activity: </h1> */}
@@ -92,7 +92,7 @@ export default function TimeLogger() {
               </center>
               
             </div>
-          ) : (activities.length == 0) ? (
+          ) : (activities.length === 0) ? (
             <div>
               <label htmlFor="activity">Activity:</label><br></br>
               <input 

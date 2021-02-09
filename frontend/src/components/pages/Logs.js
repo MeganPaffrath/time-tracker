@@ -1,15 +1,22 @@
 import React, {useState, useEffect} from 'react';
+// import Home from './pages/Home';
 // import UserContext from "../../context/UserContext";
 import Axios from "axios";
+import AllLogs from './log-views/AllLogs';
 
-export default function Log() {
+export default function Logs() {
   const [logs, setLogs] = useState([]);
+  const [view, setView] = useState("all");
   const [activities, setActivities] = useState([]);
 
   function showLogs() {
     logs.forEach(log => {
       console.log(log);
     })
+  }
+
+  function viewSetter(newView) {
+    setView(newView);
   }
 
   useEffect(() => {
@@ -32,26 +39,16 @@ export default function Log() {
 
 
   return (
-    <section>
-      <br />
-      <table>
-      <thead>
-        <tr>
-          <th>Activity</th>
-          <th>Date</th>
-          <th>Minutes</th>
-        </tr>
-      </thead>
-        <tbody>
-          {logs.map(log => (
-            <tr key={log._id}>
-              <th>{log.activity}</th>
-              <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
-              <th>{log.minutes}</th>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <section className="logs">
+      <div>
+        <center>
+          <button>All Logs</button>
+          <button>This Month</button>
+        </center>
+        <br />
+        <br />
+        <AllLogs logs={logs}/>
+      </div>
     </section>
   )
 }

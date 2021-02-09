@@ -113,13 +113,13 @@
       - key: x-auth-token
       - value: \<string>
 - DELETE
-  - api/delete : delete a user ❌
+  - `api/delete` : delete a user ❌
     - header
       - key: x-auth-token
       - value: \<string>
     - body
       - username: \<string>
-  - api/edituser : edit user info ❌
+  - `api/edituser` : edit user info ❌
     - header
       - key: x-auth-token
       - value: \<string>
@@ -131,7 +131,7 @@
 ### Route: `api/log/`
 
 - POST
-  - api/log/new: creates new log ✅
+  - `api/log/new`: creates new log ✅
     - header
       - key: x-auth-token
       - value: \<string>
@@ -140,7 +140,7 @@
       - date: UTC time
       - minutes: \<int>
 - GET
-  - api/log/getlogs: gets all logs for the user ✅
+  - `api/log/getlogs`: gets all logs for the user ✅
     - header
       - key: x-auth-token
       - value: \<string>
