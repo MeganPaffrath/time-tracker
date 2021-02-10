@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 // import UserContext from "../../context/UserContext";
 import Axios from "axios";
 import AllLogs from './log-views/AllLogs';
+import MonthLogs from './log-views/MonthLogs';
 
 export default function Logs() {
   const [logs, setLogs] = useState([]);
@@ -43,12 +44,14 @@ export default function Logs() {
     <section className="logs">
       <div>
         <center>
-          <button>All Logs</button>
+          <button onClick={() => viewSetter('all')}>All Logs</button>
           <button>This Month</button>
         </center>
         <br />
         <br />
         <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
+        <br />
+        <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
       </div>
     </section>
   )
