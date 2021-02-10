@@ -76,34 +76,33 @@ export default function TimeLogger() {
 
 
   return (
-    <section className="time-logger form">
+    <section className="form-box">
       <div>
         <h1>Start Logging!</h1>
-        <Form onSubmit={logTime}>
-          { (activity === "new") ? (
-            <div>NEW</div>
-          ) : (activities.length === 0) ? (
-            <div>zero items</div>
-          ): (
-            <div>other</div>
-          )}
-            <Form.Group controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Enter username" />
-              {/* <Form.Text className="text-muted">
-                Need x more characters
-              </Form.Text> */}
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <center>
-            <Button variant="dark" type="submit">
-              Submit
-            </Button>
-            </center>
-          </Form>
+        { (activity === "new") ? (
+          <div>
+            <p>new</p>
+          </div>
+        ) : (activities.length === 0) ? (
+          <div>
+            <p>Nothing exists yet, let's make a new activity category!</p>
+            <Form onSubmit={newAct}>
+              <Form.Group controlId="username">
+                <Form.Label>New Activity Type:</Form.Label>
+                <Form.Control type="activity" placeholder="Enter activity" />
+              </Form.Group>
+              <center>
+              <Button variant="dark" type="submit">
+                Submit
+              </Button>
+              </center>
+            </Form>
+          </div>
+        ): (
+          <div>
+            <p>things exist</p>
+          </div>
+        )}
         <form onSubmit={logTime}>
           {/* <form> */}
           { (activity === "new") ? (

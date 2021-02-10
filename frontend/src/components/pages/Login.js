@@ -54,7 +54,7 @@ export default function Login() {
   return (
     <Container>
       <Row className="justify-content-md-center">
-        <div className="form-box-login">
+        <div className="form-box">
           <h1>Login</h1>
           <Form onSubmit={submit}>
             <Form.Group controlId="username">
