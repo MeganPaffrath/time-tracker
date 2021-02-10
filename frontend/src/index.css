@@ -1,10 +1,15 @@
-.row .form-box-login {
+.row .form-box {
   max-width: 600px;
   padding: 50px 0;
 }
 
 .form-box button {
   /* width: 100%; */
+  margin: 10px;
+}
+
+section {
+  background-color: grey;
   margin: 10px;
 }
 

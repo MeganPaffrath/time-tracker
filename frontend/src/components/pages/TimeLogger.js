@@ -4,7 +4,7 @@ import Axios from "axios";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Form, Button, Container, Row} from 'react-bootstrap';
+import {Form, Button, Container, Row, FormGroup} from 'react-bootstrap';
 
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);
@@ -76,12 +76,26 @@ export default function TimeLogger() {
 
 
   return (
-    <section className="form-box">
-      <div>
+    <section className="time-logger-component">
+      <div className="form-box">
         <h1>Start Logging!</h1>
         { (activity === "new") ? (
           <div>
             <p>new</p>
+            <Form onSubmit={newAct}>
+              <Form.Group controlId="activity">
+                <Form.Label>New Activity Type:</Form.Label>
+                <Form.Control type="string" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
+              </Form.Group>
+              <center>
+              <Button variant="dark" type="submit">
+                Submit
+              </Button>
+              <Button variant="dark" type="cancel" onClick={reset}>
+                Cancel
+              </Button>
+              </center>
+            </Form>
           </div>
         ) : (activities.length === 0) ? (
           <div>
@@ -100,72 +114,33 @@ export default function TimeLogger() {
           </div>
         ): (
           <div>
-            <p>things exist</p>
-          </div>
-        )}
-        <form onSubmit={logTime}>
-          {/* <form> */}
-          { (activity === "new") ? (
-            <div>
-              <label htmlFor="activity">Activity:</label><br></br>
-              {/* <h1>Add Activity: </h1> */}
-              <input 
-                type="string" 
-                id="activity"
-                onChange={e => setNewActivity(e.target.value)}
-              />
-              <center>
-                <button onClick={newAct}>+ Add</button>
-                <button onClick={reset}>Cancel</button>
-              </center>
-              
-            </div>
-          ) : (activities.length === 0) ? (
-            <div>
-              <label htmlFor="activity">Activity:</label><br></br>
-              <input 
-                type="string" 
-                id="activity"
-                onChange={e => setNewActivity(e.target.value)}
-              />
-              <center>
-                <button onClick={newAct}>+ Add</button>
-              </center>
-              
-            </div>
-          ) : (
-            <div>
-              <label htmlFor="activity">Activity:</label><br></br>
-              <select value={activity} id="activity" name="activity" onChange={e => selectActivity(e.target.value)}>
-                {activities.map(
+            <Form onSubmit={logTime}>
+            <Form.Group controlId="activity-select">
+              <Form.Label>Select Activity</Form.Label>
+              <Form.Control as="select" onChange={e => selectActivity(e.target.value)}>
+              {activities.map(
                   i =>
                   <option key={i.activity} value={i.activity}>{i.activity}</option>
                 )}
-                <option key="new" value="new" >new</option>
-              </select><br></br><br></br>
-              <label htmlFor="date">Date:</label>
-              <input 
-                type="date" 
-                id="date"
-                onChange={e => setDate(e.target.value)}
-              /><br></br>
-              <label htmlFor="minutes">Minutes:</label>
-              <input 
-                type="number" 
-                id="minutes" 
-                min="0" 
-                onChange={e => setMinutes(e.target.value)}
-              />
-              <input 
-                type="submit" 
-                value="Log It!" 
-              />
-            </div>
-            
-          )}
-          
-          
-        </form>
+                <option key="new" value="new">New</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="date">
+              <Form.Label>Date</Form.Label>
+              <Form.Control type="date" onChange={e => setDate(e.target.value)}/>
+            </Form.Group>
+            <Form.Group controlId="minutes">
+              <Form.Label>Minutes</Form.Label>
+              <Form.Control type="number" min="0" max="1440" onChange={e => setMinutes(e.target.value)}/>
+            </Form.Group>
+              <center>
+              <Button variant="dark" type="submit">
+                Submit
+              </Button>
+              </center>
+            </Form>
+          </div>
+        )}
       </div>
     </section>
   )
