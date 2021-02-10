@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const Log = require("../models/logModel");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
-// const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 // const moment = require("moment");
 
 router.post("/new", async (req, res) => {
@@ -36,8 +36,6 @@ router.post("/new", async (req, res) => {
         .json({msg: "Token verification failure."});
     }
 
-    console.log("p5");
-
     // verify user
     const user = await User.findById(verified.id);
     if (!user) {
@@ -45,8 +43,6 @@ router.post("/new", async (req, res) => {
         .status(400)
         .json({msg: "User not found"});
     }
-
-    console.log("p6");
 
     // create log for user
     const newLog = new Log({
@@ -73,6 +69,53 @@ router.post("/new", async (req, res) => {
 
 });
 
+router.delete("/delete", async (req, res) => {
+  // get verified token
+  const token = req.header("x-auth-token");
+  if (!token) {
+    return res
+      .status(400)
+      .json({msg: "token was lost"});
+  }
+
+  // get verified user
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+      return res
+        .status(400)
+        .json({msg: "Token verification failure."});
+    }
+
+  // get username tied to log, make sure same as user
+  const user = await User.findById(verified.id);
+  if (!user) {
+    return res
+      .status(400)
+      .json({msg: "User not found"});
+  }
+  const username = user.username;
+  console.log(username);
+
+  // make sure user is tied to this log
+  const logFound = await Log.findById(req.body.id);
+  console.log(logFound);
+  if (logFound.username != user.username) {
+    return res
+      .status(400)
+      .json({msg: "bad user"});
+  }
+
+  // delete log
+  try {
+    const deletedLog = await Log.findByIdAndDelete(req.body.id);
+    res.status(200).json(deletedLog);
+    // res.status(200).json({msg: "kk"})
+  } catch (err) {
+    res.status(500).json({error: error.message});
+  }
+});
+
+
 
 router.get("/getlogs", async (req, res) => {
   try {
@@ -85,7 +128,6 @@ router.get("/getlogs", async (req, res) => {
         .json({msg: "token was lost"});
     }
 
-    // return res.status(300).json({msg: "im lost"});
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) {
