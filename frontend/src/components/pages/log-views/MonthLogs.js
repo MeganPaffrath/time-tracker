@@ -18,23 +18,40 @@ export default function MonthLogs({logs, update, setUpdate}) {
     "July", "August", "September", "October", "November", "December"
   ];
 
+  function incrementMonthAndYearBy(monthBy, yearBy) {
+    setMonthLogs(logs.filter(log => (
+      new Date(log.date).getUTCMonth() === (month + monthBy)
+      && new Date(log.date).getUTCFullYear() === (year + yearBy)
+    )));
+  }
+
   function nextMonth() {
     if (month === 11) {
       setMonth(0);
       setYear(year + 1);
+      incrementMonthAndYearBy(-11, 1);
     } else {
       setMonth(month + 1)
+      incrementMonthAndYearBy(1, 0);
     }
+
+    console.log(month + " " + year);
   }
 
   function prevMonth() {
     if (month === 0 ) {
       setMonth(11);
       setYear(year - 1);
+      incrementMonthAndYearBy(11, -1);
     } else {
       setMonth(month - 1);
+      incrementMonthAndYearBy(-1, 0);
     }
+
+    console.log(month + " " + year);
   }
+
+
 
   return (
     <div>
@@ -44,27 +61,6 @@ export default function MonthLogs({logs, update, setUpdate}) {
         <button onClick={nextMonth}>next month</button>
       </center>
       <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
-      {/* <table>
-          <thead>
-            <tr>
-              <th>Activity</th>
-              <th>Date</th>
-              <th>Minutes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs.filter(log => (
-              new Date(log.date).getUTCMonth() === month
-              && new Date(log.date).getUTCFullYear() === year
-            )).map(log => (
-              <tr key={log._id}>
-                <th>{log.activity}</th>
-                <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
-                <th>{log.minutes}</th>
-              </tr>
-          ))}
-          </tbody>
-        </table> */}
     </div>
   )
 }

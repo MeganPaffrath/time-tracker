@@ -45,7 +45,7 @@ export default function Logs() {
       <div>
         <center>
           <button onClick={() => viewSetter('all')}>All Logs</button>
-          <button>This Month</button>
+          <button onClick={() => viewSetter('month')}>Month View</button>
         </center>
         <br />
         <br />
