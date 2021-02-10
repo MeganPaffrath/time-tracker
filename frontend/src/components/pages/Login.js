@@ -3,6 +3,10 @@ import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Form, Button, Container, Row} from 'react-bootstrap';
+
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -48,28 +52,30 @@ export default function Login() {
   }
 
   return (
-    <div className="form-container">
-      <div className="form-box">
-        <h1>Login:</h1>
-        <form onSubmit={submit}>
-          <label htmlFor="username">Username:</label>
-          <input 
-            type="username" 
-            placeholder="username"
-            onChange={e => setUsername(e.target.value)}
-          />
-          <label htmlFor="password">Password:</label>
-          <input 
-            type="password" 
-            placeholder="password"
-            onChange={e => setPassword(e.target.value)}
-          />
-          <input 
-            type="submit" 
-            value="Submit" 
-          />
-        </form>
-      </div>
-    </div>
+    <Container>
+      <Row className="justify-content-md-center">
+        <div className="form-box-login">
+          <h1>Login</h1>
+          <Form onSubmit={submit}>
+            <Form.Group controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="username" placeholder="Enter username" onChange={e => setUsername(e.target.value)}/>
+              {/* <Form.Text className="text-muted">
+                Need x more characters
+              </Form.Text> */}
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+            </Form.Group>
+            <center>
+            <Button variant="dark" type="submit">
+              Submit
+            </Button>
+            </center>
+          </Form>
+        </div>
+      </Row>
+    </Container>
   )
 }

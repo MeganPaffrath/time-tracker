@@ -1,7 +1,13 @@
-/* header */
-Link {
-  color: red;
+.row .form-box-login {
+  max-width: 600px;
+  padding: 50px 0;
 }
+
+.form-box-login button {
+  /* width: 100%; */
+  margin: 10px 0;
+}
+
 /* #header {
   background-color: green;
   display: flex;
@@ -24,7 +30,7 @@ nav button {
 } */
 
 /* forms */
-.form-container {
+/* .form-container {
   display: flex;
   justify-content: center;
   padding: 1rem;
@@ -43,7 +49,7 @@ form {
 form input {
   width: 100%;
   margin-bottom: 1rem;
-}
+} */
 
 /* Time Logger */
 section {
