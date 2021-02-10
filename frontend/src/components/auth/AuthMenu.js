@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
+import {Nav} from 'react-bootstrap';
 
 // determins what user sees if logged in/out
 export default function AuthMenu() {
@@ -29,20 +30,20 @@ export default function AuthMenu() {
 
 
   return (
-    <nav>
+    <Nav className="mr-auto">
       {
         userData.username ? (
           <>
-            <button>Hi {userData.username}!</button>
-            <button onClick={logout}>Logout</button>
+            <Nav.Link>Hi {userData.username}!</Nav.Link>
+            <Nav.Link onClick={logout}>LOGOUT</Nav.Link>
           </>
         ) : (
           <>
-            <button onClick={register}>Register</button>
-            <button onClick={login}>Login</button>
+            <Nav.Link onClick={register}>Register</Nav.Link>
+            <Nav.Link onClick={login}>Login</Nav.Link>
           </>
         )
       }
-    </nav>
+    </Nav>
   )
 }
