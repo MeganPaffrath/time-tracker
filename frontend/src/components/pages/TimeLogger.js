@@ -89,7 +89,7 @@ export default function TimeLogger() {
             <Form onSubmit={newAct}>
               <Form.Group controlId="username">
                 <Form.Label>New Activity Type:</Form.Label>
-                <Form.Control type="activity" placeholder="Enter activity" />
+                <Form.Control type="activity" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <center>
               <Button variant="dark" type="submit">
