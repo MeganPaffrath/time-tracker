@@ -2,6 +2,10 @@ import React, {useState, useEffect, useContext} from 'react';
 import UserContext from "../../context/UserContext";
 import Axios from "axios";
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Form, Button, Container, Row} from 'react-bootstrap';
+
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);
   let [date, setDate] = useState();
@@ -75,6 +79,31 @@ export default function TimeLogger() {
     <section className="time-logger form">
       <div>
         <h1>Start Logging!</h1>
+        <Form onSubmit={logTime}>
+          { (activity === "new") ? (
+            <div>NEW</div>
+          ) : (activities.length === 0) ? (
+            <div>zero items</div>
+          ): (
+            <div>other</div>
+          )}
+            <Form.Group controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="username" placeholder="Enter username" />
+              {/* <Form.Text className="text-muted">
+                Need x more characters
+              </Form.Text> */}
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+            <center>
+            <Button variant="dark" type="submit">
+              Submit
+            </Button>
+            </center>
+          </Form>
         <form onSubmit={logTime}>
           {/* <form> */}
           { (activity === "new") ? (
