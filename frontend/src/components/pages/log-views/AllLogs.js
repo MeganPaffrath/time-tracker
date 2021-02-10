@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function removeLog(id) {
-  console.log(id);
-}
+export default function AllLogs( {logs, update, setUpdate} ) {
+  // const [deleted, setDeleted] = useState(0);
 
-export default function AllLogs(logs) {
+  // console.log(logs);
+
+  const removeLog = async (id) => {
+    console.log(id + " id");
+    try {
+      let token = localStorage.getItem("auth-token");
+      let removed =  await axios({
+        method: 'DELETE',
+        url: "http://localhost:5000/log/delete",
+        data: {
+          id: id
+        },
+        headers: {
+          "x-auth-token": token
+        }
+      })
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    setUpdate(update + 1);
+    // this.setDeleted(deleted + 1);
+    
+  }
+
+
   return (
     <div>
       <h1>All logs</h1>
@@ -17,7 +42,7 @@ export default function AllLogs(logs) {
             </tr>
           </thead>
             <tbody>
-              {logs.logs.map(log => (
+              {logs.map(log => (
                 <tr key={log._id}>
                   <th>{log.activity}</th>
                   <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>

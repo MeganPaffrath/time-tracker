@@ -6,6 +6,7 @@ import AllLogs from './log-views/AllLogs';
 
 export default function Logs() {
   const [logs, setLogs] = useState([]);
+  const [update, setUpdate] = useState(0);
   const [view, setView] = useState("all");
   const [activities, setActivities] = useState([]);
 
@@ -35,7 +36,7 @@ export default function Logs() {
     return () => {
       isMounted = false;
     }
-  }, []);
+  }, [update]);
 
 
   return (
@@ -47,7 +48,7 @@ export default function Logs() {
         </center>
         <br />
         <br />
-        <AllLogs logs={logs}/>
+        <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
       </div>
     </section>
   )
