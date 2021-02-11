@@ -4,7 +4,7 @@ import Axios from "axios";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Form, Button, Container, Row, FormGroup} from 'react-bootstrap';
+import {Form, Button } from 'react-bootstrap';
 
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);
@@ -20,12 +20,8 @@ export default function TimeLogger() {
     if (userData != null && userData.activities != null && userData.activities.length > 0) {
       setActivity(userData.activities[0].activity);
       setActivities(userData.activities);
-      console.log(activity);
-      console.log(activities);
     }
   }, []);
-
-  console.log(newActivity);
 
   const newAct = async (e) => {
     try {
@@ -77,7 +73,6 @@ export default function TimeLogger() {
   }
 
   function updateMinutes(min) {
-    console.log(min);
     setMinutes(Number(min));
     updateTotalMinutes(hours, Number(min) );
   }
@@ -145,19 +140,19 @@ export default function TimeLogger() {
               <Form.Label>Date</Form.Label>
               <Form.Control type="date" onChange={e => setDate(e.target.value)}/>
             </Form.Group>
-            <Form.Group controlId="minutes">
-              <Form.Label>Minutes</Form.Label>
-              <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
-            </Form.Group>
             <Form.Group controlId="hours">
               <Form.Label>Hours</Form.Label>
               <Form.Control type="number" min="0" max="24" onChange={e => updateHours(e.target.value)}/>
             </Form.Group>
-              <center>
+            <Form.Group controlId="minutes">
+              <Form.Label>Minutes</Form.Label>
+              <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
+            </Form.Group>
+            <center>
               <Button variant="dark" type="submit">
                 Submit
               </Button>
-              </center>
+            </center>
             </Form>
           </div>
         )}

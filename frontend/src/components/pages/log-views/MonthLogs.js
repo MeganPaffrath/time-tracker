@@ -29,8 +29,6 @@ export default function MonthLogs({logs, update, setUpdate}) {
     )));
   }
 
-  console.log(monthLogs);
-
   function nextMonth() {
     if (month === 11) {
       setMonth(0);
@@ -40,8 +38,6 @@ export default function MonthLogs({logs, update, setUpdate}) {
       setMonth(month + 1)
       incrementMonthAndYearBy(1, 0);
     }
-
-    console.log(month + " " + year);
   }
 
   function prevMonth() {
@@ -53,8 +49,6 @@ export default function MonthLogs({logs, update, setUpdate}) {
       setMonth(month - 1);
       incrementMonthAndYearBy(-1, 0);
     }
-
-    console.log(month + " " + year);
   }
 
 

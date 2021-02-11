@@ -9,7 +9,6 @@ export default function Home() {
   const {userData} = useContext(UserContext);
   const history = useHistory();
 
-  console.log("user data: " + userData.username);
   if (!userData.username) {
     history.push("/login");
   }

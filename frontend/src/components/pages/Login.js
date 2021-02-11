@@ -14,7 +14,6 @@ export default function Login() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("USER DATA from LOGIN: " + userData.username);
     if (userData.username) {
       history.push("/")
     }
