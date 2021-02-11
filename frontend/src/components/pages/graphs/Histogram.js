@@ -41,14 +41,15 @@ const DATA = [
 export default function Histogram({month, year, monthLogs}) {
   const [monthDays, setMonthDays] = useState([]);
   const [monthData, setMonthData] = useState([]);
+  const [maxHours, setMaxHours] = useState(0);
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
 
   console.log(monthData);
-
   console.log(monthDays);
+  console.log(maxHours + " hours");
 
   useEffect(() => {
     // determine days in each month
@@ -64,19 +65,21 @@ export default function Histogram({month, year, monthLogs}) {
     
     // set data
     if (monthLogs !== null) {
-      let data = monthLogs.map( (log) => {
+      setMonthData(null);
+      let data = [];
+      monthLogs.map( (log) => {
         let date = new Date(log.date).getUTCDate();
         let time = (log.minutes) / 60;
+        if (Math.floor(time) > maxHours) {
+          setMaxHours(Math.floor(time));
+        }
         console.log(date + ": " + time);
-        monthLogs.push({
+        data.push({
           x0: (date - 1),
           x: date,
           y: time
-        })
+        });
       })
-
-      console.log(data);
-
       setMonthData(data);
     } 
     }, [month, year]);
@@ -96,11 +99,11 @@ export default function Histogram({month, year, monthLogs}) {
     <div>
       <center>
         <h1>{monthNames[month]} {year}</h1>
-        <p>Days: {monthDays[month]}</p>
+        <p>Hours of ACTIVITY per day</p>
       </center>
       <XYPlot
         xDomain={[1, monthDays[month]]}
-        yDomain={[0, 4]}
+        yDomain={[0, maxHours]}
         xType="linear"
         width={300}
         height={300}
@@ -109,7 +112,7 @@ export default function Histogram({month, year, monthLogs}) {
         <HorizontalGridLines />
         <XAxis />
         <YAxis />
-        <VerticalRectSeries data={DATA} style={{stroke: '#fff'}} />
+        <VerticalRectSeries data={monthData} style={{stroke: '#fff'}} />
       </XYPlot>
     </div>
     
