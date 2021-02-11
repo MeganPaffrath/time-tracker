@@ -22,7 +22,10 @@
 - User application 🏁
   - Handle users 🏁
     - utilizes JWTs & bcryptjs ✅
+    - Register: username, email, password, verify password ✅
+      - notify user of bad register attempts ❌
     - Login: username & password ✅
+      - notify user of bad login attempts ❌
     - Logout ✅
     - Delete Account ❌
     - Edit account ❌
@@ -32,6 +35,8 @@
     - \<user> can delete \<activity> types ❌
   - Logger
     - \<user> can log times for an \<activity> ✅
+    - \<user> can select specific start&end time of activity ❌
+    - \<user> can use a clock to start and end activity ❌
   - Log View
     - \<user> can view all of their time logs in chronological order ✅
     - \<user> can delete a log via the chronological order list ✅
@@ -179,15 +184,6 @@
         - Footer.js
     - context /
       - `UserContext.js` : initializes and holds context
-
-# UI Design
-
-- Example utilizing the Recharts API to create a graph:
-  - refer to old file for implementation
-
-![Time Log](readme-content/first-sample.png)
-
-[See Future Design Concept Here](https://www.figma.com/file/hqnRBUyQbHOPRZnKp6D2Df/Time-Tracker)
 
 # Models
 
