@@ -9,7 +9,9 @@ import {Form, Button, Container, Row, FormGroup} from 'react-bootstrap';
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);
   let [date, setDate] = useState();
-  const [minutes, setMinutes] = useState();
+  const [totalMinutes, setTotalMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
   const [activity, setActivity] = useState();
   const [newActivity, setNewActivity] = useState(null);
   const [activities, setActivities] = useState([]);
@@ -47,12 +49,12 @@ export default function TimeLogger() {
   const logTime = async (e) => {
     try {
       // make sure all logs were filled
-      if (!date || !minutes || !activity) {
+      if (!date || !totalMinutes || !activity) {
         throw new Error("missing field");
       }
 
       // make a new log
-      let logInput = {date, minutes, activity};
+      let logInput = {date, minutes: totalMinutes, activity};
       let token = localStorage.getItem("auth-token");
       return await Axios.post(
         "http://localhost:5000/log/new",
@@ -72,6 +74,21 @@ export default function TimeLogger() {
 
   function reset() {
     setNewActivity(null);
+  }
+
+  function updateMinutes(min) {
+    console.log(min);
+    setMinutes(Number(min));
+    updateTotalMinutes(hours, Number(min) );
+  }
+
+  function updateHours(hrs) {
+    setHours(Number(hrs));
+    updateTotalMinutes(Number(hrs), minutes);
+  }
+
+  function updateTotalMinutes(hrs, min) {
+    setTotalMinutes( (hrs*60 + min) );
   }
 
 
@@ -130,7 +147,11 @@ export default function TimeLogger() {
             </Form.Group>
             <Form.Group controlId="minutes">
               <Form.Label>Minutes</Form.Label>
-              <Form.Control type="number" min="0" max="1440" onChange={e => setMinutes(e.target.value)}/>
+              <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
+            </Form.Group>
+            <Form.Group controlId="hours">
+              <Form.Label>Hours</Form.Label>
+              <Form.Control type="number" min="0" max="24" onChange={e => updateHours(e.target.value)}/>
             </Form.Group>
               <center>
               <Button variant="dark" type="submit">
