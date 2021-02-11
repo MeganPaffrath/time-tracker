@@ -9,7 +9,7 @@ export default function AuthMenu() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("USER DATA from AUTH: " + userData.username);
+    // console.log("USER DATA from AUTH: " + userData.username);
     if (!userData.username) {
       history.push("/login");
     }
@@ -18,7 +18,6 @@ export default function AuthMenu() {
   const register = () => { history.push("/register")};
   const login = () => { history.push("/login")};
   const logout = () => {
-    console.log("attempt to log out")
     // reset user context
     setUserData({
       token: undefined,

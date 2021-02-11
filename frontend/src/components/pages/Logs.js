@@ -13,13 +13,6 @@ export default function Logs() {
   const [logs, setLogs] = useState([]);
   const [update, setUpdate] = useState(0);
   const [view, setView] = useState("all");
-  const [activities, setActivities] = useState([]);
-
-  function showLogs() {
-    logs.forEach(log => {
-      console.log(log);
-    })
-  }
 
   function viewSetter(newView) {
     setView(newView);

@@ -4,12 +4,14 @@ import Axios from "axios";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Form, Button, Container, Row, FormGroup} from 'react-bootstrap';
+import {Form, Button } from 'react-bootstrap';
 
 export default function TimeLogger() {
   const {userData} = useContext(UserContext);
   let [date, setDate] = useState();
-  const [minutes, setMinutes] = useState();
+  const [totalMinutes, setTotalMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
   const [activity, setActivity] = useState();
   const [newActivity, setNewActivity] = useState(null);
   const [activities, setActivities] = useState([]);
@@ -18,12 +20,8 @@ export default function TimeLogger() {
     if (userData != null && userData.activities != null && userData.activities.length > 0) {
       setActivity(userData.activities[0].activity);
       setActivities(userData.activities);
-      console.log(activity);
-      console.log(activities);
     }
   }, []);
-
-  console.log(newActivity);
 
   const newAct = async (e) => {
     try {
@@ -47,12 +45,12 @@ export default function TimeLogger() {
   const logTime = async (e) => {
     try {
       // make sure all logs were filled
-      if (!date || !minutes || !activity) {
+      if (!date || !totalMinutes || !activity) {
         throw new Error("missing field");
       }
 
       // make a new log
-      let logInput = {date, minutes, activity};
+      let logInput = {date, minutes: totalMinutes, activity};
       let token = localStorage.getItem("auth-token");
       return await Axios.post(
         "http://localhost:5000/log/new",
@@ -72,6 +70,20 @@ export default function TimeLogger() {
 
   function reset() {
     setNewActivity(null);
+  }
+
+  function updateMinutes(min) {
+    setMinutes(Number(min));
+    updateTotalMinutes(hours, Number(min) );
+  }
+
+  function updateHours(hrs) {
+    setHours(Number(hrs));
+    updateTotalMinutes(Number(hrs), minutes);
+  }
+
+  function updateTotalMinutes(hrs, min) {
+    setTotalMinutes( (hrs*60 + min) );
   }
 
 
@@ -128,15 +140,19 @@ export default function TimeLogger() {
               <Form.Label>Date</Form.Label>
               <Form.Control type="date" onChange={e => setDate(e.target.value)}/>
             </Form.Group>
+            <Form.Group controlId="hours">
+              <Form.Label>Hours</Form.Label>
+              <Form.Control type="number" min="0" max="24" onChange={e => updateHours(e.target.value)}/>
+            </Form.Group>
             <Form.Group controlId="minutes">
               <Form.Label>Minutes</Form.Label>
-              <Form.Control type="number" min="0" max="1440" onChange={e => setMinutes(e.target.value)}/>
+              <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
             </Form.Group>
-              <center>
+            <center>
               <Button variant="dark" type="submit">
                 Submit
               </Button>
-              </center>
+            </center>
             </Form>
           </div>
         )}

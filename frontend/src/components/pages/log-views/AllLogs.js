@@ -8,7 +8,6 @@ export default function AllLogs( {logs, update, setUpdate} ) {
   // console.log(logs);
 
   const removeLog = async (id) => {
-    console.log(id + " id");
     try {
       let token = localStorage.getItem("auth-token");
       let removed =  await axios({
