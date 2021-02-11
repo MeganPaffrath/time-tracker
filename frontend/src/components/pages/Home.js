@@ -18,6 +18,7 @@ export default function Home() {
     <div>
 
       <TimeLogger userData={userData}/>
+      <div className="section-divider"></div>
       <Logs />
 
     </div>

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import LogList from './LogList';
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
+
 
 export default function MonthLogs({logs, update, setUpdate}) {
   const [month, setMonth] = useState(new Date().getUTCMonth());
   const [year, setYear] = useState(new Date().getUTCFullYear());
-  const [monthLogs, setMonthLogs] = useState();
+  const [monthLogs, setMonthLogs] = useState(null);
 
   useEffect(() => {
     setMonthLogs(logs.filter(log => (
@@ -24,6 +28,8 @@ export default function MonthLogs({logs, update, setUpdate}) {
       && new Date(log.date).getUTCFullYear() === (year + yearBy)
     )));
   }
+
+  console.log(monthLogs);
 
   function nextMonth() {
     if (month === 11) {
@@ -54,11 +60,11 @@ export default function MonthLogs({logs, update, setUpdate}) {
 
 
   return (
-    <div>
-      <h1>{monthNames[month]} {year} Logs</h1>
+    <div className="month-logs-component">
+      <h3>{monthNames[month]} {year} Logs</h3>
       <center>
-        <button onClick={prevMonth}>last month</button>
-        <button onClick={nextMonth}>next month</button>
+        <Button variant="dark" onClick={prevMonth}>Previous</Button>
+        <Button variant="dark" onClick={nextMonth}>Next</Button>
       </center>
       <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
     </div>
