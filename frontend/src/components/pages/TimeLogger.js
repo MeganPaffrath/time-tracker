@@ -81,7 +81,6 @@ export default function TimeLogger() {
         <h1>Start Logging!</h1>
         { (activity === "new") ? (
           <div>
-            <p>new</p>
             <Form onSubmit={newAct}>
               <Form.Group controlId="activity">
                 <Form.Label>New Activity Type:</Form.Label>
