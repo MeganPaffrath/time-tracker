@@ -5,6 +5,10 @@ import Axios from "axios";
 import AllLogs from './log-views/AllLogs';
 import MonthLogs from './log-views/MonthLogs';
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
+
 export default function Logs() {
   const [logs, setLogs] = useState([]);
   const [update, setUpdate] = useState(0);
@@ -41,17 +45,21 @@ export default function Logs() {
 
 
   return (
-    <section className="logs">
+    <section className="logs-component">
       <div>
+        <center><h1>Logs</h1></center>
         <center>
-          <button onClick={() => viewSetter('all')}>All Logs</button>
-          <button onClick={() => viewSetter('month')}>Month View</button>
+          <Button variant="dark" onClick={() => viewSetter('all')}>All Logs</Button>
+          <Button variant="dark" onClick={() => viewSetter('month')}>Month Logs</Button>
         </center>
-        <br />
-        <br />
-        <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
-        <br />
-        <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
+        <div className="log-list">
+        { (view === 'all') ? (
+          <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
+        ) : ''}
+        { (view === 'month') ? (
+          <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
+        ) : ''}
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Table, Button } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
+
 export default function LogList( {logs, update, setUpdate }) {
 
   const removeLog = async (id) => {
@@ -29,12 +34,13 @@ export default function LogList( {logs, update, setUpdate }) {
   return (
     <div>
       { (logs && logs.length != 0) ? (
-        <table>
+        <Table striped bordered hover variant="dark" size="sm">
           <thead>
             <tr>
               <th>Activity</th>
               <th>Date</th>
               <th>Minutes</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -43,14 +49,13 @@ export default function LogList( {logs, update, setUpdate }) {
                 <th>{log.activity}</th>
                 <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
                 <th>{log.minutes}</th>
-                <th><button onClick={() => removeLog(log._id)}>delete</button></th>
+                <th><Trash onClick={() => removeLog(log._id)}/></th>
+                {/* <th><Button variant="light" size="sm" onClick={() => removeLog(log._id)}> <Trash /></Button></th> */}
               </tr>
             ))}
           </tbody>
-        </table>
-      ) : (
-        <p>There are no logs</p>
-      )}
+        </Table>
+      ) : (<p>No logs were found for this month.</p>) }
     </div>
   )
 }
