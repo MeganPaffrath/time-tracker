@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LogList from './LogList';
+import Histogram from '../graphs/Histogram';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,6 +29,8 @@ export default function MonthLogs({logs, update, setUpdate}) {
       && new Date(log.date).getUTCFullYear() === (year + yearBy)
     )));
   }
+
+  console.log(month);
 
   function nextMonth() {
     if (month === 11) {
@@ -61,6 +64,9 @@ export default function MonthLogs({logs, update, setUpdate}) {
         <Button variant="dark" onClick={nextMonth}>Next</Button>
       </center>
       <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
+      <div className="log-charts">
+          <Histogram month={month} year={year} monthLogs={monthLogs}/>
+        </div>
     </div>
   )
 }
