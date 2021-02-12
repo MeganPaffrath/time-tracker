@@ -71,8 +71,8 @@ export default function MonthLogs({logs, update, setUpdate, activityView, setAct
     <div className="month-logs-component">
       <center>
         <h3>{monthNames[month]} {year} </h3>
-        <Button variant="dark" onClick={prevMonth}>Previous</Button>
-        <Button variant="dark" onClick={nextMonth}>Next</Button>
+        {/* <Button variant="dark" onClick={prevMonth}>Previous</Button> */}
+        {/* <Button variant="dark" onClick={nextMonth}>Next</Button> */}
       </center>
       <center>
         <Button variant="light" onClick={() => setActivityView("all")}>all</Button>

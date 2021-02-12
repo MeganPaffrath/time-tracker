@@ -18,7 +18,7 @@ export default function LogList( {logs, update, setUpdate, category }) {
         setCategoryLogs(logs);
       }
     }
-  }, [category, logs]);
+  }, [category, logs, update]);
 
   console.log(categoryLogs);
 

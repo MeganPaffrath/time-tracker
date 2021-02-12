@@ -53,26 +53,11 @@ export default function Bargraph({ selectedLogs, year, month, activityView }) {
 
   return (
     <div>
-      <p>BAR GRAPH HERE</p>
-      <p>Month: {month}</p>
-      <p>Year: {year}</p>
-      <p>View: {activityView}</p>
-      { (selectedLogs && selectedLogs.length >= 0) ? (
-        <p>Selected: {selectedLogs.length}</p>
-      ) : (
-        <p>No selected logs</p>
-      )}
-      { (monthData && monthData.length >= 0) ? (
-        <p>Month Data: {monthData.length}</p>
-      ) : (
-        <p>No selected logs</p>
-      )}
       { (monthData.length !== 0) ? (
         <div>
           <center>
-          <h1>{monthNames[month]} {year}</h1>
-          <p>Hours of {activityView} per day</p>
-        </center>
+            <h5>Hours of {activityView} per day</h5>
+          </center>
           <XYPlot
           xDomain={[1, monthDays[month]]}
           yDomain={[0, maxHours]}

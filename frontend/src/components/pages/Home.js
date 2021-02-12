@@ -5,6 +5,7 @@ import Logs from './Logs';
 import TimeLogger from './TimeLogger';
 import LogSelector from './LogSelector';
 import Bargraph from './graphs/Bargraph';
+import LogList from './log-views/LogList';
 import axios from 'axios';
 
 // bootstrap
@@ -13,6 +14,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 // HELPER
 import filteredLogs from '../../helpers/log-filter.js';
+
 
 
 export default function Home() {
@@ -28,6 +30,8 @@ export default function Home() {
   // CURRENT VIEW
   const [month, setMonth] = useState(new Date().getMonth());
   const [year,setYear] = useState(new Date().getUTCFullYear());
+  // UPDATE
+  const [update, setUpdate] = useState(0);
 
   if (logs && selectedLogs) {
     console.log("There are " + logs.length + " logs.\n"
@@ -102,12 +106,25 @@ export default function Home() {
             />
           </Col>
           <Col>
+            <section>
+              <h1>Logs</h1>
+              <p>Month: {month}</p>
+              <LogList 
+                logs={selectedLogs}
+                update={update}
+                setUpdate={setUpdate}
+                category={activityView}
+              // logs, update, setUpdate, category
+              />
+            </section>
+          </Col>
+          {/* <Col>
             <Logs 
               logs={logs} setLogs={setLogs}
               view={view} setView={setView}
               activityView={activityView} setActivityView={setActivityView}
             />
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </div>
