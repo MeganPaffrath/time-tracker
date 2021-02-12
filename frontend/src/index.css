@@ -12,8 +12,12 @@
   padding: 50px 0;
 }
 
-body button {
+.form-box button {
   margin: 10px 5px;
+}
+
+body button {
+  margin: 5px 5px;
 }
 
 body svg {
@@ -54,9 +58,9 @@ table th {
   padding: 1rem;
 } */
 
-.logs-component {
+/* .logs-component {
   min-height: 100vh;
-}
+} */
 
 /* results */
 table,

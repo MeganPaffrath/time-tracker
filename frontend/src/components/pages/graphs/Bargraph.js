@@ -1,36 +1,14 @@
-// Copyright (c) 2016 - 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 import React, {useEffect, useState} from 'react';
 import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, VerticalRectSeries } from 'react-vis';
 
-// import {
-//   XYPlot,
-//   XAxis,
-//   YAxis,
-//   VerticalGridLines,
-//   HorizontalGridLines,
-//   VerticalRectSeries
-// } from 'index';
 
-export default function Histogram({month, year, monthLogs, category}) {
+export default function Bargraph({ logs, setLogs, view, setView, activityView, setActivityView, year, month }) {
+  // month={month} setMonth={setMonth}
+  //             year={year} setYear={setYear}
+  // let [year, setYear] = useState();
+  // let [month, setMonth] = useState(0);
+  let [monthLogs, setMonthLogs] = useState(logs);
+
   const [monthDays, setMonthDays] = useState([]);
   const [monthData, setMonthData] = useState([]);
   const [maxHours, setMaxHours] = useState(0);
@@ -57,8 +35,8 @@ export default function Histogram({month, year, monthLogs, category}) {
       setMonthData(null);
       let data = [];
       monthLogs.map( (log) => {
-        console.log(log.activity + " =? " + category );
-        if (log.activity === category) {
+        // console.log(log.activity + " =? " + activityView );
+        if (log.activity === activityView) {
           let date = new Date(log.date).getUTCDate();
           let time = (log.minutes) / 60;
           if (Math.floor(time) > maxHours) {
@@ -75,21 +53,24 @@ export default function Histogram({month, year, monthLogs, category}) {
       })
       setMonthData(data);
     } 
-    }, [month, year, category]);
+    }, [month, year, activityView]);
 
     useEffect(() => {
       setChange(change + 1);
-      console.log(monthData);
+      // console.log(monthData);
 
     }, [monthData]);
 
   return (
     <div>
+      <p>BAR GRAPH HERE</p>
+      <p>Month: {month}</p>
+      <p>Year: {year}</p>
       { (monthData.length !== 0) ? (
         <div>
           <center>
           <h1>{monthNames[month]} {year}</h1>
-          <p>Hours of {category} per day</p>
+          <p>Hours of {activityView} per day</p>
         </center>
           <XYPlot
           xDomain={[1, monthDays[month]]}
