@@ -52,10 +52,10 @@ export default function LogList( {logs, update, setUpdate, category, view, month
 
   return (
     <section class="log-chart-component">
-      <h1>Category: {category}</h1>
-      { (view !== 'all') ? (
+      {/* <h1>Category: {category}</h1> */}
+      {/* { (view !== 'all') ? (
         <h2>{monthFromDate(month)} {year}</h2>
-      ) : ''}
+      ) : ''} */}
       { (category === 'all' && logs && logs.length !== 0) ? (
           <Table striped bordered hover variant="dark" size="sm">
             <thead>

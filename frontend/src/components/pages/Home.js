@@ -106,6 +106,15 @@ export default function Home() {
                 month={month} setMonth={setMonth}
                 year={year} setYear={setYear}
               />
+              <LogChart 
+                logs={selectedLogs}
+                month={month}
+                year={year}
+                update={update}
+                setUpdate={setUpdate}
+                view={view}
+                category={activityView}
+              />
               <Bargraph
                 selectedLogs={selectedLogs}
                 month={month}
@@ -115,7 +124,7 @@ export default function Home() {
               />
             </section>
           </Col>
-          <Col>
+          {/* <Col>
             <section>
               <LogChart 
                 logs={selectedLogs}
@@ -127,7 +136,7 @@ export default function Home() {
                 category={activityView}
               />
             </section>
-          </Col>
+          </Col> */}
           {/* <Col>
             <Logs 
               logs={logs} setLogs={setLogs}

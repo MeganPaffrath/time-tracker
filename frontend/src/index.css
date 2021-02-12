@@ -61,3 +61,15 @@ td {
   align-items: center;
   text-align: center;
 }
+
+.month-text {
+  display: inline;
+}
+
+.month-selector {
+  margin: -1rem 0.7rem 0 0.7rem;
+}
+
+.activity-view-select {
+  width: 50%;
+}

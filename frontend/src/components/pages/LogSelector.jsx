@@ -5,12 +5,13 @@ import monthFromDate from "../../helpers/month-number-to-string.js";
 import incrementMonth from "../../helpers/increment-month.js";
 // import Home from './pages/Home';
 import Axios from "axios";
-import AllLogs from './log-views/AllLogs';
+// import AllLogs from './log-views/AllLogs';
 import MonthLogs from './log-views/MonthLogs';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form  } from 'react-bootstrap';
+import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 export default function LogsSelector( { view, setView, activityView, 
                                         setActivityView, month, setMonth, 
@@ -54,24 +55,32 @@ export default function LogsSelector( { view, setView, activityView,
         { (view === 'all') ? <h1>All Logs</h1> : ''}
         { (view === 'month' ? ( 
           <div>
-            <h1>{monthFromDate(month)} {year}</h1>
-            <Button variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}>Previous Month</Button> 
-            <Button variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}>Next Month</Button> 
+            <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}><ArrowLeft /></Button>
+            <h1 class="month-text">{monthFromDate(month)} {year}</h1>
+            <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}><ArrowRight /></Button> 
           </div>
         ) : '')}
-        { (view !== 'month') ? <Button variant="dark" size="sm" onClick={() => viewSetter('month')}>View By Month</Button> : ''}
-        { (view !== 'all') ? <Button variant="dark" size="sm" onClick={() => viewSetter('all')}>View All</Button> : '' }
+        { (view !== 'month') ? <Button variant="dark" size="md" onClick={() => viewSetter('month')}>View By Month</Button> : ''}
+        { (view !== 'all') ? <Button variant="dark" size="md" onClick={() => viewSetter('all')}>View All</Button> : '' }
         {/* Category View */}
         { (userData && userData.activities && userData.activities.length !== 0) ? (
           <div>
-            <h2>Category: {activityView}</h2>
-            {/* <p>Change category:</p> */}
-            { (activityView !== 'all') ? <Button variant="light" size="sm" onClick={() => setActivityView("all")}>all</Button> : ''}
-            {userData.activities.map( (i) => {
-              if (i.activity !== activityView ) {
-                return <Button variant="light" key={i.activity} size="sm" onClick={() => setActivityView(i.activity)}>{i.activity}</Button>
-              }
-            })}
+              <Form>
+                <Form.Group as={Row} controlId="formPlaintextPassword">
+                  <Form.Label column sm="2">
+                    Activity:
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control as="select" onChange={e => setActivityView(e.target.value)}>
+                      {userData.activities.map(
+                        i =>
+                        <option key={i.activity} value={i.activity}>{i.activity}</option>
+                      )}
+                      <option key="all" value="all">all</option>
+                    </Form.Control>
+                  </Col>
+                </Form.Group>
+              </Form>       
           </div>
         ) : (
           ''
