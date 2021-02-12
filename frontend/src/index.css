@@ -2,10 +2,44 @@
   background-color: rgb(155, 173, 182);
 }
 
-.header a,
-.header .mr-auto {
+/* LAYOUT */
+/* NAVBAR */
+.navbar {
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 1100px;
+}
+
+.header .auth-nav {
   background-color: inherit;
 }
+
+.header a,
+.header .nav-item {
+  background-color: inherit;
+}
+
+/* CONTENTS FORMAT */
+.contents {
+  margin: 0 auto;
+  /* padding: 0 10px; */
+  max-width: 1100px;
+}
+
+section {
+  padding: 30px 0;
+}
+
+body button {
+  margin: 5px 5px;
+}
+
+/* Log Selector */
+.log-selector-hdr {
+  height: 3rem;
+}
+
+/* REST */
 
 .row .form-box {
   max-width: 600px;
@@ -19,16 +53,8 @@
   margin: 10px 5px;
 }
 
-body button {
-  margin: 5px 5px;
-}
-
 body svg {
   background-color: inherit;
-}
-
-body section {
-  padding: 30px 0;
 }
 
 .log-list {
@@ -53,13 +79,17 @@ td {
 .bargraph-component center,
 .bargraph-component h5 {
   background-color: rgb(202, 202, 202);
-  width: 90%;
-  border-radius: 5px;
+  /* width: 90%; */
+  /* border-radius: 5px; */
 }
 
 .log-chart-component {
   align-items: center;
   text-align: center;
+}
+
+.view-buttons button {
+  margin: 5px 0;
 }
 
 .month-text {
@@ -80,5 +110,15 @@ td {
 @media only screen and (max-width: 1000px) {
   .activity-view-selector {
     width: 90%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .row .col {
+    padding: 0;
+  }
+
+  form {
+    padding: 0 5px;
   }
 }
