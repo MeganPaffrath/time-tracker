@@ -39,11 +39,11 @@ export default function Bargraph({ selectedLogs, year, month, activityView }) {
         x: date,
         y: time
       });
-    }, [selectedLogs])
+    })
 
 
       setMonthData(data);
-    }}, [month, year, activityView]);
+    }}, [month, year, activityView, selectedLogs]);
 
     useEffect(() => {
       setChange(change + 1);
@@ -57,6 +57,16 @@ export default function Bargraph({ selectedLogs, year, month, activityView }) {
       <p>Month: {month}</p>
       <p>Year: {year}</p>
       <p>View: {activityView}</p>
+      { (selectedLogs && selectedLogs.length >= 0) ? (
+        <p>Selected: {selectedLogs.length}</p>
+      ) : (
+        <p>No selected logs</p>
+      )}
+      { (monthData && monthData.length >= 0) ? (
+        <p>Month Data: {monthData.length}</p>
+      ) : (
+        <p>No selected logs</p>
+      )}
       { (monthData.length !== 0) ? (
         <div>
           <center>
