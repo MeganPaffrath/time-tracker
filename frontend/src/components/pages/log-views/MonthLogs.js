@@ -11,13 +11,27 @@ export default function MonthLogs({logs, update, setUpdate}) {
   const [month, setMonth] = useState(new Date().getUTCMonth());
   const [year, setYear] = useState(new Date().getUTCFullYear());
   const [monthLogs, setMonthLogs] = useState(null);
+  const [viewType, setViewType] = useState("all");
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     setMonthLogs(logs.filter(log => (
       new Date(log.date).getUTCMonth() === month
       && new Date(log.date).getUTCFullYear() === year
     )));
-  }, []);
+    console.log(logs);
+    let activityList = [];
+    logs.map(log => {
+      if (!activityList.includes(log.activity)) {
+        activityList.push(log.activity);
+      }
+    })
+    setActivities(activityList);
+  }, [month]);
+
+  useEffect(() => {
+    console.log(activities);
+  }, [activities])
   
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -29,8 +43,6 @@ export default function MonthLogs({logs, update, setUpdate}) {
       && new Date(log.date).getUTCFullYear() === (year + yearBy)
     )));
   }
-
-  console.log(month);
 
   function nextMonth() {
     if (month === 11) {
@@ -54,19 +66,25 @@ export default function MonthLogs({logs, update, setUpdate}) {
     }
   }
 
-
-
   return (
     <div className="month-logs-component">
-      <h3>{monthNames[month]} {year} Logs</h3>
+      <h3>{monthNames[month]} {year}</h3>
       <center>
         <Button variant="dark" onClick={prevMonth}>Previous</Button>
         <Button variant="dark" onClick={nextMonth}>Next</Button>
       </center>
-      <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
-      <div className="log-charts">
-          <Histogram month={month} year={year} monthLogs={monthLogs}/>
+      <center>
+        <Button variant="light" onClick={() => setViewType("all")}>all</Button>
+        {/* get log types and have a button for each */}
+        {activities.map( (act) => <Button variant="light" key={act} onClick={() => setViewType(act)}>{act}</Button>)}
+      </center>
+      {viewType !== 'all' ? (
+        <div className="log-charts">
+          <Histogram month={month} year={year} monthLogs={monthLogs} category={viewType}/>
         </div>
+      ) : ''}
+      <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
+      
     </div>
   )
 }

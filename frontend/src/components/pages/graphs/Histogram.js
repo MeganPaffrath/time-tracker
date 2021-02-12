@@ -30,18 +30,13 @@ import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, VerticalRe
 //   VerticalRectSeries
 // } from 'index';
 
-const timestamp = new Date('May 01 2017').getTime();
-const ONE_DAY = 86400000;
-
-const DATA = [
-  {x0: 0, x: 1, y: 4},
-  {x0: 1, x: 2, y: 2}
-].map(el => ({x0: el.x0, x: el.x, y: el.y}));
-
-export default function Histogram({month, year, monthLogs}) {
+export default function Histogram({month, year, monthLogs, category}) {
   const [monthDays, setMonthDays] = useState([]);
   const [monthData, setMonthData] = useState([]);
   const [maxHours, setMaxHours] = useState(0);
+  const [change, setChange] = useState(0);
+
+  console.log("Category: " + category);
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -68,52 +63,55 @@ export default function Histogram({month, year, monthLogs}) {
       setMonthData(null);
       let data = [];
       monthLogs.map( (log) => {
-        let date = new Date(log.date).getUTCDate();
-        let time = (log.minutes) / 60;
-        if (Math.floor(time) > maxHours) {
-          setMaxHours(Math.floor(time));
+        console.log(log.activity + " =? " + category );
+        if (log.activity === category) {
+          let date = new Date(log.date).getUTCDate();
+          let time = (log.minutes) / 60;
+          if (Math.floor(time) > maxHours) {
+            setMaxHours(Math.floor(time));
+          }
+          console.log(date + ": " + time);
+          data.push({
+            x0: (date - 1),
+            x: date,
+            y: time
+          });
         }
-        console.log(date + ": " + time);
-        data.push({
-          x0: (date - 1),
-          x: date,
-          y: time
-        });
+        
       })
       setMonthData(data);
     } 
-    }, [month, year]);
+    }, [month, year, category]);
 
     useEffect(() => {
+      setChange(change + 1);
       console.log(monthData);
 
     }, [monthData]);
-  
-    // console.log(monthLogs);
-
-
-  // console.log(monthData);
-  
 
   return (
     <div>
-      <center>
-        <h1>{monthNames[month]} {year}</h1>
-        <p>Hours of ACTIVITY per day</p>
-      </center>
-      <XYPlot
-        xDomain={[1, monthDays[month]]}
-        yDomain={[0, maxHours]}
-        xType="linear"
-        width={300}
-        height={300}
-      >
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis />
-        <YAxis />
-        <VerticalRectSeries data={monthData} style={{stroke: '#fff'}} />
-      </XYPlot>
+      { (monthData.length !== 0) ? (
+        <div>
+          <center>
+          <h1>{monthNames[month]} {year}</h1>
+          <p>Hours of {category} per day</p>
+        </center>
+          <XYPlot
+          xDomain={[1, monthDays[month]]}
+          yDomain={[0, maxHours]}
+          xType="linear"
+          width={300}
+          height={300}
+        >
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis />
+          <YAxis />
+          <VerticalRectSeries data={monthData} style={{stroke: '#fff'}} />
+        </XYPlot>
+        </div>
+      ) : ''}
     </div>
     
   );
