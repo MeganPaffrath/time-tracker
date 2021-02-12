@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, VerticalRectSeries } from 'react-vis';
 
 
-export default function Bargraph({ selectedLogs, year, month, activityView }) {
+export default function Bargraph({ selectedLogs, year, month, view, activityView }) {
   const [monthDays, setMonthDays] = useState([]);
   const [monthData, setMonthData] = useState([]);
   const [maxHours, setMaxHours] = useState(0);
@@ -52,8 +52,8 @@ export default function Bargraph({ selectedLogs, year, month, activityView }) {
     }, [monthData]);
 
   return (
-    <div>
-      { (monthData.length !== 0) ? (
+    <center class="bargraph-component">
+      { (monthData.length !== 0 && activityView !== 'all' && view !== 'all') ? (
         <div>
           <center>
             <h5>Hours of {activityView} per day</h5>
@@ -72,8 +72,8 @@ export default function Bargraph({ selectedLogs, year, month, activityView }) {
           <VerticalRectSeries data={monthData} style={{stroke: '#fff'}} />
         </XYPlot>
         </div>
-      ) : 'nothing for now - histogram'}
-    </div>
+      ) : ''}
+    </center>
     
   );
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import UserContext from "../../context/UserContext";
 // Helpers
-import monthFromDate from "../../helpers/next-or-prev-month.js";
+import monthFromDate from "../../helpers/month-number-to-string.js";
 import incrementMonth from "../../helpers/increment-month.js";
 // import Home from './pages/Home';
 import Axios from "axios";

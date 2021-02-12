@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from "../../context/UserContext";
 import Logs from './Logs';
+import LogChart from './log-views/LogChart';
 import TimeLogger from './TimeLogger';
 import LogSelector from './LogSelector';
 import Bargraph from './graphs/Bargraph';
@@ -60,15 +61,19 @@ export default function Home() {
     return () => {
       isMounted = false;
     }
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
-  }, [month, year]);
+  }, [month, year, view, activityView]);
   
-  useEffect(() => {
-    setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
-  }, [activityView]);
+  // useEffect(() => {
+  //   setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
+  // }, [activityView]);
+
+  // useEffect(() => {
+  //   setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
+  // }, [view]);
 
   useEffect(() => { 
     console.log("selected logs chagned");
@@ -87,34 +92,39 @@ export default function Home() {
       <Container className="logs-component">
         <Row>
           <Col>
+          <section>
             <TimeLogger 
               // userData={userData}
             />
-          </Col>
-          <Col>
-            <LogSelector
-              view={view} setView={setView}
-              activityView={activityView} setActivityView={setActivityView}
-              month={month} setMonth={setMonth}
-              year={year} setYear={setYear}
-            />
-            <Bargraph
-              selectedLogs={selectedLogs}
-              month={month}
-              year={year}
-              activityView={activityView}
-            />
+            </section>
           </Col>
           <Col>
             <section>
-              <h1>Logs</h1>
-              <p>Month: {month}</p>
-              <LogList 
+              <LogSelector
+                view={view} setView={setView}
+                activityView={activityView} setActivityView={setActivityView}
+                month={month} setMonth={setMonth}
+                year={year} setYear={setYear}
+              />
+              <Bargraph
+                selectedLogs={selectedLogs}
+                month={month}
+                year={year}
+                view={view}
+                activityView={activityView}
+              />
+            </section>
+          </Col>
+          <Col>
+            <section>
+              <LogChart 
                 logs={selectedLogs}
+                month={month}
+                year={year}
                 update={update}
                 setUpdate={setUpdate}
+                view={view}
                 category={activityView}
-              // logs, update, setUpdate, category
               />
             </section>
           </Col>

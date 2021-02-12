@@ -9,6 +9,9 @@
 
 .row .form-box {
   max-width: 600px;
+}
+
+.login-form {
   padding: 50px 0;
 }
 
@@ -25,21 +28,8 @@ body svg {
 }
 
 body section {
-  /* background-color: rgb(155, 173, 182); */
   padding: 30px 0;
 }
-
-/* .section-divider {
-  background-color: whitesmoke;
-  height: 20px;
-} */
-
-/* .mid-section-divider {
-  width: 100vw;
-  background-color: grey;
-  height: 4px;
-  margin: 30px 0;
-} */
 
 .log-list {
   display: flex;
@@ -51,21 +41,23 @@ table th {
   text-align: center;
 }
 
-/* Time Logger */
-/* section {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-} */
-
-/* .logs-component {
-  min-height: 100vh;
-} */
-
 /* results */
 table,
 th,
 td {
   border-collapse: collapse;
   border: 1px solid black;
+}
+
+.bargraph-component div,
+.bargraph-component center,
+.bargraph-component h5 {
+  background-color: rgb(202, 202, 202);
+  width: 90%;
+  border-radius: 5px;
+}
+
+.log-chart-component {
+  align-items: center;
+  text-align: center;
 }

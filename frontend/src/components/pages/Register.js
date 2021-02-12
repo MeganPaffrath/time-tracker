@@ -59,7 +59,7 @@ export default function Register() {
   return (
     <Container>
     <Row className="justify-content-md-center">
-      <div className="form-box">
+      <div className="form-box login-form">
         <h1>Register</h1>
         <Form onSubmit={submitRegister}>
           <Form.Group controlId="email">
