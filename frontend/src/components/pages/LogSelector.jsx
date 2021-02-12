@@ -1,20 +1,15 @@
 import React, { useContext } from 'react';
+// CONTEXT
 import UserContext from "../../context/UserContext";
-// Helpers
+// HELPERS
 import monthFromDate from "../../helpers/month-number-to-string.js";
 import incrementMonth from "../../helpers/increment-month.js";
-// import Home from './pages/Home';
-import Axios from "axios";
-// import AllLogs from './log-views/AllLogs';
-import MonthLogs from './log-views/MonthLogs';
-
-// bootstrap
+// BOOTSTRAP
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button, Form  } from 'react-bootstrap';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
-export default function LogsSelector( { view, setView, activityView, 
-                                        setActivityView, month, setMonth, 
+export default function LogsSelector( { view, setView, setActivityView, month, setMonth, 
                                         year, setYear }) {
 
   const {userData} = useContext(UserContext);
@@ -56,13 +51,27 @@ export default function LogsSelector( { view, setView, activityView,
         { (view === 'month' ? ( 
           <div>
             <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}><ArrowLeft /></Button>
-            <h1 class="month-text">{monthFromDate(month)} {year}</h1>
+            <h1 className="month-text">{monthFromDate(month)} {year}</h1>
             <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}><ArrowRight /></Button> 
           </div>
         ) : '')}
-        { (view !== 'month') ? <Button variant="dark" size="md" onClick={() => viewSetter('month')}>View By Month</Button> : ''}
-        { (view !== 'all') ? <Button variant="dark" size="md" onClick={() => viewSetter('all')}>View All</Button> : '' }
-        {/* Category View */}
+        { (view === 'month') ? (
+          <div>
+            <Button variant="secondary" size="md" onClick={() => viewSetter('month')}>View By Month</Button>
+            <Button variant="dark" size="md" onClick={() => viewSetter('all')}>View All</Button> 
+          </div>
+        ) : (view === 'all') ? ( 
+          <div>
+            <Button variant="dark" size="md" onClick={() => viewSetter('month')}>View By Month</Button>
+            <Button variant="secondary" size="md" onClick={() => viewSetter('all')}>View All</Button> 
+          </div>
+        ) : ( 
+          <div>
+          <Button variant="dark" size="md" onClick={() => viewSetter('month')}>View By Month</Button>
+          <Button variant="dark" size="md" onClick={() => viewSetter('all')}>View All</Button> 
+          {console.log("UNEXPECTED VIEW TYPE")}
+          </div>
+        )}
         { (userData && userData.activities && userData.activities.length !== 0) ? (
           <div>
               <Form>

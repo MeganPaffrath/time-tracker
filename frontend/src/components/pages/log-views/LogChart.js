@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 // helpers
@@ -9,20 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 
-export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
-
-  // useEffect(() => {
-  //   if (logs !== null ) {
-  //     if (category !== 'all') {
-  //       let logSet = logs.filter(log => log.activity === category)
-  //       setCategoryLogs(logSet);
-  //     } else {
-  //       setCategoryLogs(logs);
-  //     }
-  //   }
-  // }, [category, logs, update, month]);
-
-  // console.log(categoryLogs);
+export default function LogList( {logs, update, setUpdate, category, month, year }) {
 
   const removeLog = async (id) => {
     try {
@@ -51,11 +38,7 @@ export default function LogList( {logs, update, setUpdate, category, view, month
   }
 
   return (
-    <section class="log-chart-component">
-      {/* <h1>Category: {category}</h1> */}
-      {/* { (view !== 'all') ? (
-        <h2>{monthFromDate(month)} {year}</h2>
-      ) : ''} */}
+    <section className="log-chart-component">
       { (category === 'all' && logs && logs.length !== 0) ? (
           <Table striped bordered hover variant="dark" size="sm">
             <thead>
@@ -95,7 +78,6 @@ export default function LogList( {logs, update, setUpdate, category, view, month
                   <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
                   <th>{timeString(log.minutes)}</th>
                   <th><Trash onClick={() => removeLog(log._id)}/></th>
-                  {/* <th><Button variant="light" size="sm" onClick={() => removeLog(log._id)}> <Trash /></Button></th> */}
                 </tr>
               ))}
             </tbody>

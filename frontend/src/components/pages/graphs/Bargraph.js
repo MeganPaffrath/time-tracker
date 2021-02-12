@@ -52,7 +52,7 @@ export default function Bargraph({ selectedLogs, year, month, view, activityView
     }, [monthData]);
 
   return (
-    <center class="bargraph-component">
+    <center className="bargraph-component">
       { (monthData.length !== 0 && activityView !== 'all' && view !== 'all') ? (
         <div>
           <center>

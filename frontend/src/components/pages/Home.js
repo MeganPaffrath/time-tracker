@@ -1,12 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from "../../context/UserContext";
-import Logs from './Logs';
 import LogChart from './log-views/LogChart';
 import TimeLogger from './TimeLogger';
 import LogSelector from './LogSelector';
 import Bargraph from './graphs/Bargraph';
-import LogList from './log-views/LogList';
 import axios from 'axios';
 
 // bootstrap
@@ -15,8 +13,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 // HELPER
 import filteredLogs from '../../helpers/log-filter.js';
-
-
 
 export default function Home() {
   // DATA & HISTORY:
@@ -40,8 +36,6 @@ export default function Home() {
     + "viewing the " + month + ' month of ' + year);
   }
   
-  
-
   // get logs from DB
   useEffect(() => {
     console.log("use effect of home");
@@ -66,14 +60,6 @@ export default function Home() {
   useEffect(() => {
     setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
   }, [month, year, view, activityView]);
-  
-  // useEffect(() => {
-  //   setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
-  // }, [activityView]);
-
-  // useEffect(() => {
-  //   setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
-  // }, [view]);
 
   useEffect(() => { 
     console.log("selected logs chagned");
@@ -85,17 +71,13 @@ export default function Home() {
     history.push("/login");
   }
 
-  console.log("logs size from HOME.js: " + logs.length);
-
   return (
     <div>
       <Container className="logs-component">
         <Row>
           <Col>
           <section>
-            <TimeLogger 
-              // userData={userData}
-            />
+            <TimeLogger />
             </section>
           </Col>
           <Col>
@@ -124,26 +106,6 @@ export default function Home() {
               />
             </section>
           </Col>
-          {/* <Col>
-            <section>
-              <LogChart 
-                logs={selectedLogs}
-                month={month}
-                year={year}
-                update={update}
-                setUpdate={setUpdate}
-                view={view}
-                category={activityView}
-              />
-            </section>
-          </Col> */}
-          {/* <Col>
-            <Logs 
-              logs={logs} setLogs={setLogs}
-              view={view} setView={setView}
-              activityView={activityView} setActivityView={setActivityView}
-            />
-          </Col> */}
         </Row>
       </Container>
     </div>
