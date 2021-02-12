@@ -7,16 +7,13 @@ import MonthLogs from './log-views/MonthLogs';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export default function Logs() {
-  const [logs, setLogs] = useState([]);
-  const [update, setUpdate] = useState(0);
-  const [view, setView] = useState("all");
+export default function Logs( { logs, setLogs, update, setUpdate, view, setView }) {
+  // const [logs, setLogs] = useState([]);
+  // const [update, setUpdate] = useState(0);
+  // const [view, setView] = useState("all");
 
-  function viewSetter(newView) {
-    setView(newView);
-  }
 
   useEffect(() => {
     let isMounted = true;
@@ -39,21 +36,26 @@ export default function Logs() {
 
   return (
     <section className="logs-component">
-      <div>
-        <center><h1>Logs</h1></center>
-        <center>
-          <Button variant="dark" onClick={() => viewSetter('all')}>All Logs</Button>
-          <Button variant="dark" onClick={() => viewSetter('month')}>Month Logs</Button>
-        </center>
-        <div className="log-list">
-        { (view === 'all') ? (
-          <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
-        ) : ''}
-        { (view === 'month') ? (
-          <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
-        ) : ''}
+      <Col>
+        <div>
+          <center><h1>Logs</h1></center>
+          <center>
+            <Button variant="dark" onClick={() => setView('all')}>View All</Button>
+            <Button variant="dark" onClick={() => setView('month')}>View By Month</Button>
+          </center>
+          
         </div>
-      </div>
+      </Col>
+      <Col>
+        <div className="log-list">
+          { (view === 'all') ? (
+            <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
+          ) : ''}
+          { (view === 'month') ? (
+            <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
+          ) : ''}
+        </div>
+      </Col>
     </section>
   )
 }

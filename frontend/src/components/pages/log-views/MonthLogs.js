@@ -68,8 +68,8 @@ export default function MonthLogs({logs, update, setUpdate}) {
 
   return (
     <div className="month-logs-component">
-      <h3>{monthNames[month]} {year}</h3>
       <center>
+        <h3>{monthNames[month]} {year} </h3>
         <Button variant="dark" onClick={prevMonth}>Previous</Button>
         <Button variant="dark" onClick={nextMonth}>Next</Button>
       </center>
@@ -83,7 +83,7 @@ export default function MonthLogs({logs, update, setUpdate}) {
           <Histogram month={month} year={year} monthLogs={monthLogs} category={viewType}/>
         </div>
       ) : ''}
-      <LogList logs={monthLogs} update={update} setUpdate={setUpdate} />
+      <LogList logs={monthLogs} update={update} setUpdate={setUpdate} category={viewType}/>
       
     </div>
   )

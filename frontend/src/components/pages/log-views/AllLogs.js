@@ -33,7 +33,7 @@ export default function AllLogs( {logs, update, setUpdate} ) {
   return (
     <div>
       <h3>All Logs</h3>
-      <LogList logs={logs} update={update} setUpdate={setUpdate} />
+      <LogList logs={logs} update={update} setUpdate={setUpdate} category="all"/>
     </div>
   )
 }

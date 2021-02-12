@@ -25,10 +25,17 @@ body section {
   padding: 30px 0;
 }
 
-.section-divider {
+/* .section-divider {
   background-color: whitesmoke;
-  height: 10px;
-}
+  height: 20px;
+} */
+
+/* .mid-section-divider {
+  width: 100vw;
+  background-color: grey;
+  height: 4px;
+  margin: 30px 0;
+} */
 
 .log-list {
   display: flex;
@@ -41,11 +48,11 @@ table th {
 }
 
 /* Time Logger */
-section {
+/* section {
   display: flex;
   justify-content: center;
   padding: 1rem;
-}
+} */
 
 .logs-component {
   min-height: 100vh;

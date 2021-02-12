@@ -36,8 +36,6 @@ export default function Histogram({month, year, monthLogs, category}) {
   const [maxHours, setMaxHours] = useState(0);
   const [change, setChange] = useState(0);
 
-  console.log("Category: " + category);
-
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
