@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-// import Home from './pages/Home';
-// import UserContext from "../../context/UserContext";
 import Axios from "axios";
 import AllLogs from './log-views/AllLogs';
 import MonthLogs from './log-views/MonthLogs';
