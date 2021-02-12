@@ -2,13 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, VerticalRectSeries } from 'react-vis';
 
 
-export default function Bargraph({ logs, setLogs, view, setView, activityView, setActivityView, year, month }) {
-  // month={month} setMonth={setMonth}
-  //             year={year} setYear={setYear}
-  // let [year, setYear] = useState();
-  // let [month, setMonth] = useState(0);
-  let [monthLogs, setMonthLogs] = useState(logs);
-
+export default function Bargraph({ selectedLogs, year, month, activityView }) {
   const [monthDays, setMonthDays] = useState([]);
   const [monthData, setMonthData] = useState([]);
   const [maxHours, setMaxHours] = useState(0);
@@ -31,29 +25,25 @@ export default function Bargraph({ logs, setLogs, view, setView, activityView, s
     }
     
     // set data
-    if (monthLogs !== null) {
+    if (selectedLogs !== null) {
       setMonthData(null);
       let data = [];
-      monthLogs.map( (log) => {
-        // console.log(log.activity + " =? " + activityView );
-        if (log.activity === activityView) {
-          let date = new Date(log.date).getUTCDate();
-          let time = (log.minutes) / 60;
-          if (Math.floor(time) > maxHours) {
-            setMaxHours(Math.floor(time));
-          }
-          console.log(date + ": " + time);
-          data.push({
-            x0: (date - 1),
-            x: date,
-            y: time
-          });
+      selectedLogs.map( (log) => {
+        let date = new Date(log.date).getUTCDate();
+        let time = (log.minutes) / 60;
+        if (Math.floor(time) > maxHours) {
+          setMaxHours(Math.floor(time));
         }
-        
-      })
+        data.push({
+        x0: (date - 1),
+        x: date,
+        y: time
+      });
+    }, [selectedLogs])
+
+
       setMonthData(data);
-    } 
-    }, [month, year, activityView]);
+    }}, [month, year, activityView]);
 
     useEffect(() => {
       setChange(change + 1);
@@ -66,6 +56,7 @@ export default function Bargraph({ logs, setLogs, view, setView, activityView, s
       <p>BAR GRAPH HERE</p>
       <p>Month: {month}</p>
       <p>Year: {year}</p>
+      <p>View: {activityView}</p>
       { (monthData.length !== 0) ? (
         <div>
           <center>

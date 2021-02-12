@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
 // HELPER
-import filteredLogs from '../../helpers/filter-logs-month.js';
+import filteredLogs from '../../helpers/log-filter.js';
 
 
 export default function Home() {
@@ -29,9 +29,12 @@ export default function Home() {
   const [month, setMonth] = useState(new Date().getMonth());
   const [year,setYear] = useState(new Date().getUTCFullYear());
 
-  console.log("There are " + logs.length + " logs.\n"
+  if (logs && selectedLogs) {
+    console.log("There are " + logs.length + " logs.\n"
     + selectedLogs.length + ' of which are in the ' + activityView + ' category\n'
     + "viewing the " + month + ' month of ' + year);
+  }
+  
   
 
   // get logs from DB
@@ -56,10 +59,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log("SETTING DATA FOR SPECIFIED MONTH");
-    // let filtered = filteredLogs(logs, month, year, activityView)
-    setSelectedLogs(filteredLogs(logs, month, year, activityView));
+    setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
   }, [month, year]);
+  
+  useEffect(() => {
+    setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
+  }, [activityView]);
+
+  useEffect(() => { 
+    console.log("selected logs chagned");
+  }, [selectedLogs])
 
   console.log(selectedLogs);
 
@@ -86,11 +95,10 @@ export default function Home() {
               year={year} setYear={setYear}
             />
             <Bargraph
-              logs={logs} setLogs={setLogs}
-              view={view} setView={setView}
-              activityView={activityView} setActivityView={setActivityView}
-              month={month} setMonth={setMonth}
-              year={year} setYear={setYear}
+              selectedLogs={selectedLogs}
+              month={month}
+              year={year}
+              activityView={activityView}
             />
           </Col>
           <Col>
