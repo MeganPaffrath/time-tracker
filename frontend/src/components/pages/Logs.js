@@ -23,7 +23,7 @@ export default function Logs( { logs, setLogs, update, setUpdate, view, setView,
         setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
       }
     }).catch(err => {
-      console.log(err);
+      console.log(err.message);
     })
     return () => {
       isMounted = false;

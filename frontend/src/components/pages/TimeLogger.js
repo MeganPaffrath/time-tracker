@@ -110,7 +110,6 @@ export default function TimeLogger() {
           </div>
         ) : (activities.length === 0) ? (
           <div>
-            <p>Nothing exists yet, let's make a new activity category!</p>
             <Form onSubmit={newAct}>
               <Form.Group controlId="username">
                 <Form.Label>New Activity Type:</Form.Label>

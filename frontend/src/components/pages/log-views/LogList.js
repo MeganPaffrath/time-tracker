@@ -20,8 +20,6 @@ export default function LogList( {logs, update, setUpdate, category }) {
     }
   }, [category, logs, update]);
 
-  console.log(categoryLogs);
-
   const removeLog = async (id) => {
     try {
       let token = localStorage.getItem("auth-token");

@@ -38,7 +38,6 @@ export default function Home() {
   
   // get logs from DB
   useEffect(() => {
-    console.log("use effect of home");
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
     axios.get(
@@ -50,7 +49,7 @@ export default function Home() {
         setSelectedLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
       }
     }).catch(err => {
-      console.log(err);
+      console.log(err.message);
     })
     return () => {
       isMounted = false;
@@ -65,7 +64,6 @@ export default function Home() {
     console.log("selected logs chagned");
   }, [selectedLogs])
 
-  console.log(selectedLogs);
 
   if (!userData.username) {
     history.push("/login");

@@ -6,14 +6,13 @@ import monthFromDate from "../../helpers/month-number-to-string.js";
 import incrementMonth from "../../helpers/increment-month.js";
 // BOOTSTRAP
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Button, Form } from 'react-bootstrap';
+import { Row, Button, Form } from 'react-bootstrap';
 import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 export default function LogsSelector( { view, setView, setActivityView, month, setMonth, 
                                         year, setYear }) {
 
   const {userData} = useContext(UserContext);
-  console.log(userData.activities);
 
   function viewSetter(newView) {
     setView(newView);
@@ -73,21 +72,19 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
           </div>
         )}
         { (userData && userData.activities && userData.activities.length !== 0) ? (
-          <div>
+          <div className="activity-view-selector">
               <Form>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="2">
+                  <Form.Label>
                     Activity:
                   </Form.Label>
-                  <Col sm="10">
                     <Form.Control as="select" onChange={e => setActivityView(e.target.value)}>
+                      <option key="all" value="all">all</option>
                       {userData.activities.map(
                         i =>
                         <option key={i.activity} value={i.activity}>{i.activity}</option>
                       )}
-                      <option key="all" value="all">all</option>
                     </Form.Control>
-                  </Col>
                 </Form.Group>
               </Form>       
           </div>

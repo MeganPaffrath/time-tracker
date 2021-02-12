@@ -47,8 +47,6 @@ export default function Bargraph({ selectedLogs, year, month, view, activityView
 
     useEffect(() => {
       setChange(change + 1);
-      // console.log(monthData);
-
     }, [monthData]);
 
   return (

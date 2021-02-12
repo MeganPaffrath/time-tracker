@@ -9,7 +9,6 @@ export default function AuthMenu() {
   const history = useHistory();
 
   useEffect(() => {
-    // console.log("USER DATA from AUTH: " + userData.username);
     if (!userData.username) {
       history.push("/login");
     }

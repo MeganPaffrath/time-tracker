@@ -70,6 +70,15 @@ td {
   margin: -1rem 0.7rem 0 0.7rem;
 }
 
-.activity-view-select {
+.activity-view-selector {
   width: 50%;
+}
+.activity-view-selector label {
+  text-align: left;
+}
+
+@media only screen and (max-width: 1000px) {
+  .activity-view-selector {
+    width: 90%;
+  }
 }

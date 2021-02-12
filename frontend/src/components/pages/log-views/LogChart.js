@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 
-export default function LogList( {logs, update, setUpdate, category, month, year }) {
+export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
 
   const removeLog = async (id) => {
     try {
@@ -82,6 +82,8 @@ export default function LogList( {logs, update, setUpdate, category, month, year
               ))}
             </tbody>
           </Table>
+        ) : (view === 'all') ? (
+          <p>No logs found in the {category} category</p>
         ) : (
           <p>No logs found in the {category} category for {monthFromDate(month)} {year}</p>
         ) }
