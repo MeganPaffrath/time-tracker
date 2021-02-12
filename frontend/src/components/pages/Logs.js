@@ -9,12 +9,9 @@ import MonthLogs from './log-views/MonthLogs';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export default function Logs( { logs, setLogs, update, setUpdate, view, setView }) {
-  // const [logs, setLogs] = useState([]);
-  // const [update, setUpdate] = useState(0);
-  // const [view, setView] = useState("all");
+export default function Logs( { logs, setLogs, update, setUpdate, view, setView, activityView, setActivityView }) {
 
-
+  // get logs from DB
   useEffect(() => {
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
@@ -39,11 +36,12 @@ export default function Logs( { logs, setLogs, update, setUpdate, view, setView 
       <Col>
         <div>
           <center><h1>Logs</h1></center>
+          <p>All/Month: {view}</p>
+          <p>Activity: {activityView}</p>
           <center>
             <Button variant="dark" onClick={() => setView('all')}>View All</Button>
             <Button variant="dark" onClick={() => setView('month')}>View By Month</Button>
           </center>
-          
         </div>
       </Col>
       <Col>
@@ -52,7 +50,11 @@ export default function Logs( { logs, setLogs, update, setUpdate, view, setView 
             <AllLogs logs={logs} update={update} setUpdate={setUpdate}/>
           ) : ''}
           { (view === 'month') ? (
-            <MonthLogs logs={logs} update={update} setUpdate={setUpdate}/>
+            <MonthLogs 
+              logs={logs} update={update} 
+              activityView={activityView} setActivityView={setActivityView}
+              setUpdate={setUpdate}
+            />
           ) : ''}
         </div>
       </Col>

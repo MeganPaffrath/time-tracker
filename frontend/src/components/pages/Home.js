@@ -15,7 +15,8 @@ export default function Home() {
   const history = useHistory();
   const [logs, setLogs] = useState([]);
   const [update, setUpdate] = useState(0);
-  const [view, setView] = useState("all");
+  const [view, setView] = useState("all"); // or month
+  const [activityView, setActivityView] = useState('all'); // or category
 
 
   if (!userData.username) {
@@ -26,19 +27,23 @@ export default function Home() {
     <Container className="logs-component">
       <Row>
         <Col>
-          <TimeLogger userData={userData}/>
-        </Col>
-        <Col>
-          <LogSelector logs={logs} setLogs={setLogs} 
-            update={update} setUpdate={setUpdate}
-            view={view} setView={setView}
-            userData={userData}
+          <TimeLogger 
+            // userData={userData}
           />
         </Col>
         <Col>
-          <Logs logs={logs} setLogs={setLogs} 
+          <LogSelector
+            view={view} setView={setView}
+            activityView={activityView} setActivityView={setActivityView}
+            // userData={userData}
+          />
+        </Col>
+        <Col>
+          <Logs 
+            logs={logs} setLogs={setLogs} 
             update={update} setUpdate={setUpdate}
             view={view} setView={setView}
+            activityView={activityView} setActivityView={setActivityView}
           />
         </Col>
         <Col>Test</Col>

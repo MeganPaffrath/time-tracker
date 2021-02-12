@@ -7,11 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 
 
-export default function MonthLogs({logs, update, setUpdate}) {
+export default function MonthLogs({logs, update, setUpdate, activityView, setActivityView}) {
+  // activityView={activityView} setActivityView={setActivityView}
   const [month, setMonth] = useState(new Date().getUTCMonth());
   const [year, setYear] = useState(new Date().getUTCFullYear());
   const [monthLogs, setMonthLogs] = useState(null);
-  const [viewType, setViewType] = useState("all");
+  const [viewType, setViewType] = useState("all"); /// THIS
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -74,11 +75,11 @@ export default function MonthLogs({logs, update, setUpdate}) {
         <Button variant="dark" onClick={nextMonth}>Next</Button>
       </center>
       <center>
-        <Button variant="light" onClick={() => setViewType("all")}>all</Button>
+        <Button variant="light" onClick={() => setActivityView("all")}>all</Button>
         {/* get log types and have a button for each */}
-        {activities.map( (act) => <Button variant="light" key={act} onClick={() => setViewType(act)}>{act}</Button>)}
+        {activities.map( (act) => <Button variant="light" key={act} onClick={() => setActivityView(act)}>{act}</Button>)}
       </center>
-      {viewType !== 'all' ? (
+      {activityView !== 'all' ? (
         <div className="log-charts">
           <Histogram month={month} year={year} monthLogs={monthLogs} category={viewType}/>
         </div>

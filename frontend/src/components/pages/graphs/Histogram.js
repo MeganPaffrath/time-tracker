@@ -109,7 +109,7 @@ export default function Histogram({month, year, monthLogs, category}) {
           <VerticalRectSeries data={monthData} style={{stroke: '#fff'}} />
         </XYPlot>
         </div>
-      ) : ''}
+      ) : 'nothing for now - histogram'}
     </div>
     
   );

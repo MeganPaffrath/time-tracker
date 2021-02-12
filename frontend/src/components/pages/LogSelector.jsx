@@ -9,7 +9,7 @@ import MonthLogs from './log-views/MonthLogs';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export default function LogsSelector( { logs, setLogs, update, setUpdate, view, setView }) {
+export default function LogsSelector( { view, setView, activityView, setActivityView }) {
   const {userData} = useContext(UserContext);
 
   console.log(userData.activities);
@@ -18,23 +18,23 @@ export default function LogsSelector( { logs, setLogs, update, setUpdate, view, 
     setView(newView);
   }
 
-  useEffect(() => {
-    let isMounted = true;
-    let token = localStorage.getItem("auth-token");
-    Axios.get(
-      "http://localhost:5000/log/getlogs",
-      {headers: {"x-auth-token": token}}
-    ).then(res => {
-      if (isMounted) {
-        setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-      }
-    }).catch(err => {
-      console.log(err);
-    })
-    return () => {
-      isMounted = false;
-    }
-  }, [update]);
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   let token = localStorage.getItem("auth-token");
+  //   Axios.get(
+  //     "http://localhost:5000/log/getlogs",
+  //     {headers: {"x-auth-token": token}}
+  //   ).then(res => {
+  //     if (isMounted) {
+  //       setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
+  //     }
+  //   }).catch(err => {
+  //     console.log(err);
+  //   })
+  //   return () => {
+  //     isMounted = false;
+  //   }
+  // }, [update]);
 
 
   return (
@@ -45,24 +45,17 @@ export default function LogsSelector( { logs, setLogs, update, setUpdate, view, 
           <Button variant="dark" onClick={() => viewSetter('all')}>View All</Button>
           <Button variant="dark" onClick={() => viewSetter('month')}>View By Month</Button>
           {/* Category View */}
-          { (userData.activities.length !== 0) ? (
+          { (userData && userData.activities && userData.activities.length !== 0) ? (
             <div>
               <h3>View By Category:</h3>
-              <Button variant="light" onClick={() => setView("all")}>all</Button>
+              <Button variant="light" onClick={() => setActivityView("all")}>all</Button>
               {userData.activities.map(
-                i => <Button variant="light" onClick={() => setView(i.activity)}>{i.activity}</Button>
+                i => <Button variant="light" key={i.activity} onClick={() => setActivityView(i.activity)}>{i.activity}</Button>
               )}
             </div>
-            
           ) : (
             ''
           )}
-          
-          {/* {
-            userData.activities.map((act) => {
-              <p>act.activity</p>
-            })
-          } */}
         </center>
       </Col>
     </section>
