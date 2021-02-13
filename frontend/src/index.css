@@ -34,6 +34,10 @@ body button {
   margin: 5px 5px;
 }
 
+body .btn {
+  /* color: red; */
+}
+
 /* Log Selector */
 .log-selector-hdr {
   height: 3rem;
@@ -103,6 +107,10 @@ td {
 
 .month-selector {
   margin: -1rem 0.7rem 0 0.7rem;
+}
+
+.month-selector-icon {
+  margin-top: -0.2rem;
 }
 
 .activity-view-selector {
