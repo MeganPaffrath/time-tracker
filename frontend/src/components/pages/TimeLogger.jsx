@@ -112,7 +112,9 @@ export default function TimeLogger({ update, setUpdate }) {
   return (
     <section className="time-logger-component">
       <div className="form-box">
-        <h1>Start Logging!</h1>
+        <center>
+          <h1>Start Logging!</h1>
+        </center>
         { (activity === "new") ? (
           <div>
             <Form onSubmit={newAct}>
@@ -169,6 +171,7 @@ export default function TimeLogger({ update, setUpdate }) {
               <Form.Label>Minutes</Form.Label>
               <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
             </Form.Group>
+            <ErrorMessage message={error} />
             <center>
               <Button variant="dark" type="submit">
                 Submit
@@ -178,9 +181,6 @@ export default function TimeLogger({ update, setUpdate }) {
           </div>
         )}
       </div>
-      { (error) ? (
-            <ErrorMessage message={error} resetError={() => setError(undefined)}/>
-          ) : '' }
     </section>
   )
 }

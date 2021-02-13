@@ -63,6 +63,7 @@ export default function Login() {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
+            <ErrorMessage message={error} />
             <center>
             <Button variant="dark" type="submit">
               Submit
@@ -70,9 +71,6 @@ export default function Login() {
             </center>
           </Form>
         </div>
-        { (error) ? (
-            <ErrorMessage message={error} resetError={() => setError(undefined)}/>
-          ) : '' }
       </Row>
     </Container>
   )

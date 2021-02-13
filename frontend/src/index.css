@@ -44,6 +44,10 @@ body .btn {
 }
 
 /* FORMS */
+.form-group {
+  padding-top: 0.2rem;
+}
+
 .form-group .form-control {
   margin-bottom: 0.5rem;
 }
@@ -59,7 +63,7 @@ body .btn {
 }
 
 .form-box button {
-  margin: 10px 5px;
+  margin: 0 10px;
 }
 
 body svg {
@@ -109,7 +113,7 @@ td {
   margin: -1rem 0.7rem 0 0.7rem;
 }
 
-.month-selector-icon {
+.button-icon {
   margin-top: -0.2rem;
 }
 
@@ -133,5 +137,9 @@ td {
 
   form {
     padding: 0 5px;
+  }
+
+  section {
+    padding: 10px 0;
   }
 }

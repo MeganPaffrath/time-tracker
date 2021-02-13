@@ -82,14 +82,12 @@ export default function Register() {
             <Form.Control type="password" placeholder="Verify Password" onChange={e => setVerifyPassword(e.target.value)}/>
           </Form.Group>
           <center>
+          <ErrorMessage message={error} />
           <Button variant="dark" type="submit">
             Submit
           </Button>
           </center>
         </Form>
-        { (error) ? (
-          <ErrorMessage message={error} resetError={() => setError(undefined)}/>
-        ) : '' }
       </div>
     </Row>
   </Container>
