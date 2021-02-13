@@ -10,7 +10,6 @@ import Register from './pages/Register';
 import UserContext from '../context/UserContext';
 
 
-
 export default function App() {
   const [userData, setUserData] = useState({
     token: undefined,
