@@ -29,7 +29,7 @@ export default function AuthMenu() {
 
   return (
     // container-fluid
-    <Nav className="container-fluid auth-nav">
+    <Nav className="auth-nav container-fluid">
       {
         userData.username ? (
           <>
@@ -42,9 +42,8 @@ export default function AuthMenu() {
           </>
         ) : (
           <>
-            <Nav.Link onClick={register}>Register</Nav.Link>
+            <Nav.Link className="ml-auto" onClick={login}></Nav.Link>
             <Nav.Link onClick={login}>Login</Nav.Link>
-            
           </>
         )
       }

@@ -68,6 +68,9 @@ export default function Login() {
             <Button variant="dark" type="submit">
               Submit
             </Button>
+            <Button variant="dark" onClick={() => { history.push("/register")}}>
+              Register
+            </Button>
             </center>
           </Form>
         </div>

@@ -7,7 +7,7 @@ import {Nav} from 'react-bootstrap';
 
 export default function Header() {
   return (
-    <div className="header bg-dark">
+    <div className="header bg-dark ">
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/">TimeTracker</Navbar.Brand>
         <AuthMenu />
