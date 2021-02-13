@@ -83,9 +83,9 @@ export default function LogList( {logs, update, setUpdate, category, view, month
             </tbody>
           </Table>
         ) : (view === 'all') ? (
-          <p>No logs found in the {category} category</p>
+          <p>No logs found in the {category} activity category</p>
         ) : (
-          <p>No logs found in the {category} category for {monthFromDate(month)} {year}</p>
+          <p>No logs found in the {category} activity category for {monthFromDate(month)} {year}</p>
         ) }
     </section>
   )

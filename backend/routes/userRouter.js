@@ -29,6 +29,20 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({msg: "Not all fields were filled."});
     }
+
+    // valid username format?
+    if (username.length < 5) {
+      return res
+        .status(400)
+        .json({msg: "Username must be at least 5 characters long"});
+    }
+
+    // valid username format?
+    if (password.length < 7) {
+      return res
+        .status(400)
+        .json({msg: "Password must be at least 7 characters long."});
+    }
     
     // valid password format?
     if (password.length < 7) {
@@ -97,13 +111,15 @@ router.post("/login", async (req, res) => {
         .json({msg: "Please fill out all fields."});
     }
 
-    console.log("finding user");
-    // find user
+    // find user & validate
     const user = await User.findOne({username: username});
-    // see if password is correct
-    const validLogin =  await bcrypt.compare(password, user.password);
 
-    console.log("Validlogin? : ", validLogin);
+    if (!user) {
+      return res.status(400).json({msg: "Invalid login"});
+    }
+
+    // validate password
+    const validLogin =  await bcrypt.compare(password, user.password);
 
     // if not valid
     if (!validLogin) {
@@ -112,10 +128,8 @@ router.post("/login", async (req, res) => {
         .json({msg: "Invalid login"});
     }
 
-    // otherwise valid, res w/ user data
+    // otherwise valid, respond w/ user data
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
-    console.log("token made");
-    console.log("Token: " + token);
     res.json({
       token,
       user: {
@@ -195,18 +209,24 @@ body:
 returns: activity name added
 */
 router.put("/addactivity", async (req, res) => {
-  console.log("add act called");
-  const {activity} = req.body;
-  console.log("adding" + activity);
+  let {activity} = req.body;
+  activity = await activity.toLowerCase();
+
+  // activity cannot be "all" or "new"
+  if (activity === 'all' || activity === "new") {
+    return res
+      .status(400)
+      .json({msg: "Cannot make new activity of this type"});
+  }
+
+
   try {
     // verify token
     const token = req.header("x-auth-token");
-    if (!token) return res.json(false);
+    if (!token) return res.status(400).json({msg: "unauthorized access"});
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) {
-      return res.json(false)
-    }
+    if (!verified) return res.status(400).json({msg: "unauthorized access"});
 
     // update this user
     let user = await User.findById(verified.id);
@@ -214,15 +234,11 @@ router.put("/addactivity", async (req, res) => {
     const newAct = new Activity({
       activity: activity
     });
-
-    let userHasAct = user.activities.some(act => {
-      return act.activity === activity
-    })
-
-    if (userHasAct) {
+    
+    if (user.activities.some(i => i.activity === activity)) {
       return res
         .status(400)
-        .json({msg: `${activity} activity already exists`});
+        .json({msg: "activity exists already"});
     } else {
       User.updateOne(
         {_id: verified.id},

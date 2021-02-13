@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
+// COMPONENTS
+import ErrorMessage from "../other/ErrorMesage";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +14,7 @@ export default function Register() {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const [verifyPassword, setVerifyPassword] = useState();
+  const [error, setError] = useState();
 
   // const [error, setError] = useState();
   const {setUserData} = useContext(UserContext);
@@ -49,11 +52,11 @@ export default function Register() {
       history.push("/");
       
     } catch (err) {
-      // set error
-      // setError(err.message);
-      console.log(err.message);
+      err.response.data.msg && setError(err.response.data.msg);
     }
   }
+
+  console.log(error);
 
 
   return (
@@ -79,6 +82,7 @@ export default function Register() {
             <Form.Control type="password" placeholder="Verify Password" onChange={e => setVerifyPassword(e.target.value)}/>
           </Form.Group>
           <center>
+          <ErrorMessage message={error} />
           <Button variant="dark" type="submit">
             Submit
           </Button>

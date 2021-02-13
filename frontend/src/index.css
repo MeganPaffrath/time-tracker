@@ -34,9 +34,22 @@ body button {
   margin: 5px 5px;
 }
 
+body .btn {
+  /* color: red; */
+}
+
 /* Log Selector */
 .log-selector-hdr {
   height: 3rem;
+}
+
+/* FORMS */
+.form-group {
+  padding-top: 0.2rem;
+}
+
+.form-group .form-control {
+  margin-bottom: 0.5rem;
 }
 
 /* REST */
@@ -50,7 +63,7 @@ body button {
 }
 
 .form-box button {
-  margin: 10px 5px;
+  margin: 0 10px;
 }
 
 body svg {
@@ -100,6 +113,10 @@ td {
   margin: -1rem 0.7rem 0 0.7rem;
 }
 
+.button-icon {
+  margin-top: -0.2rem;
+}
+
 .activity-view-selector {
   width: 50%;
 }
@@ -120,5 +137,9 @@ td {
 
   form {
     padding: 0 5px;
+  }
+
+  section {
+    padding: 10px 0;
   }
 }

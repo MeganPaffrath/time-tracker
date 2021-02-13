@@ -5,7 +5,8 @@ const ActivitySchema = require("./activityModel").schema;
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   }, 
   email: {
     type: String,
