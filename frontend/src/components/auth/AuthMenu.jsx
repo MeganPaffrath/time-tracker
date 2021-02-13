@@ -9,7 +9,6 @@ export default function AuthMenu() {
   const history = useHistory();
 
   useEffect(() => {
-    // console.log("USER DATA from AUTH: " + userData.username);
     if (!userData.username) {
       history.push("/login");
     }
@@ -29,17 +28,23 @@ export default function AuthMenu() {
 
 
   return (
-    <Nav className="mr-auto">
+    // container-fluid
+    <Nav className="container-fluid auth-nav">
       {
         userData.username ? (
           <>
-            <Nav.Link>Hi {userData.username}!</Nav.Link>
-            <Nav.Link onClick={logout}>LOGOUT</Nav.Link>
+            <Nav.Item>
+              <Nav.Link>Hi {userData.username}!</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={logout}>Logout</Nav.Link>
+            </Nav.Item>
           </>
         ) : (
           <>
             <Nav.Link onClick={register}>Register</Nav.Link>
             <Nav.Link onClick={login}>Login</Nav.Link>
+            
           </>
         )
       }

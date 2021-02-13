@@ -2,32 +2,59 @@
   background-color: rgb(155, 173, 182);
 }
 
-.header a,
-.header .mr-auto {
+/* LAYOUT */
+/* NAVBAR */
+.navbar {
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 1100px;
+}
+
+.header .auth-nav {
   background-color: inherit;
 }
 
-.row .form-box {
-  max-width: 600px;
-  padding: 50px 0;
+.header a,
+.header .nav-item {
+  background-color: inherit;
+}
+
+/* CONTENTS FORMAT */
+.contents {
+  margin: 0 auto;
+  /* padding: 0 10px; */
+  max-width: 1100px;
+}
+
+section {
+  padding: 30px 0;
 }
 
 body button {
+  margin: 5px 5px;
+}
+
+/* Log Selector */
+.log-selector-hdr {
+  height: 3rem;
+}
+
+/* REST */
+
+.row .form-box {
+  max-width: 600px;
+}
+
+.login-form {
+  padding: 50px 0;
+}
+
+.form-box button {
   margin: 10px 5px;
 }
 
 body svg {
   background-color: inherit;
-}
-
-body section {
-  /* background-color: rgb(155, 173, 182); */
-  padding: 30px 0;
-}
-
-.section-divider {
-  background-color: whitesmoke;
-  height: 10px;
 }
 
 .log-list {
@@ -40,21 +67,58 @@ table th {
   text-align: center;
 }
 
-/* Time Logger */
-section {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.logs-component {
-  min-height: 100vh;
-}
-
 /* results */
 table,
 th,
 td {
   border-collapse: collapse;
   border: 1px solid black;
+}
+
+.bargraph-component div,
+.bargraph-component center,
+.bargraph-component h5 {
+  background-color: rgb(202, 202, 202);
+  /* width: 90%; */
+  /* border-radius: 5px; */
+}
+
+.log-chart-component {
+  align-items: center;
+  text-align: center;
+}
+
+.view-buttons button {
+  margin: 5px 0;
+}
+
+.month-text {
+  display: inline;
+}
+
+.month-selector {
+  margin: -1rem 0.7rem 0 0.7rem;
+}
+
+.activity-view-selector {
+  width: 50%;
+}
+.activity-view-selector label {
+  text-align: left;
+}
+
+@media only screen and (max-width: 1000px) {
+  .activity-view-selector {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .row .col {
+    padding: 0;
+  }
+
+  form {
+    padding: 0 5px;
+  }
 }
