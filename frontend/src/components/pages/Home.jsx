@@ -75,7 +75,10 @@ export default function Home() {
         <Row>
           <Col>
           <section>
-            <TimeLogger />
+            <TimeLogger 
+              update={update}
+              setUpdate={setUpdate}
+            />
             </section>
           </Col>
           <Col>

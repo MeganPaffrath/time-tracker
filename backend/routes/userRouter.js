@@ -209,18 +209,14 @@ body:
 returns: activity name added
 */
 router.put("/addactivity", async (req, res) => {
-  console.log("add act called");
   const {activity} = req.body;
-  console.log("adding" + activity);
   try {
     // verify token
     const token = req.header("x-auth-token");
-    if (!token) return res.json(false);
+    if (!token) return res.status(400).json({msg: "unauthorized access"});
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) {
-      return res.json(false)
-    }
+    if (!verified) return res.status(400).json({msg: "unauthorized access"});
 
     // update this user
     let user = await User.findById(verified.id);
@@ -228,15 +224,11 @@ router.put("/addactivity", async (req, res) => {
     const newAct = new Activity({
       activity: activity
     });
-
-    let userHasAct = user.activities.some(act => {
-      return act.activity === activity
-    })
-
-    if (userHasAct) {
+    
+    if (user.activities.some(i => i.activity === activity)) {
       return res
         .status(400)
-        .json({msg: `${activity} activity already exists`});
+        .json({msg: "activity exists already"});
     } else {
       User.updateOne(
         {_id: verified.id},

@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
 import ErrorMessage from "../other/ErrorMesage";
-
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button, Container, Row} from 'react-bootstrap';
@@ -70,10 +69,10 @@ export default function Login() {
             </Button>
             </center>
           </Form>
-          { (error) ? (
-          <ErrorMessage message={error} resetError={() => setError(undefined)}/>
-        ) : '' }
         </div>
+        { (error) ? (
+            <ErrorMessage message={error} resetError={() => setError(undefined)}/>
+          ) : '' }
       </Row>
     </Container>
   )

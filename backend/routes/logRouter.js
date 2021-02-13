@@ -5,20 +5,37 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 // const moment = require("moment");
 
+
+/*
+Add new activity
+header:
+  key: x-auth-token
+  value: <token>
+body:
+{
+  "activity": "<name>",
+  "date": "<UTC date>",
+  "minutes": <number>
+}
+returns: the new log
+*/
 router.post("/new", async (req, res) => {
   try {
     const { activity, date, minutes} = req.body;
-    console.log("Act:", activity);
-    console.log("Date:", date);
-    console.log("Min:", minutes);
-    console.log("new", req.body.newActivity);
-
     const utcDate = new Date(date);
 
+    // check date
     if (isNaN(utcDate)) {
       return res
         .status(500)
         .json({msg: "server failed to have date in utc format."});
+    }
+
+    // check minutes
+    if (minutes > 1440) {
+      return res
+        .status(400)
+        .json({msg: "Succeeded total minutes in a day"});
     }
 
     // verify token
@@ -52,17 +69,12 @@ router.post("/new", async (req, res) => {
       minutes
     });
 
-    console.log(newLog);
-
-    // return res.json(true);
-
     const savedLog = await newLog.save();
     res.json({
       savedLog
     });
 
   } catch (err) {
-    console.log("wooops");
     res.status(500).json({error: err.message});
   }
   
