@@ -97,13 +97,15 @@ router.post("/login", async (req, res) => {
         .json({msg: "Please fill out all fields."});
     }
 
-    console.log("finding user");
-    // find user
+    // find user & validate
     const user = await User.findOne({username: username});
-    // see if password is correct
-    const validLogin =  await bcrypt.compare(password, user.password);
 
-    console.log("Validlogin? : ", validLogin);
+    if (!user) {
+      return res.status(400).json({msg: "Invalid login"});
+    }
+
+    // validate password
+    const validLogin =  await bcrypt.compare(password, user.password);
 
     // if not valid
     if (!validLogin) {
@@ -112,10 +114,8 @@ router.post("/login", async (req, res) => {
         .json({msg: "Invalid login"});
     }
 
-    // otherwise valid, res w/ user data
+    // otherwise valid, respond w/ user data
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
-    console.log("token made");
-    console.log("Token: " + token);
     res.json({
       token,
       user: {
