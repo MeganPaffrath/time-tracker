@@ -39,6 +39,11 @@ body button {
   height: 3rem;
 }
 
+/* FORMS */
+.form-group .form-control {
+  margin-bottom: 0.5rem;
+}
+
 /* REST */
 
 .row .form-box {
