@@ -38,6 +38,7 @@ export default function Home() {
   
   // get logs from DB
   useEffect(() => {
+    console.log("use effect HOME");
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
     axios.get(

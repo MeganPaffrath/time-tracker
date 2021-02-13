@@ -42,8 +42,7 @@ export default function TimeLogger({ update, setUpdate }) {
         )
         
         if (newAct) {
-          setUpdate(update + 1);
-          setError(undefined);
+          reset();
         }
       }
     } catch (err) {
@@ -71,7 +70,8 @@ export default function TimeLogger({ update, setUpdate }) {
 
         // if new log, update
         if (newLog) {
-          setUpdate(update + 1);
+          console.log("new log");
+          reset();
         }
       }
     } catch (err) {
@@ -91,6 +91,7 @@ export default function TimeLogger({ update, setUpdate }) {
     setError(undefined);
     setNewActivity(null);
     setUpdate(update + 1);
+    window.location.reload(true);
   }
 
   function updateMinutes(min) {
@@ -153,7 +154,7 @@ export default function TimeLogger({ update, setUpdate }) {
                   i =>
                   <option key={i.activity} value={i.activity}>{i.activity}</option>
                 )}
-                <option key="new" value="new">New</option>
+                <option key="new" value="new">new</option>
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="date">

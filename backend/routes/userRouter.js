@@ -209,7 +209,17 @@ body:
 returns: activity name added
 */
 router.put("/addactivity", async (req, res) => {
-  const {activity} = req.body;
+  let {activity} = req.body;
+  activity = await activity.toLowerCase();
+
+  // activity cannot be "all" or "new"
+  if (activity === 'all' || activity === "new") {
+    return res
+      .status(400)
+      .json({msg: "Cannot make new activity of this type"});
+  }
+
+
   try {
     // verify token
     const token = req.header("x-auth-token");
