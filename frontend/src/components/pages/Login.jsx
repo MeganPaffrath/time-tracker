@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Axios from "axios";
-import ErrorMessage from "../other/ErrorMsg";
+import ErrorMessage from "../other/ErrorMesage";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,10 +20,6 @@ export default function Login() {
       history.push("/")
     }
   });
-
-  // useEffect(() => {
-
-  // }, [error])
   
 
   // called when user clicks login
@@ -51,7 +47,6 @@ export default function Login() {
       history.push("/");
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
-      // console.log(err.response.data.msg);
     }
   }
 

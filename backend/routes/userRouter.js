@@ -29,6 +29,20 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({msg: "Not all fields were filled."});
     }
+
+    // valid username format?
+    if (username.length < 5) {
+      return res
+        .status(400)
+        .json({msg: "Username must be at least 5 characters long"});
+    }
+
+    // valid username format?
+    if (password.length < 7) {
+      return res
+        .status(400)
+        .json({msg: "Password must be at least 7 characters long."});
+    }
     
     // valid password format?
     if (password.length < 7) {
