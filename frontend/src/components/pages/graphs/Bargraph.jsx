@@ -47,14 +47,24 @@ export default function Bargraph({ selectedLogs, year, month, view, activityView
       selectedLogs.map( (log) => {
         let date = new Date(log.date).getUTCDate();
         let time = (log.minutes) / 60;
-        if (Math.floor(time) > maxHours) {
-          setMaxHours(Math.floor(time));
+
+        if (data.length > 0
+          && data.some(item => date === item.x)) { // update old item & time
+            const index = data.findIndex(item => item.x === date);
+            time = data[index].y + time;
+            data[index].y = time;
+        } else { // push new item
+          data.push({
+            x0: (date - 1),
+            x: date,
+            y: time
+           });
         }
-        data.push({
-        x0: (date - 1),
-        x: date,
-        y: time
-      });
+
+        // Set max hours
+        if (Math.floor(time) + 1 > maxHours) {
+          setMaxHours(Math.floor(time) + 1);
+        }
     })
 
 
