@@ -16,7 +16,7 @@ export default function LogList( {logs, update, setUpdate, category, view, month
       let token = localStorage.getItem("auth-token");
       await axios({
         method: 'DELETE',
-        url: "http://localhost:5000/log/delete",
+        url: (process.env.REACT_APP_API_URL + "/log/delete"),
         data: {
           id: id
         },

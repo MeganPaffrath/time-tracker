@@ -29,14 +29,14 @@ export default function App() {
 
       // check with db if token is valid
       const tokenRes = await Axios.post(
-        "http://localhost:5000/users/validateToken",
+        (process.env.REACT_APP_API_URL + "/users/validateToken"),
         null,
         {headers: {"x-auth-token": token}}
       );
 
       if (tokenRes.data) {
         const userRes = await Axios.get(
-          "http://localhost:5000/users/",
+          (process.env.REACT_APP_API_URL + "/users/"),
           {headers: {"x-auth-token": token}}
         );
         setUserData({

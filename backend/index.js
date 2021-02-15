@@ -4,7 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 // For cross origin requests, supporting secure req & data transfers btwn browsers and servers:
 const cors = require("cors");
-// loads env vars from .env file:
+// load env vars from .env file:
 require("dotenv").config();
 
 

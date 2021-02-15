@@ -30,7 +30,7 @@ export default function Login() {
 
       // try to log user in & get login result
       const loginRes = await Axios.post(
-        "http://localhost:5000/users/login",
+        (process.env.REACT_APP_API_URL + "/users/login"),
         userLogin
       );
 

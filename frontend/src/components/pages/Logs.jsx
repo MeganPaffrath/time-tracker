@@ -14,7 +14,7 @@ export default function Logs( { logs, setLogs, update, setUpdate, view, setView,
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
     Axios.get(
-      "http://localhost:5000/log/getlogs",
+      (process.env.REACT_APP_API_URL + "/log/getlogs"),
       {headers: {"x-auth-token": token}}
     ).then(res => {
       if (isMounted) {

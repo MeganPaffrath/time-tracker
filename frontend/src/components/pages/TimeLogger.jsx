@@ -36,7 +36,7 @@ export default function TimeLogger({ update, setUpdate }) {
         let token = localStorage.getItem("auth-token");
         // make new activity type
         let newAct = await Axios.put(
-          "http://localhost:5000/users/addactivity",
+          (process.env.REACT_APP_API_URL + "/users/addactivity"),
           {activity: newActivity},
           {headers: {"x-auth-token": token}}
         )
@@ -63,7 +63,7 @@ export default function TimeLogger({ update, setUpdate }) {
         let logInput = {date, minutes: totalMinutes, activity};
         let token = localStorage.getItem("auth-token");
         const newLog =  await Axios.post(
-          "http://localhost:5000/log/new",
+          (process.env.REACT_APP_API_URL + "/log/new"),
           logInput,
           {headers: {"x-auth-token": token}}
         )
