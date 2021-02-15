@@ -1,0 +1,28 @@
+.footer {
+  flex-shrink: 0;
+  background-color: #212529;
+  padding: 20px 0;
+}
+.footer h5 {
+  text-align: center;
+  background-color: #212529;
+  color: #fff;
+}
+
+.footer p {
+  text-align: center;
+  background-color: #212529;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.55);
+  font-style: none;
+  background-color: inherit;
+  padding: 0 5px;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #fff;
+}
