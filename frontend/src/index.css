@@ -19,6 +19,39 @@
   background-color: inherit;
 }
 
+/* FOOTER */
+html,
+body {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+.hdr-and-content {
+  flex: 1 0 auto;
+}
+.footer {
+  flex-shrink: 0;
+  background-color: #212529;
+  padding: 20px 0;
+}
+.footer h5 {
+  text-align: center;
+  background-color: #212529;
+  color: #fff;
+}
+
+.footer p {
+  text-align: center;
+  background-color: #212529;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 /* CONTENTS FORMAT */
 .contents {
   margin: 0 auto;

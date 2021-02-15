@@ -6,6 +6,7 @@ import Header from './layout/Header';
 import Home from './pages/Home';
 import Login from "./pages/Login";
 import Register from './pages/Register';
+import Footer from './layout/Footer';
 // to keep track of user:
 import UserContext from '../context/UserContext';
 
@@ -52,16 +53,20 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-      <UserContext.Provider value={{userData, setUserData}}>
-        <Header />
-        <div className="contents">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-          </Switch>
-        </div>
+        <UserContext.Provider value={{userData, setUserData}}>
+          <div className="hdr-and-content">
+            <Header />
+            <div className="contents">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+              </Switch>
+            </div>
+            </div>
+            <Footer />
         </UserContext.Provider>
+          
       </BrowserRouter>
     </>
   )
