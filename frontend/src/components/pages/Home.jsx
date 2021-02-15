@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import UserContext from "../../context/UserContext";
+// import UserContext from "../../context/UserContext";
 import LogChart from './log-views/LogChart';
 import TimeLogger from './TimeLogger';
 import LogSelector from './LogSelector';
@@ -15,9 +14,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import filteredLogs from '../../helpers/log-filter.js';
 
 export default function Home() {
-  // DATA & HISTORY:
-  const {userData} = useContext(UserContext);
-  const history = useHistory();
+  // ACTIVITIES
+  const [activities, setActivities] = useState([]);
   // BY VIEW:
   const [view, setView] = useState("all"); // or month
   const [activityView, setActivityView] = useState('all'); // or category
@@ -29,6 +27,10 @@ export default function Home() {
   const [year,setYear] = useState(new Date().getUTCFullYear());
   // UPDATE
   const [update, setUpdate] = useState(0);
+
+  useEffect(() => {
+    console.log(activities);
+  }, [activities]);
 
   if (logs && selectedLogs) {
     console.log("There are " + logs.length + " logs.\n"
@@ -48,6 +50,17 @@ export default function Home() {
       if (isMounted) {
         setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
         setSelectedLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
+        // SET ACTIVITIES HERE
+        let newActs = [];
+        res.data.map(item => {
+          console.log("item: " + item.activity); 
+          if (!newActs.includes(item.activity)) {
+            console.log("NOT FOUND " + item.activity);
+            newActs.push(item.activity);
+            console.log(newActs);
+          }
+        });
+        setActivities(newActs);
       }
     }).catch(err => {
       console.log(err.message);
@@ -81,6 +94,7 @@ export default function Home() {
             <TimeLogger 
               update={update}
               setUpdate={setUpdate}
+              activities={activities}
             />
             </section>
           </Col>
@@ -91,6 +105,7 @@ export default function Home() {
                 activityView={activityView} setActivityView={setActivityView}
                 month={month} setMonth={setMonth}
                 year={year} setYear={setYear}
+                activities={activities}
               />
               <LogChart 
                 logs={selectedLogs}

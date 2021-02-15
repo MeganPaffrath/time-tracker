@@ -19,7 +19,6 @@ export default function Login() {
       history.push("/")
     }
   });
-  
 
   // called when user clicks login
   const submit = async (e) => {

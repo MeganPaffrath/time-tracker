@@ -14,9 +14,7 @@ import UserContext from '../context/UserContext';
 export default function App() {
   const [userData, setUserData] = useState({
     token: undefined,
-    username: undefined,
-    id: undefined,
-    activities: undefined
+    username: undefined
   });
 
   console.log("RENDER APP");
@@ -45,8 +43,7 @@ export default function App() {
         );
         setUserData({
           token,
-          username: userRes.data.username,
-          activities: userRes.data.activities
+          username: userRes.data.username
         });
       }
     }

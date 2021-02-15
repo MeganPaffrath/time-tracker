@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-// CONTEXT
-import UserContext from "../../context/UserContext";
+import React from 'react';
 // HELPERS
 import monthFromDate from "../../helpers/month-number-to-string.js";
 import incrementMonth from "../../helpers/increment-month.js";
@@ -10,9 +8,7 @@ import { Row, Button, Form, ButtonGroup } from 'react-bootstrap';
 import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 export default function LogsSelector( { view, setView, setActivityView, month, setMonth, 
-                                        year, setYear }) {
-
-  const {userData} = useContext(UserContext);
+                                        year, setYear, activities }) {
 
   function viewSetter(newView) {
     setView(newView);
@@ -83,7 +79,7 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
             {console.log("UNEXPECTED VIEW TYPE")}
           </div>
         )}
-        { (userData && userData.activities && userData.activities.length !== 0) ? (
+        { (activities && activities.length !== 0) ? (
           <div className="activity-view-selector">
               <Form>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
@@ -92,9 +88,9 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
                   </Form.Label>
                     <Form.Control as="select" onChange={e => setActivityView(e.target.value)}>
                       <option key="all" value="all">all</option>
-                      {userData.activities.map(
+                      {activities.map(
                         i =>
-                        <option key={i.activity} value={i.activity}>{i.activity}</option>
+                        <option key={i} value={i}>{i}</option>
                       )}
                     </Form.Control>
                 </Form.Group>

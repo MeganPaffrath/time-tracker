@@ -7,25 +7,22 @@ import ErrorMessage from "../other/ErrorMesage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button } from 'react-bootstrap';
 
-export default function TimeLogger({ update, setUpdate }) {
-  const {userData} = useContext(UserContext);
+export default function TimeLogger({ update, setUpdate, activities }) {
   let [date, setDate] = useState();
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
-  const [activity, setActivity] = useState();
+  let [activity, setActivity] = useState(activities[0]);
   const [newActivity, setNewActivity] = useState(null);
-  const [activities, setActivities] = useState([]);
+  // const [activities, setActivities] = useState([]);
   let [error, setError] = useState();
 
-  console.log(userData.username);
 
   useEffect(() => {
-    if (userData != null && userData.activities != null && userData.activities.length > 0) {
-      setActivity(userData.activities[0].activity);
-      setActivities(userData.activities);
+    if (activities != null && activities.length > 0) {
+      setActivity(activities[0]);
     }
-  }, [update]);
+  }, [update, activities])
 
   const newAct = async (e) => {
     e.preventDefault();
@@ -154,7 +151,7 @@ export default function TimeLogger({ update, setUpdate }) {
               <Form.Control as="select" onChange={e => selectActivity(e.target.value)}>
               {activities.map(
                   i =>
-                  <option key={i.activity} value={i.activity}>{i.activity}</option>
+                  <option key={i} value={i}>{i}</option>
                 )}
                 <option key="new" value="new">new</option>
               </Form.Control>

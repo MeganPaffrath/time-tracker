@@ -8,11 +8,11 @@ export default function AuthMenu() {
   const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
-  useEffect(() => {
-    if (!userData.username) {
-      history.push("/login");
-    }
-  });
+  // useEffect(() => {
+  //   if (!userData.username) {
+  //     history.push("/login");
+  //   }
+  // });
 
   const register = () => { history.push("/register")};
   const login = () => { history.push("/login")};
