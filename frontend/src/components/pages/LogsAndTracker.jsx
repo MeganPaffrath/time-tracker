@@ -15,8 +15,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import filteredLogs from '../../helpers/log-filter.js';
 
 export default function LogsAndTracker() {
-  const {userData} = useContext(UserContext);
-  const history = useHistory();
   // ACTIVITIES
   const [activities, setActivities] = useState([]);
   // BY VIEW:
@@ -35,11 +33,6 @@ export default function LogsAndTracker() {
     console.log(activities);
   }, [activities]);
 
-  // useEffect(() => {
-  //   if (!userData.username) {
-  //     history.push("/login")
-  //   }
-  // });
 
   if (logs && selectedLogs) {
     console.log("There are " + logs.length + " logs.\n"

@@ -9,9 +9,11 @@ import Register from './pages/Register';
 import Footer from './layout/Footer';
 // to keep track of user:
 import UserContext from '../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 
 export default function App() {
+  const history = useHistory();
   const [userData, setUserData] = useState({
     token: undefined,
     username: undefined
@@ -47,7 +49,12 @@ export default function App() {
         });
       }
     }
-    verifyUser();
+    try {
+      verifyUser();
+    } catch (err) {
+      history.push("/login");
+    }
+    
   }, []);
 
   return (

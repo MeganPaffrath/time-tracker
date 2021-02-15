@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import UserContext from "../../context/UserContext";
 import Axios from "axios";
 // COMPONENTS
 import ErrorMessage from "../other/ErrorMesage";
