@@ -12,6 +12,7 @@ import { Trash } from 'react-bootstrap-icons';
 export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
 
   const removeLog = async (id) => {
+    let ts = new Date(Date.now());
     try {
       let token = localStorage.getItem("auth-token");
       await axios({
@@ -21,7 +22,10 @@ export default function LogList( {logs, update, setUpdate, category, view, month
           id: id
         },
         headers: {
-          "x-auth-token": token
+          "x-auth-token": token,
+          'Content-Type': 'application/json',
+          'Cache-Control' : 'no-cache',
+          time: ts
         }
       })
     } catch (err) {

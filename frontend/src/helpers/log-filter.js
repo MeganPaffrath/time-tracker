@@ -1,7 +1,7 @@
 const filteredLogs = (logs, month, year, category, activity) => {
   if (category === 'month') {
     console.log("FILTERING BY MONTH");
-    if (logs.length === 0) {
+    if (logs === null || logs === undefined || logs.length === 0) {
       return logs;
     }
 

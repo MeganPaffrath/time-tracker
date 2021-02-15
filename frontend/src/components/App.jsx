@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 export default function App() {
   const history = useHistory();
   const [userData, setUserData] = useState({
-    token: undefined,
+    id: undefined,
     username: undefined
   });
 
@@ -32,19 +32,30 @@ export default function App() {
       }
 
       // check with db if token is valid
+      let ts = new Date(Date.now());
       const tokenRes = await Axios.post(
         (process.env.REACT_APP_API_URL + "/users/validateToken"),
-        null,
-        {headers: {"x-auth-token": token}}
+        {headers: {
+          "x-auth-token": token,
+          'Content-Type': 'application/json',
+          'Cache-Control' : 'no-cache',
+          time: ts
+        }}
       );
 
       if (tokenRes.data) {
         const userRes = await Axios.get(
           (process.env.REACT_APP_API_URL + "/users/"),
-          {headers: {"x-auth-token": token}}
+          {headers: {
+            "x-auth-token": token,
+            'Content-Type': 'application/json',
+            'Cache-Control' : 'no-cache',
+            time: ts
+          }}
         );
+        console.log(userRes.data);
         setUserData({
-          token,
+          id: userRes.data.id,
           username: userRes.data.username
         });
       }

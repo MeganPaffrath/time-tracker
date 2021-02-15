@@ -11,15 +11,15 @@ export default function TimeLogger({ update, setUpdate, activities }) {
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
-  let [activity, setActivity] = useState(activities[0]);
+  let [activity, setActivity] = useState("a");
   const [newActivity, setNewActivity] = useState(null);
   // const [activities, setActivities] = useState([]);
   let [error, setError] = useState();
 
 
   useEffect(() => {
-    if (activities != null && activities.length > 0) {
-      setActivity(activities[0]);
+    if (activities != undefined && activities != null && activities.length > 0) {
+      setActivity(activities[0].activity);
     }
   }, [update, activities])
 
@@ -29,15 +29,23 @@ export default function TimeLogger({ update, setUpdate, activities }) {
       if (!newActivity) {
         setError("missing field");
       } else {
+        console.log("adding " + newActivity);
         let token = localStorage.getItem("auth-token");
         // make new activity type
+        let ts = new Date(Date.now());
         let newAct = await Axios.put(
           (process.env.REACT_APP_API_URL + "/users/addactivity"),
           {activity: newActivity},
-          {headers: {"x-auth-token": token}}
+          {headers: {
+            "x-auth-token": token,
+            'Content-Type': 'application/json',
+            'Cache-Control' : 'no-cache',
+            time: ts
+          }}
         )
         
         if (newAct) {
+          console.log("GOOD");
           reset();
         }
       }
@@ -58,10 +66,16 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         // make a new log
         let logInput = {date, minutes: totalMinutes, activity};
         let token = localStorage.getItem("auth-token");
+        let ts = new Date(Date.now());
         const newLog =  await Axios.post(
           (process.env.REACT_APP_API_URL + "/log/new"),
           logInput,
-          {headers: {"x-auth-token": token}}
+          {headers: {
+            "x-auth-token": token,
+            'Content-Type': 'application/json',
+            'Cache-Control' : 'no-cache',
+            time: ts
+          }}
         )
 
         // if new log, update
@@ -128,7 +142,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
               </center>
             </Form>
           </div>
-        ) : (activities.length === 0) ? (
+        ) : (activities && activities != null && activities.length === 0) ? (
           <div>
             <Form onSubmit={newAct}>
               <Form.Group controlId="username">
@@ -148,10 +162,15 @@ export default function TimeLogger({ update, setUpdate, activities }) {
             <Form.Group controlId="activity-select">
               <Form.Label>Select Activity</Form.Label>
               <Form.Control as="select" onChange={e => selectActivity(e.target.value)}>
-              {activities.map(
+              {(activities && activities !== null) ? (
+                activities.map(
                   i =>
-                  <option key={i} value={i}>{i}</option>
-                )}
+                  <option key={i.activity} value={i.activity}>{i.activity}</option>
+                )
+              ) : (
+                <p>hi</p>
+              )}
+              
                 <option key="new" value="new">new</option>
               </Form.Control>
             </Form.Group>

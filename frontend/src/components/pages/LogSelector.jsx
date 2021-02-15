@@ -9,6 +9,10 @@ import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 export default function LogsSelector( { view, setView, setActivityView, month, setMonth, 
                                         year, setYear, activities }) {
+  
+  // useEffect(() => {
+
+  // }, [month, year])
 
   function viewSetter(newView) {
     setView(newView);
@@ -90,7 +94,7 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
                       <option key="all" value="all">all</option>
                       {activities.map(
                         i =>
-                        <option key={i} value={i}>{i}</option>
+                        <option key={i.activity} value={i.activity}>{i.activity}</option>
                       )}
                     </Form.Control>
                 </Form.Group>

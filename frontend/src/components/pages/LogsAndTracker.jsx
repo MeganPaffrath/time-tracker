@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import UserContext from "../../context/UserContext";
+import React, { useState, useEffect } from 'react';
 import LogChart from './log-views/LogChart';
 import TimeLogger from './TimeLogger';
 import LogSelector from './LogSelector';
@@ -15,6 +14,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import filteredLogs from '../../helpers/log-filter.js';
 
 export default function LogsAndTracker() {
+
+  // const Activity 
+
+
   // ACTIVITIES
   const [activities, setActivities] = useState([]);
   // BY VIEW:
@@ -29,8 +32,13 @@ export default function LogsAndTracker() {
   // UPDATE
   const [update, setUpdate] = useState(0);
 
+  console.log("RENDER HOME");
+  console.log(activities);
+  console.log(logs);
+  console.log("log length: " + logs.length);
+
   useEffect(() => {
-    console.log(activities);
+    // console.log(activities);
   }, [activities]);
 
 
@@ -40,52 +48,91 @@ export default function LogsAndTracker() {
     + "viewing the " + month + ' month of ' + year);
   }
   
-  // get logs from DB
+  // get logs & activities list from DB
   useEffect(() => {
-    console.log("use effect HOME");
+    console.log("GETTING LOGS");
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
-    axios.get(
-      (process.env.REACT_APP_API_URL + "/log/getlogs"),
-      {headers: {"x-auth-token": token}}
-    ).then(res => {
-      if (isMounted) {
-        setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-        setSelectedLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-        // SET ACTIVITIES HERE
-        let newActs = [];
-        res.data.map(item => {
-          console.log("item: " + item.activity); 
-          if (!newActs.includes(item.activity)) {
-            console.log("NOT FOUND " + item.activity);
-            newActs.push(item.activity);
-            console.log(newActs);
-          }
-        });
-        setActivities(newActs);
+
+    try {
+      const getLogs = async (e) => {
+        let ts = new Date(Date.now());
+        let logs = await axios.get(
+          (process.env.REACT_APP_API_URL + "/log/getlogs"),
+          {headers: {
+            "x-auth-token": token,
+            'Content-Type': 'application/json',
+            'Cache-Control' : 'no-cache',
+            time: ts
+          }}
+        )
+        
+        console.log(logs.data);
+        // return true;
+        // setActivities(logs.data);
+        setLogs(logs.data);
       }
-    }).catch(err => {
-      console.log(err.message);
-    })
-    return () => {
-      isMounted = false;
+
+      const getActivities = async (e) => {
+        let ts = new Date(Date.now());
+        let activities = await axios.get(
+          (process.env.REACT_APP_API_URL + "/users"),
+          {headers: {
+            "x-auth-token": token,
+            'Content-Type': 'application/json',
+            'Cache-Control' : 'no-cache',
+            time: ts
+          }}
+        )
+        // console.log(activities.data.activities);
+        setActivities(activities.data.activities);
+      }
+
+
+      getLogs();
+      getActivities();
+    } catch (err) {
+      console.log(err);
     }
+    
+    
+
+
+    // axios.get(
+    //   (process.env.REACT_APP_API_URL + "/log/getlogs"),
+    //   {headers: {"x-auth-token": token}}
+    // ).then(res => {
+    //   if (isMounted) {
+    //     setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
+    //     setSelectedLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
+    //     // SET ACTIVITIES HERE
+    //     let newActs = [];
+    //     res.data.map(item => {
+    //       console.log("item: " + item.activity); 
+    //       if (!newActs.includes(item.activity)) {
+    //         console.log("NOT FOUND " + item.activity);
+    //         newActs.push(item.activity);
+    //         console.log(newActs);
+    //       }
+    //     });
+    //     setActivities(newActs);
+    //   }
+    // }).catch(err => {
+    //   console.log(err.message);
+    // })
+    // return () => {
+    //   isMounted = false;
+    // }
   }, [update]);
 
   useEffect(() => {
     setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
-  }, [month, year, view, activityView]);
+  }, [month, year, view, activityView, logs]);
 
   useEffect(() => { 
     console.log("selected logs chagned");
   }, [selectedLogs])
 
-
-  // if (!userData.username) {
-  //   history.push("/login");
-  // }
-
-  console.log("RENDER HOME");
 
   return (
     <div>
