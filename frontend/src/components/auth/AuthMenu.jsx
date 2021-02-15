@@ -26,6 +26,7 @@ export default function AuthMenu() {
     })
     // reset localStorage
     localStorage.setItem("auth-token", "");
+    history.push("/login");
   }
 
 

@@ -14,7 +14,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 // HELPER
 import filteredLogs from '../../helpers/log-filter.js';
 
-export default function Home() {
+export default function LogsAndTracker() {
   const {userData} = useContext(UserContext);
   const history = useHistory();
   // ACTIVITIES
