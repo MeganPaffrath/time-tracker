@@ -20,7 +20,9 @@ export default function AuthMenu() {
     // reset user context
     setUserData({
       token: undefined,
-      username: undefined
+      username: undefined,
+      id: undefined,
+      activities: undefined
     })
     // reset localStorage
     localStorage.setItem("auth-token", "");

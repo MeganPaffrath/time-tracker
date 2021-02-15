@@ -13,8 +13,8 @@ export default function Footer() {
       <h5>&copy; Megan Paffrath {year}</h5>
       <p>
         <a href="https://www.meganpaffrath.com/" target="_blank">meganpaffrath.com</a>
-        <a href="https://www.meganpaffrath.com/" target="_blank"><Github /></a>
-        <a href="https://www.meganpaffrath.com/" target="_blank"><Linkedin /></a>
+        <a href="https://github.com/MeganPaffrath" target="_blank"><Github /></a>
+        <a href="https://www.linkedin.com/in/meganpaffrath/" target="_blank"><Linkedin /></a>
       </p>
     </footer>
   )

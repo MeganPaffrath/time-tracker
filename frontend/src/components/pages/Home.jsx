@@ -66,9 +66,11 @@ export default function Home() {
   }, [selectedLogs])
 
 
-  if (!userData.username) {
-    history.push("/login");
-  }
+  // if (!userData.username) {
+  //   history.push("/login");
+  // }
+
+  console.log("RENDER HOME");
 
   return (
     <div>

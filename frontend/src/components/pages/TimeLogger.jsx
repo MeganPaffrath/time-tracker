@@ -18,14 +18,14 @@ export default function TimeLogger({ update, setUpdate }) {
   const [activities, setActivities] = useState([]);
   let [error, setError] = useState();
 
+  console.log(userData.username);
+
   useEffect(() => {
     if (userData != null && userData.activities != null && userData.activities.length > 0) {
       setActivity(userData.activities[0].activity);
       setActivities(userData.activities);
     }
   }, [update]);
-
-  console.log(error);
 
   const newAct = async (e) => {
     e.preventDefault();
@@ -56,8 +56,8 @@ export default function TimeLogger({ update, setUpdate }) {
     
     try {
       // make sure all logs were filled
-      if (!date || !totalMinutes || !activity) {
-        setError("missing field");
+      if (!date || totalMinutes === 0 || !activity) {
+        setError("missing information");
       } else {
         // make a new log
         let logInput = {date, minutes: totalMinutes, activity};

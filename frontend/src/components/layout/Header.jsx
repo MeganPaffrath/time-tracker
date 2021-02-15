@@ -1,9 +1,7 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 import AuthMenu from '../auth/AuthMenu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
-import {Nav, NavDropdown} from 'react-bootstrap';
 
 export default function Header() {
   return (
@@ -11,7 +9,6 @@ export default function Header() {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/">Growth By Day</Navbar.Brand>
         <AuthMenu />
-        {/* </NavDropdown> */}
       </Navbar>
     </div>
   )

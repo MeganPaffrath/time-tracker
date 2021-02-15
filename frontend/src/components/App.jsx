@@ -19,7 +19,10 @@ export default function App() {
     activities: undefined
   });
 
+  console.log("RENDER APP");
+
   useEffect(() => {
+    console.log("RENDER USE EFFECT");
     const verifyUser = async () => {
       let token = localStorage.getItem("auth-token");
 
