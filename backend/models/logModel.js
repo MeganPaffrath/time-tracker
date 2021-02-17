@@ -9,14 +9,13 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  date: {
+  startTime: {
     type: Date,
     required: true
   }, 
-  minutes: {
-    type: Number,
-    required: true,
-    min: 1
+  endTime: {
+    type: Date,
+    required: true
   }
 });
 
