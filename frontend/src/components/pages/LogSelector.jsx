@@ -47,14 +47,16 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
     <section className="logs-component">
       <center>
         <div className="">
-          { (view === 'all') ? <h1 class="log-selector-text">All Logs</h1> : ''}
+          { (view === 'all') ? 
+            <div class="log-selector-hdr"><h1 class="log-selector-text">All Logs</h1></div> : ''}
           { (view === 'month' ? ( 
             <div class="log-selector-hdr">
               <Button className="month-selector-left" variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}>
                 <ArrowLeft className="button-icon"/>
               </Button >
-              <div>
-                <h1 className="log-selector-text">{monthFromDate(month)}</h1> <h2>{year}</h2>
+              <div className="log-selector-text">
+                <h1>{monthFromDate(month)}</h1> 
+                <h1>{year}</h1>
               </div>
               <Button className="month-selector-right" variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}>
                 <ArrowRight className="button-icon"/>

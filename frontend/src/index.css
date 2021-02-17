@@ -57,19 +57,28 @@ body .btn {
 
 /* Log Selector */
 .log-selector-hdr {
-  max-width: 250px;
+  width: 350px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 5rem;
 }
 
+.log-selector-text {
+  text-align: center;
+  width: 100%;
+}
+
+.log-selector-text h1 {
+  margin: 0;
+}
+
 .month-selector-left {
-  margin: -1rem 0.7rem 0 0;
+  margin: -1rem 0 0 0;
 }
 
 .month-selector-right {
-  margin: -1rem 0 0 0.7rem;
+  margin: -1rem 0 0 0;
 }
 
 /* .month-selector {
@@ -137,11 +146,6 @@ td {
 .view-buttons button {
   margin: 5px 0;
 }
-
-.log-selector-text {
-  display: inline;
-}
-
 .button-icon {
   margin-top: -0.2rem;
 }
