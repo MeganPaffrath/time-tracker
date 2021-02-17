@@ -22,24 +22,6 @@ export default function App() {
   console.log("RENDER APP");
 
   useEffect(() => {
-    // const verifyAuth = async (token) => {
-    //   if (token === null) {
-    //     localStorage.setItem("auth-token", "");
-    //     token = "";
-    //     return false;
-    //   } else {
-    //     return await Axios.post(
-    //       (process.env.REACT_APP_API_URL + "/users/validateToken"),
-    //       {headers: {
-    //         "x-auth-token": token,
-    //         'Content-Type': 'application/json',
-    //         'Cache-Control' : 'no-cache',
-    //         time: ts
-    //       }}
-    //     );
-    //   }
-    // }
-
     const verifyUser = async () => {
       let token = localStorage.getItem("auth-token");
       if (token === null) {
@@ -47,63 +29,49 @@ export default function App() {
         token = "";
       }
 
-      console.log("CHECKING: \n " + token);
+      if (token) {
+        try {
+          // check with db if token is valid
+          let ts = new Date(Date.now());
+          const tokenRes = await Axios.post(
+            (process.env.REACT_APP_API_URL + "/users/validateToken"),
+            {},
+            {headers: {
+              "x-auth-token": token,
+              'Content-Type': 'application/json',
+              'Cache-Control' : 'no-cache',
+              time: ts
+            }}
+          );
 
-      // try {
-      //   let ts = new Date(Date.now());
-      //   const tokenRes = await Axios.post(
-      //     (process.env.REACT_APP_API_URL + "/users/validateToken"),
-      //     {headers: {
-      //       "x-auth-token": token,
-      //       'Content-Type': 'application/json',
-      //       'Cache-Control' : 'no-cache',
-      //       time: ts
-      //     }}
-      //   );
-      //   console.log(tokenRes);
-      // } catch (err) {
-      //   console.log("AUTH TOKEN FAILED");
-      // }
-      
+          console.log(tokenRes);
+          // console.log(JSON.parse(tokenRes))
 
-      // check with db if token is valid
-      let ts = new Date(Date.now());
-      const tokenRes = await Axios.post(
-        (process.env.REACT_APP_API_URL + "/users/validateToken"),
-        {},
-        {headers: {
-          "x-auth-token": token,
-          'Content-Type': 'application/json',
-          'Cache-Control' : 'no-cache',
-          time: ts
-        }}
-      );
-
-      console.log(tokenRes);
-      // console.log(JSON.parse(tokenRes))
-
-      if (tokenRes) {
-        const userRes = await Axios.get(
-          (process.env.REACT_APP_API_URL + "/users/"),
-          {headers: {
-            "x-auth-token": token,
-            'Content-Type': 'application/json',
-            'Cache-Control' : 'no-cache',
-            time: ts
-          }}
-        );
-        console.log(userRes.data);
-        setUserData({
-          id: userRes.data.id,
-          username: userRes.data.username
-        });
+          if (tokenRes) {
+            const userRes = await Axios.get(
+              (process.env.REACT_APP_API_URL + "/users/"),
+              {headers: {
+                "x-auth-token": token,
+                'Content-Type': 'application/json',
+                'Cache-Control' : 'no-cache',
+                time: ts
+              }}
+            );
+            console.log(userRes.data);
+            setUserData({
+              id: userRes.data.id,
+              username: userRes.data.username
+            });
+          }   
+        } catch (err) {
+          localStorage.setItem("auth-token", "");
+          token = "";
+          console.log("REDIRECT TO HOME");
+        }
       }
     }
-    try {
-      verifyUser();
-    } catch (err) {
-      // history.push("/login");
-    }
+    
+    verifyUser();
     
   }, []);
 
