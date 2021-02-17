@@ -174,7 +174,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
             </Form.Group>
             <Form.Group controlId="date">
               <Form.Label>Date</Form.Label>
-              <Form.Control type="date" onChange={e => setDate(e.target.value)}/>
+              <Form.Control type="date" placeholder="mm/dd/yyyy" onChange={e => setDate(e.target.value)}/>
             </Form.Group>
             <Form.Group controlId="hours">
               <Form.Label>Hours</Form.Label>
