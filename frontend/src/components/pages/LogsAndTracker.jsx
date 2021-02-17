@@ -32,18 +32,13 @@ export default function LogsAndTracker() {
   // UPDATE
   const [update, setUpdate] = useState(0);
 
-  console.log("RENDER HOME");
-  console.log(activities);
-  console.log(logs);
-  console.log("log length: " + logs.length);
-
   useEffect(() => {
     // console.log(activities);
   }, [activities]);
 
 
   if (logs && selectedLogs) {
-    console.log("There are " + logs.length + " logs.\n"
+    console.log("LOGS AND TRACKER: There are " + logs.length + " logs.\n"
     + selectedLogs.length + ' of which are in the ' + activityView + ' category\n'
     + "viewing the " + month + ' month of ' + year);
   }
@@ -67,7 +62,7 @@ export default function LogsAndTracker() {
           }}
         )
         
-        console.log(logs.data);
+        // console.log(logs.data);
         // return true;
         // setActivities(logs.data);
         setLogs(logs.data);
@@ -84,7 +79,7 @@ export default function LogsAndTracker() {
             time: ts
           }}
         )
-        // console.log(activities.data.activities);
+        // console.log(activities.data);
         setActivities(activities.data.activities);
       }
 
