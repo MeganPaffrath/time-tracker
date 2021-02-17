@@ -10,6 +10,7 @@ import { Table } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 
 export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
+  console.log(logs);
 
   const removeLog = async (id) => {
     let ts = new Date(Date.now());
@@ -35,15 +36,15 @@ export default function LogList( {logs, update, setUpdate, category, view, month
     setUpdate(update + 1);
   }
 
-  let timeString = (minutes) => {
-    let hrs = Math.floor(minutes/60);
-    let min = minutes%60;
-    return (hrs + "h " + min + "m");
+  let timeString = (startTime, endTime) => {
+    let hours = Math.floor( (new Date(endTime) - new Date(startTime)) / (1000*60*60) )
+    let minutes = Math.floor(((new Date(endTime) - new Date(startTime)) / (1000 * 60) ) % 60);
+    return (hours + "h " +  minutes + "m");
   }
 
   return (
     <section className="log-chart-component">
-      { (category === 'all' && logs && logs.length !== 0) ? (
+      { (logs && logs.length !== 0) ? (
           <Table striped bordered hover variant="dark" size="sm">
             <thead>
               <tr>
@@ -57,31 +58,12 @@ export default function LogList( {logs, update, setUpdate, category, view, month
               {logs.map(log => (
                 <tr key={log._id}>
                   <th>{log.activity}</th>
-                  <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
-                  <th>{timeString(log.minutes)}</th>
+                  <th>{new Date(log.startTime).getUTCMonth() + 1}/{new Date(log.startTime).getUTCDate()}/{new Date(log.startTime).getUTCFullYear()}</th>
+                  <th>{
+                    timeString(log.startTime, log.endTime)
+                  }</th>
                   <th><Trash onClick={() => removeLog(log._id)}/></th>
                   {/* <th><Button variant="light" size="sm" onClick={() => removeLog(log._id)}> <Trash /></Button></th> */}
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (logs && logs.length !== 0) ? (
-          <Table striped bordered hover variant="dark" size="sm">
-            <thead>
-              <tr>
-                <th>Activity</th>
-                <th>Date</th>
-                <th>Timespan</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map(log => (
-                <tr key={log._id}>
-                  <th>{log.activity}</th>
-                  <th>{new Date(log.date).getUTCMonth() + 1}/{new Date(log.date).getUTCDate()}/{new Date(log.date).getUTCFullYear()}</th>
-                  <th>{timeString(log.minutes)}</th>
-                  <th><Trash onClick={() => removeLog(log._id)}/></th>
                 </tr>
               ))}
             </tbody>

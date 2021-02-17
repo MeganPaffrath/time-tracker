@@ -20,6 +20,7 @@ body:
 returns: the new log
 */
 router.post("/new", async (req, res) => {
+  console.log("new");
   try {
     const { activity, date, minutes} = req.body;
     const utcDate = new Date(date);
@@ -62,12 +63,25 @@ router.post("/new", async (req, res) => {
     }
 
     // create log for user
+    let startDate = new Date(date);
+    let endTime = new Date(date);
+    console.log(date);
+    console.log("Start: " + startDate.toISOString());
+    endTime.setTime(endTime.getTime() + minutes*60*1000);
+    console.log("END: " + endTime.toISOString());
+    // let timeStr = await endTime.toISOString();
+    // console.log(endTime);
+
+
+
     const newLog = new Log({
       username: user.username,
       activity,
-      date,
-      minutes
+      startTime: startDate.toUTCString(),
+      endTime: endTime.toUTCString()
     });
+
+    console.log(newLog);
 
     const savedLog = await newLog.save();
     res.json({
@@ -76,6 +90,7 @@ router.post("/new", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({error: err.message});
+    console.log("faile");
   }
   
 

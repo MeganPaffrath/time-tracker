@@ -45,8 +45,10 @@ export default function Bargraph({ selectedLogs, year, month, view, activityView
       setMonthData(null);
       let data = [];
       selectedLogs.map( (log) => {
-        let date = new Date(log.date).getUTCDate();
-        let time = (log.minutes) / 60;
+        let date = new Date(log.startTime).getUTCDate();
+        let time =  (new Date(log.endTime) - new Date(log.startTime)) / (1000*60*60);
+        // console.log(date + " " + time);
+        // let time = (log.minutes) / 60;
 
         if (data.length > 0
           && data.some(item => date === item.x)) { // update old item & time
