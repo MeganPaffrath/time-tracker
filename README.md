@@ -189,14 +189,16 @@
 
 ## User:
 
-- username
-- email
-- password
-- activities[]
+- username: string
+- email: email
+- password: string
+- activities[Activity]: array of Activity
+- accountCreated: Date
+- lastSeen: Date
 
 ## Event Log:
 
-- userid
-- startTime
-- endTime
-- eventType
+- userid: string
+- startTime: Date
+- minutes:
+- eventType: string
