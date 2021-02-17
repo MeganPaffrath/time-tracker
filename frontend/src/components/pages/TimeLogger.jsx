@@ -13,7 +13,6 @@ export default function TimeLogger({ update, setUpdate, activities }) {
   const [hours, setHours] = useState(0);
   let [activity, setActivity] = useState("a");
   const [newActivity, setNewActivity] = useState(null);
-  // const [activities, setActivities] = useState([]);
   let [error, setError] = useState();
 
 
@@ -45,13 +44,11 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         )
         
         if (newAct) {
-          console.log("GOOD");
           reset();
         }
       }
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
-      // console.log(err.reponse.data.msg);
     }
   }
 
@@ -80,7 +77,6 @@ export default function TimeLogger({ update, setUpdate, activities }) {
 
         // if new log, update
         if (newLog) {
-          console.log("new log");
           reset();
         }
       }
@@ -132,6 +128,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
                 <Form.Label>New Activity Type:</Form.Label>
                 <Form.Control type="string" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
+              <ErrorMessage message={error} />
               <center>
               <Button variant="dark" type="submit">
                 Submit
@@ -150,6 +147,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
                 <Form.Control type="activity" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <center>
+              <ErrorMessage message={error} />
               <Button variant="dark" type="submit">
                 Submit
               </Button>
