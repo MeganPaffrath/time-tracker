@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect } from 'react';
 import Axios from "axios";
 // COMPONENTS
 import ErrorMessage from "../other/ErrorMesage";
@@ -17,7 +17,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
 
 
   useEffect(() => {
-    if (activities != undefined && activities != null && activities.length > 0) {
+    if (activities !== undefined && activities !== null && activities.length > 0) {
       setActivity(activities[0].activity);
     }
   }, [update, activities])
