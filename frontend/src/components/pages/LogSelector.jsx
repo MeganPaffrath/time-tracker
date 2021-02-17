@@ -9,10 +9,6 @@ import { ArrowRight, ArrowLeft } from 'react-bootstrap-icons';
 
 export default function LogsSelector( { view, setView, setActivityView, month, setMonth, 
                                         year, setYear, activities }) {
-  
-  // useEffect(() => {
-
-  // }, [month, year])
 
   function viewSetter(newView) {
     setView(newView);
@@ -24,37 +20,22 @@ export default function LogsSelector( { view, setView, setActivityView, month, s
     setYear(monthYear.year);
   }
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   let token = localStorage.getItem("auth-token");
-  //   Axios.get(
-  //     "http://localhost:5000/log/getlogs",
-  //     {headers: {"x-auth-token": token}}
-  //   ).then(res => {
-  //     if (isMounted) {
-  //       setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-  //     }
-  //   }).catch(err => {
-  //     console.log(err);
-  //   })
-  //   return () => {
-  //     isMounted = false;
-  //   }
-  // }, [update]);
-
-
   return (
     <section className="logs-component">
       <center>
-        <div className="log-selector-hdr">
-          { (view === 'all') ? <h1>All Logs</h1> : ''}
+        <div className="">
+          { (view === 'all') ? 
+            <div className="log-selector-hdr"><h1 className="log-selector-text">All Logs</h1></div> : ''}
           { (view === 'month' ? ( 
-            <div>
-              <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}>
+            <div className="log-selector-hdr">
+              <Button className="month-selector-left" variant="dark" size="sm" onClick={() => changeTimeView(month, year, -1)}>
                 <ArrowLeft className="button-icon"/>
               </Button >
-              <h1 className="month-text">{monthFromDate(month)} {year}</h1>
-              <Button className="month-selector" variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}>
+              <div className="log-selector-text">
+                <h1>{monthFromDate(month)}</h1> 
+                <h1>{year}</h1>
+              </div>
+              <Button className="month-selector-right" variant="dark" size="sm" onClick={() => changeTimeView(month, year, 1)}>
                 <ArrowRight className="button-icon"/>
               </Button> 
             </div>

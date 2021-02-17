@@ -33,19 +33,17 @@ export default function LogsAndTracker() {
   const [update, setUpdate] = useState(0);
 
   useEffect(() => {
-    // console.log(activities);
   }, [activities]);
 
 
-  if (logs && selectedLogs) {
-    console.log("LOGS AND TRACKER: There are " + logs.length + " logs.\n"
-    + selectedLogs.length + ' of which are in the ' + activityView + ' category\n'
-    + "viewing the " + month + ' month of ' + year);
-  }
+  // if (logs && selectedLogs) {
+  //   console.log("LOGS AND TRACKER: There are " + logs.length + " logs.\n"
+  //   + selectedLogs.length + ' of which are in the ' + activityView + ' category\n'
+  //   + "viewing the " + month + ' month of ' + year);
+  // }
   
   // get logs & activities list from DB
   useEffect(() => {
-    console.log("GETTING LOGS");
     let isMounted = true;
     let token = localStorage.getItem("auth-token");
 
@@ -61,11 +59,6 @@ export default function LogsAndTracker() {
             time: ts
           }}
         )
-        
-        // console.log(logs.data);
-        // return true;
-        // setActivities(logs.data);
-        // setLogs(logs.data);
         setLogs(logs.data.sort((a,b) => (a.startTime < b.startTime) ? 1 : -1));
         setSelectedLogs(logs.data.sort((a,b) => (a.startTime < b.startTime) ? 1 : -1));
       }
@@ -81,56 +74,24 @@ export default function LogsAndTracker() {
             time: ts
           }}
         )
-        // console.log(activities.data);
         setActivities(activities.data.activities);
       }
-
-
       getLogs();
       getActivities();
     } catch (err) {
       console.log(err);
     }
-    
-    
-
-
-    // axios.get(
-    //   (process.env.REACT_APP_API_URL + "/log/getlogs"),
-    //   {headers: {"x-auth-token": token}}
-    // ).then(res => {
-    //   if (isMounted) {
-    //     setLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-    //     setSelectedLogs(res.data.sort((a,b) => (a.date < b.date) ? 1 : -1));
-    //     // SET ACTIVITIES HERE
-    //     let newActs = [];
-    //     res.data.map(item => {
-    //       console.log("item: " + item.activity); 
-    //       if (!newActs.includes(item.activity)) {
-    //         console.log("NOT FOUND " + item.activity);
-    //         newActs.push(item.activity);
-    //         console.log(newActs);
-    //       }
-    //     });
-    //     setActivities(newActs);
-    //   }
-    // }).catch(err => {
-    //   console.log(err.message);
-    // })
-    // return () => {
-    //   isMounted = false;
-    // }
   }, [update]);
 
-  console.log(logs);
+  // console.log(logs);
 
   useEffect(() => {
     setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
   }, [month, year, view, activityView, logs]);
 
   useEffect(() => { 
-    console.log("selected logs chagned");
-    console.log(selectedLogs);
+    // console.log("selected logs chagned");
+    // console.log(selectedLogs);
   }, [selectedLogs])
 
 
@@ -138,7 +99,7 @@ export default function LogsAndTracker() {
     <div>
       <Container className="logs-component">
         <Row>
-          <Col>
+          <Col md>
           <section>
             <TimeLogger 
               update={update}
@@ -147,7 +108,7 @@ export default function LogsAndTracker() {
             />
             </section>
           </Col>
-          <Col>
+          <Col md> 
             <section>
               <LogSelector
                 view={view} setView={setView}

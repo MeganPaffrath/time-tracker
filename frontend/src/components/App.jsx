@@ -19,8 +19,6 @@ export default function App() {
     username: undefined
   });
 
-  console.log("RENDER APP");
-
   useEffect(() => {
     const verifyUser = async () => {
       let token = localStorage.getItem("auth-token");
@@ -44,9 +42,6 @@ export default function App() {
             }}
           );
 
-          console.log(tokenRes);
-          // console.log(JSON.parse(tokenRes))
-
           if (tokenRes) {
             const userRes = await Axios.get(
               (process.env.REACT_APP_API_URL + "/users/"),
@@ -57,7 +52,6 @@ export default function App() {
                 time: ts
               }}
             );
-            console.log(userRes.data);
             setUserData({
               id: userRes.data.id,
               username: userRes.data.username
@@ -66,7 +60,6 @@ export default function App() {
         } catch (err) {
           localStorage.setItem("auth-token", "");
           token = "";
-          console.log("REDIRECT TO HOME");
         }
       }
     }

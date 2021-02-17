@@ -1,7 +1,5 @@
 const filteredLogs = (logs, month, year, category, activity) => {
-  console.log(logs);
   if (category === 'month') {
-    console.log("FILTERING BY MONTH");
     if (logs === null || logs === undefined || logs.length === 0) {
       return logs;
     }
@@ -15,6 +13,7 @@ const filteredLogs = (logs, month, year, category, activity) => {
     }
 
     // FILTER BY ACTIVITY
+    console.log(activity)
     return logs.filter( log => (
       new Date(log.startTime).getUTCMonth() === month
       && new Date(log.startTime).getUTCFullYear() === year
@@ -24,7 +23,6 @@ const filteredLogs = (logs, month, year, category, activity) => {
 
   // FILTER ALL
   if (category === 'all') {
-    console.log("FILTERING ALL")
     // FROM ALL ACTIVITIES
     if (activity === 'all') {
       return logs;
@@ -35,8 +33,6 @@ const filteredLogs = (logs, month, year, category, activity) => {
       log.activity === activity
     ));
   }
-
-  console.log("filteredLogs only supports ALL and MONTH");
 }
 
 export default filteredLogs;
