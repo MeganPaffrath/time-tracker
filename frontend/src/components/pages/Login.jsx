@@ -19,7 +19,6 @@ export default function Login() {
       history.push("/")
     }
   });
-  
 
   // called when user clicks login
   const submit = async (e) => {
@@ -30,15 +29,14 @@ export default function Login() {
 
       // try to log user in & get login result
       const loginRes = await Axios.post(
-        "http://localhost:5000/users/login",
+        (process.env.REACT_APP_API_URL + "/users/login"),
         userLogin
       );
 
       // if valid user, set token...
       setUserData({
-        token: loginRes.data.token,
-        username: loginRes.data.user.username,
-        activities: loginRes.data.user.activities
+        id: loginRes.data.id,
+        username: loginRes.data.user.username
       });
       // update local storage
       localStorage.setItem("auth-token", loginRes.data.token);

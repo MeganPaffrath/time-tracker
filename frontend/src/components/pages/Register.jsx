@@ -29,13 +29,13 @@ export default function Register() {
       const userRegister = {username, password, verifyPassword, email};
       // try to create user
       await Axios.post(
-        "http://localhost:5000/users/register",
+        (process.env.REACT_APP_API_URL + "/users/register"),
         userRegister
       );
 
       // try to log user in & get login result
       const loginRes = await Axios.post(
-        "http://localhost:5000/users/login",
+        (process.env.REACT_APP_API_URL + "/users/login"),
         userRegister
       );
 

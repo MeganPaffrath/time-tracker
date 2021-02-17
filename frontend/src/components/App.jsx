@@ -6,62 +6,92 @@ import Header from './layout/Header';
 import Home from './pages/Home';
 import Login from "./pages/Login";
 import Register from './pages/Register';
+import Footer from './layout/Footer';
 // to keep track of user:
 import UserContext from '../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 
 export default function App() {
+  const history = useHistory();
   const [userData, setUserData] = useState({
-    token: undefined,
-    username: undefined,
     id: undefined,
-    activities: undefined
+    username: undefined
   });
+
+  console.log("RENDER APP");
 
   useEffect(() => {
     const verifyUser = async () => {
       let token = localStorage.getItem("auth-token");
-
       if (token === null) {
         localStorage.setItem("auth-token", "");
         token = "";
       }
 
-      // check with db if token is valid
-      const tokenRes = await Axios.post(
-        "http://localhost:5000/users/validateToken",
-        null,
-        {headers: {"x-auth-token": token}}
-      );
+      if (token) {
+        try {
+          // check with db if token is valid
+          let ts = new Date(Date.now());
+          const tokenRes = await Axios.post(
+            (process.env.REACT_APP_API_URL + "/users/validateToken"),
+            {},
+            {headers: {
+              "x-auth-token": token,
+              'Content-Type': 'application/json',
+              'Cache-Control' : 'no-cache',
+              time: ts
+            }}
+          );
 
-      if (tokenRes.data) {
-        const userRes = await Axios.get(
-          "http://localhost:5000/users/",
-          {headers: {"x-auth-token": token}}
-        );
-        setUserData({
-          token,
-          username: userRes.data.username,
-          activities: userRes.data.activities
-        });
+          console.log(tokenRes);
+          // console.log(JSON.parse(tokenRes))
+
+          if (tokenRes) {
+            const userRes = await Axios.get(
+              (process.env.REACT_APP_API_URL + "/users/"),
+              {headers: {
+                "x-auth-token": token,
+                'Content-Type': 'application/json',
+                'Cache-Control' : 'no-cache',
+                time: ts
+              }}
+            );
+            console.log(userRes.data);
+            setUserData({
+              id: userRes.data.id,
+              username: userRes.data.username
+            });
+          }   
+        } catch (err) {
+          localStorage.setItem("auth-token", "");
+          token = "";
+          console.log("REDIRECT TO HOME");
+        }
       }
     }
+    
     verifyUser();
+    
   }, []);
 
   return (
     <>
       <BrowserRouter>
-      <UserContext.Provider value={{userData, setUserData}}>
-        <Header />
-        <div className="contents">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-          </Switch>
-        </div>
+        <UserContext.Provider value={{userData, setUserData}}>
+          <div className="hdr-and-content">
+            <Header />
+            <div className="contents">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+              </Switch>
+            </div>
+            </div>
+            <Footer />
         </UserContext.Provider>
+          
       </BrowserRouter>
     </>
   )

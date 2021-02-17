@@ -19,6 +19,23 @@
   background-color: inherit;
 }
 
+/* FOOTER */
+html,
+body {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+.hdr-and-content {
+  flex: 1 0 auto;
+}
+
 /* CONTENTS FORMAT */
 .contents {
   margin: 0 auto;
