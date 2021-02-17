@@ -21,7 +21,7 @@ export default function LogsAndTracker() {
   // ACTIVITIES
   const [activities, setActivities] = useState([]);
   // BY VIEW:
-  const [view, setView] = useState("all"); // or month
+  const [view, setView] = useState("month"); // or all
   const [activityView, setActivityView] = useState('all'); // or category
   // LOG GROUPS
   const [logs, setLogs] = useState([]);
@@ -65,7 +65,9 @@ export default function LogsAndTracker() {
         // console.log(logs.data);
         // return true;
         // setActivities(logs.data);
-        setLogs(logs.data);
+        // setLogs(logs.data);
+        setLogs(logs.data.sort((a,b) => (a.startTime < b.startTime) ? 1 : -1));
+        setSelectedLogs(logs.data.sort((a,b) => (a.startTime < b.startTime) ? 1 : -1));
       }
 
       const getActivities = async (e) => {
