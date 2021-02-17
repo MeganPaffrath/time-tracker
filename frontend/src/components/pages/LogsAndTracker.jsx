@@ -138,7 +138,7 @@ export default function LogsAndTracker() {
     <div>
       <Container className="logs-component">
         <Row>
-          <Col>
+          <Col md>
           <section>
             <TimeLogger 
               update={update}
@@ -147,7 +147,7 @@ export default function LogsAndTracker() {
             />
             </section>
           </Col>
-          <Col>
+          <Col md> 
             <section>
               <LogSelector
                 view={view} setView={setView}

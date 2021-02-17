@@ -57,8 +57,24 @@ body .btn {
 
 /* Log Selector */
 .log-selector-hdr {
-  height: 3rem;
+  max-width: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
 }
+
+.month-selector-left {
+  margin: -1rem 0.7rem 0 0;
+}
+
+.month-selector-right {
+  margin: -1rem 0 0 0.7rem;
+}
+
+/* .month-selector {
+  margin: -1rem 0.7rem 0 0.7rem;
+} */
 
 /* FORMS */
 .form-group {
@@ -122,12 +138,8 @@ td {
   margin: 5px 0;
 }
 
-.month-text {
+.log-selector-text {
   display: inline;
-}
-
-.month-selector {
-  margin: -1rem 0.7rem 0 0.7rem;
 }
 
 .button-icon {
