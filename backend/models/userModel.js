@@ -20,6 +20,21 @@ const userSchema = new mongoose.Schema({
   activities: {
     type: [ActivitySchema],
     required: true
+  },
+  accountCreated: {
+    type: Date,
+    required: true,
+    default: new Date()
+  },
+  lastSeen: {
+    type: Date,
+    required: true,
+    default: new Date()
+  },
+  verified: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
