@@ -1,4 +1,5 @@
 const filteredLogs = (logs, month, year, category, activity) => {
+  console.log(logs);
   if (category === 'month') {
     console.log("FILTERING BY MONTH");
     if (logs === null || logs === undefined || logs.length === 0) {
@@ -8,15 +9,15 @@ const filteredLogs = (logs, month, year, category, activity) => {
     // FROM ALL ACTIVITIES
     if (activity === 'all') {
       return logs.filter( log => (
-        new Date(log.date).getUTCMonth() === month
-        && new Date(log.date).getUTCFullYear() === year
+        new Date(log.startTime).getUTCMonth() === month
+        && new Date(log.startTime).getUTCFullYear() === year
       ));
     }
 
     // FILTER BY ACTIVITY
     return logs.filter( log => (
-      new Date(log.date).getUTCMonth() === month
-      && new Date(log.date).getUTCFullYear() === year
+      new Date(log.startTime).getUTCMonth() === month
+      && new Date(log.startTime).getUTCFullYear() === year
       && log.activity === activity
     ));
   }

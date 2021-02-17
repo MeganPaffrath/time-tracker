@@ -120,12 +120,15 @@ export default function LogsAndTracker() {
     // }
   }, [update]);
 
+  console.log(logs);
+
   useEffect(() => {
     setSelectedLogs(filteredLogs(logs, month, year, view, activityView));
   }, [month, year, view, activityView, logs]);
 
   useEffect(() => { 
     console.log("selected logs chagned");
+    console.log(selectedLogs);
   }, [selectedLogs])
 
 
