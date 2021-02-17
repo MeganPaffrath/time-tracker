@@ -10,7 +10,6 @@ import { Table } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 
 export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
-  console.log(logs);
 
   const removeLog = async (id) => {
     let ts = new Date(Date.now());
