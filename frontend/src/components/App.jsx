@@ -47,27 +47,30 @@ export default function App() {
         token = "";
       }
 
-      try {
-        let ts = new Date(Date.now());
-        const tokenRes = await Axios.post(
-          (process.env.REACT_APP_API_URL + "/users/validateToken"),
-          {headers: {
-            "x-auth-token": token,
-            'Content-Type': 'application/json',
-            'Cache-Control' : 'no-cache',
-            time: ts
-          }}
-        );
-        console.log(tokenRes);
-      } catch (err) {
-        console.log("AUTH TOKEN FAILED");
-      }
+      console.log("CHECKING: \n " + token);
+
+      // try {
+      //   let ts = new Date(Date.now());
+      //   const tokenRes = await Axios.post(
+      //     (process.env.REACT_APP_API_URL + "/users/validateToken"),
+      //     {headers: {
+      //       "x-auth-token": token,
+      //       'Content-Type': 'application/json',
+      //       'Cache-Control' : 'no-cache',
+      //       time: ts
+      //     }}
+      //   );
+      //   console.log(tokenRes);
+      // } catch (err) {
+      //   console.log("AUTH TOKEN FAILED");
+      // }
       
 
       // check with db if token is valid
       let ts = new Date(Date.now());
       const tokenRes = await Axios.post(
         (process.env.REACT_APP_API_URL + "/users/validateToken"),
+        {},
         {headers: {
           "x-auth-token": token,
           'Content-Type': 'application/json',
@@ -76,7 +79,7 @@ export default function App() {
         }}
       );
 
-      console.log(tokenRes.status);
+      console.log(tokenRes);
       // console.log(JSON.parse(tokenRes))
 
       if (tokenRes) {
