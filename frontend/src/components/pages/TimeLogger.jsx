@@ -54,7 +54,17 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         }
       }
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      if (err.response.data.msg === "invalid user/token") {
+          setUserData({
+            id: undefined,
+            username: undefined
+          })
+          localStorage.setItem("auth-token", "");
+          history.push("/login");
+      } else {
+        console.log(err.response);
+        setError(err.response.data.msg);
+      }
     }
   }
 
@@ -96,6 +106,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
           history.push("/login");
       } else {
         console.log(err.response);
+        setError(err.response.data.msg);
       }
     }
   }

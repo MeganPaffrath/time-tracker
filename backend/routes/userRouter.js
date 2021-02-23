@@ -223,10 +223,19 @@ router.put("/addactivity", async (req, res) => {
   try {
     // verify token
     const token = req.header("x-auth-token");
-    if (!token) return res.status(400).json({msg: "unauthorized access"});
+    if (!token) return res.status(400).json({msg: "invalid user/token"});
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) return res.status(400).json({msg: "unauthorized access"});
+    // get verified user
+    const verified = jwt.verify(token, process.env.JWT_SECRET, (err, verif) => {
+      if (err) {
+        return false;
+      } else {
+        return verif;
+      }
+    });
+
+    // const verified = await jwt.verify(token, false);
+    if (!verified) return res.status(400).json({msg: "invalid user/token"});
 
     // update this user
     let user = await User.findById(verified.id);
