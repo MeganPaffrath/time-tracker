@@ -67,19 +67,19 @@ export default function Register() {
         <Form onSubmit={submitRegister}>
           <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
+              <Form.Control type="email" placeholder="email@email.com" onChange={e => setEmail(e.target.value)}/>
             </Form.Group>
           <Form.Group controlId="username">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="username" placeholder="Enter username" onChange={e => setUsername(e.target.value)}/>
+            <Form.Control type="username" placeholder="username" onChange={e => setUsername(e.target.value)}/>
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+            <Form.Control type="password" placeholder="password" onChange={e => setPassword(e.target.value)}/>
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Verify Password</Form.Label>
-            <Form.Control type="password" placeholder="Verify Password" onChange={e => setVerifyPassword(e.target.value)}/>
+            <Form.Control type="password" placeholder="password verification" onChange={e => setVerifyPassword(e.target.value)}/>
           </Form.Group>
           <center>
           <ErrorMessage message={error} />
