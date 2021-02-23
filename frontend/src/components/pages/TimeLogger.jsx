@@ -1,5 +1,8 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext } from 'react';
+import UserContext from '../../context/UserContext';
 import Axios from "axios";
+import { useHistory } from 'react-router-dom';
+
 // COMPONENTS
 import ErrorMessage from "../other/ErrorMesage";
 // bootstrap
@@ -7,6 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button } from 'react-bootstrap';
 
 export default function TimeLogger({ update, setUpdate, activities }) {
+  const {userData, setUserData} = useContext(UserContext);
+  const history = useHistory();
+
   let [date, setDate] = useState();
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -81,8 +87,16 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         }
       }
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
-      console.log(err.response.data.msg);
+      if (err.response.data.msg === "invalid user/token") {
+          setUserData({
+            id: undefined,
+            username: undefined
+          })
+          localStorage.setItem("auth-token", "");
+          history.push("/login");
+      } else {
+        console.log(err.response);
+      }
     }
   }
 

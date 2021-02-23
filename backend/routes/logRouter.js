@@ -44,19 +44,25 @@ router.post("/new", async (req, res) => {
     if (!token) {
       return res
         .status(400)
-        .json({msg: "token was lost"});
+        .json({msg: "invalid user/token"});
     } else {
       console.log(token);
     }
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    // get verified user
+    const verified = jwt.verify(token, process.env.JWT_SECRET, (err, verif) => {
+      if (err) {
+        return false;
+      } else {
+        return verif;
+      }
+    });
+
+    // const verified = await jwt.verify(token, false);
     if (!verified) {
-      console.log("NOT VERIFIED");
       return res
         .status(400)
-        .json({msg: "Token verification failure."});
-    } else {
-      console.log("verif " + verified);
+        .json({msg: "invalid user/token"});
     }
 
     // verify user
