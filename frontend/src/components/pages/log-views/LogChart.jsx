@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
+import UserContext from '../../../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 // helpers
 import monthFromDate from '../../../helpers/month-number-to-string';
@@ -10,6 +12,8 @@ import { Table } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 
 export default function LogList( {logs, update, setUpdate, category, view, month, year }) {
+  const {userData, setUserData} = useContext(UserContext);
+  const history = useHistory();
 
   const removeLog = async (id) => {
     let ts = new Date(Date.now());
@@ -29,7 +33,16 @@ export default function LogList( {logs, update, setUpdate, category, view, month
         }
       })
     } catch (err) {
-      console.log(err.message);
+      if (err.response.data.msg === "invalid user/token") {
+          setUserData({
+            id: undefined,
+            username: undefined
+          })
+          localStorage.setItem("auth-token", "");
+          history.push("/login");
+      } else {
+        console.log(err.response);
+      }
     }
 
     setUpdate(update + 1);

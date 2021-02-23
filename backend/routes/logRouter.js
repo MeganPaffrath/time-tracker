@@ -23,6 +23,7 @@ router.post("/new", async (req, res) => {
   console.log("new");
   try {
     const { activity, date, minutes} = req.body;
+    const token = req.header("x-auth-token");
     const utcDate = new Date(date);
 
     // check date
@@ -40,18 +41,22 @@ router.post("/new", async (req, res) => {
     }
 
     // verify token
-    const token = req.header("x-auth-token");
     if (!token) {
       return res
         .status(400)
         .json({msg: "token was lost"});
+    } else {
+      console.log(token);
     }
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) {
+      console.log("NOT VERIFIED");
       return res
         .status(400)
         .json({msg: "Token verification failure."});
+    } else {
+      console.log("verif " + verified);
     }
 
     // verify user
@@ -69,10 +74,6 @@ router.post("/new", async (req, res) => {
     console.log("Start: " + startDate.toISOString());
     endTime.setTime(endTime.getTime() + minutes*60*1000);
     console.log("END: " + endTime.toISOString());
-    // let timeStr = await endTime.toISOString();
-    // console.log(endTime);
-
-
 
     const newLog = new Log({
       username: user.username,
@@ -90,7 +91,6 @@ router.post("/new", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({error: err.message});
-    console.log("faile");
   }
   
 
@@ -102,23 +102,32 @@ router.delete("/delete", async (req, res) => {
   if (!token) {
     return res
       .status(400)
-      .json({msg: "token was lost"});
+      .json({msg: "invalid user/token"});
   }
 
   // get verified user
-  const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) {
-      return res
-        .status(400)
-        .json({msg: "Token verification failure."});
+  const verified = jwt.verify(token, process.env.JWT_SECRET, (err, verif) => {
+    if (err) {
+      return false;
+    } else {
+      return verif;
     }
+  });
+
+  // const verified = await jwt.verify(token, false);
+  if (!verified) {
+    console.log("verification fail");
+    return res
+      .status(400)
+      .json({msg: "invalid user/token"});
+  }
 
   // get username tied to log, make sure same as user
   const user = await User.findById(verified.id);
   if (!user) {
     return res
       .status(400)
-      .json({msg: "User not found"});
+      .json({msg: "invalid user/token"});
   }
   const username = user.username;
   console.log(username);
