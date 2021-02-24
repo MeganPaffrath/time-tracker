@@ -25,11 +25,16 @@ export default function TimeLogger({ update, setUpdate, activities }) {
   useEffect(() => {
     if (activities !== undefined && activities !== null && activities.length > 0) {
       setActivity(activities[0].activity);
+      if (document.getElementById("time-logger-hours")) {
+        document.getElementById("time-logger-hours").value = "";
+        document.getElementById("time-logger-minutes").value = "";
+      }
     }
   }, [update, activities])
 
   const newAct = async (e) => {
     e.preventDefault();
+    console.log("adding new act");
     try {
       if (!newActivity) {
         setError("missing field");
@@ -122,7 +127,9 @@ export default function TimeLogger({ update, setUpdate, activities }) {
     setError(undefined);
     setNewActivity(null);
     setUpdate(update + 1);
-    window.location.reload(true);
+    setMinutes(0);
+    setHours(0);
+    setTotalMinutes(0);
   }
 
   function updateMinutes(min) {
@@ -148,14 +155,14 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         </center>
         { (activity === "new") ? (
           <div>
-            <Form onSubmit={newAct}>
+            <Form >
               <Form.Group controlId="activity">
                 <Form.Label>New Activity Type:</Form.Label>
                 <Form.Control type="string" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <ErrorMessage message={error} />
               <center>
-              <Button variant="dark" type="submit">
+              <Button variant="dark" onClick={newAct}>
                 Submit
               </Button>
               <Button variant="dark" type="cancel" onClick={reset}>
@@ -166,22 +173,22 @@ export default function TimeLogger({ update, setUpdate, activities }) {
           </div>
         ) : (activities && activities != null && activities.length === 0) ? (
           <div>
-            <Form onSubmit={newAct}>
+            <Form >
               <Form.Group controlId="username">
                 <Form.Label>New Activity Type:</Form.Label>
                 <Form.Control type="activity" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <center>
               <ErrorMessage message={error} />
-              <Button variant="dark" type="submit">
+              <Button variant="dark" onClick={newAct}>
                 Submit
               </Button>
               </center>
             </Form>
           </div>
         ): (
-          <div>
-            <Form onSubmit={logTime}>
+          <div id="time-logger">
+            <Form>
             <Form.Group controlId="activity-select">
               <Form.Label>Select Activity</Form.Label>
               <Form.Control as="select" onChange={e => selectActivity(e.target.value)}>
@@ -197,21 +204,21 @@ export default function TimeLogger({ update, setUpdate, activities }) {
                 <option key="new" value="new">new</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="date">
+            <Form.Group>
               <Form.Label>Date</Form.Label>
               <Form.Control type="date" placeholder="mm/dd/yyyy" onChange={e => setDate(e.target.value)}/>
             </Form.Group>
-            <Form.Group controlId="hours">
+            <Form.Group>
               <Form.Label>Hours</Form.Label>
-              <Form.Control type="number" min="0" max="24" onChange={e => updateHours(e.target.value)}/>
+              <Form.Control id="time-logger-hours" type="number" min="0" max="24" onChange={e => updateHours(e.target.value)}/>
             </Form.Group>
-            <Form.Group controlId="minutes">
+            <Form.Group>
               <Form.Label>Minutes</Form.Label>
-              <Form.Control type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
+              <Form.Control id="time-logger-minutes" type="number" min="0" max="60" onChange={e => updateMinutes(e.target.value)}/>
             </Form.Group>
             <ErrorMessage message={error} />
             <center>
-              <Button variant="dark" type="submit">
+              <Button variant="dark" onClick={logTime}>
                 Submit
               </Button>
             </center>
