@@ -1,0 +1,10 @@
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+RewriteCond %{REQUEST_URI} !^.*\.(css|js|png|jpg|gif|txt)$ [NC]
+
+RewriteEngine On 
+RewriteCond %{SERVER_PORT} 80
+RewriteCond %{HTTP_HOST} ^(www\.)?growthbyday\.com
+RewriteRule ^(.*)$ https://www.growthbyday.com
