@@ -32,8 +32,8 @@ export default function LogsAndTracker() {
   // UPDATE
   const [update, setUpdate] = useState(0);
 
-  // useEffect(() => {
-  // }, [activities]);
+  useEffect(() => {
+  }, [activities]);
   
   // get logs & activities list from DB
   useEffect(() => {

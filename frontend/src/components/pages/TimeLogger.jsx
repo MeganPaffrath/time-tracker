@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button } from 'react-bootstrap';
 
 export default function TimeLogger({ update, setUpdate, activities }) {
-  const {setUserData} = useContext(UserContext);
+  const {userData, setUserData} = useContext(UserContext);
   const history = useHistory();
 
   let [date, setDate] = useState();

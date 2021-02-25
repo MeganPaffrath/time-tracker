@@ -18,6 +18,8 @@ export default function App() {
     username: undefined
   });
 
+  useEffect(() => console.log("app load"))
+
   return (
     <>
       <BrowserRouter>
