@@ -56,7 +56,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         )
         
         if (newAct) {
-          reset();
+          loggerFormReset();
         }
       }
     } catch (err) {
@@ -133,6 +133,16 @@ export default function TimeLogger({ update, setUpdate, activities }) {
     setTotalMinutes(0);
   }
 
+  function loggerFormReset() {
+    setError(undefined);
+    setNewActivity(null);
+    setDate(undefined);
+    setUpdate(update + 1);
+    setMinutes(0);
+    setHours(0);
+    setTotalMinutes(0);
+  }
+
   function updateMinutes(min) {
     setMinutes(Number(min));
     updateTotalMinutes(hours, Number(min) );
@@ -165,7 +175,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
               <Button variant="dark" type="submit">
                 Submit
               </Button>
-              <Button variant="dark" type="button" onClick={reset}>
+              <Button variant="dark" type="button" onClick={loggerFormReset}>
                 Cancel
               </Button>
               </center>
