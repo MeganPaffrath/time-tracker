@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 // Pages/content:
@@ -18,8 +17,6 @@ export default function App() {
     id: undefined,
     username: undefined
   });
-
-  useEffect(() => console.log("app load"))
 
   return (
     <>

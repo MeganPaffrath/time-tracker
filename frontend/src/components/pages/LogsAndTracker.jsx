@@ -32,15 +32,8 @@ export default function LogsAndTracker() {
   // UPDATE
   const [update, setUpdate] = useState(0);
 
-  useEffect(() => {
-  }, [activities]);
-
-
-  // if (logs && selectedLogs) {
-  //   console.log("LOGS AND TRACKER: There are " + logs.length + " logs.\n"
-  //   + selectedLogs.length + ' of which are in the ' + activityView + ' category\n'
-  //   + "viewing the " + month + ' month of ' + year);
-  // }
+  // useEffect(() => {
+  // }, [activities]);
   
   // get logs & activities list from DB
   useEffect(() => {
