@@ -17,14 +17,15 @@ export default function TimeLogger({ update, setUpdate, activities }) {
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
-  let [activity, setActivity] = useState("a");
+  let [activity, setActivity] = useState();
   const [newActivity, setNewActivity] = useState(null);
   let [error, setError] = useState();
 
 
   useEffect(() => {
     if (activities !== undefined && activities !== null && activities.length > 0) {
-      setActivity(activities[0].activity);
+      if (activity === undefined || activity === "new") setActivity(activities[0].activity);
+      
       if (document.getElementById("time-logger-hours")) {
         document.getElementById("time-logger-hours").value = "";
         document.getElementById("time-logger-minutes").value = "";
@@ -55,7 +56,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         )
         
         if (newAct) {
-          reset();
+          loggerFormReset();
         }
       }
     } catch (err) {
@@ -132,6 +133,16 @@ export default function TimeLogger({ update, setUpdate, activities }) {
     setTotalMinutes(0);
   }
 
+  function loggerFormReset() {
+    setError(undefined);
+    setNewActivity(null);
+    setDate(undefined);
+    setUpdate(update + 1);
+    setMinutes(0);
+    setHours(0);
+    setTotalMinutes(0);
+  }
+
   function updateMinutes(min) {
     setMinutes(Number(min));
     updateTotalMinutes(hours, Number(min) );
@@ -146,7 +157,6 @@ export default function TimeLogger({ update, setUpdate, activities }) {
     setTotalMinutes( (hrs*60 + min) );
   }
 
-
   return (
     <section className="time-logger-component">
       <div className="form-box">
@@ -155,17 +165,17 @@ export default function TimeLogger({ update, setUpdate, activities }) {
         </center>
         { (activity === "new") ? (
           <div>
-            <Form >
+            <Form onSubmit={newAct}>
               <Form.Group controlId="activity">
                 <Form.Label>New Activity Type:</Form.Label>
                 <Form.Control type="string" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <ErrorMessage message={error} />
               <center>
-              <Button variant="dark" onClick={newAct}>
+              <Button variant="dark" type="submit">
                 Submit
               </Button>
-              <Button variant="dark" type="cancel" onClick={reset}>
+              <Button variant="dark" type="button" onClick={loggerFormReset}>
                 Cancel
               </Button>
               </center>
@@ -173,14 +183,14 @@ export default function TimeLogger({ update, setUpdate, activities }) {
           </div>
         ) : (activities && activities != null && activities.length === 0) ? (
           <div>
-            <Form >
+            <Form onSubmit={newAct}>
               <Form.Group controlId="username">
                 <Form.Label>New Activity Type:</Form.Label>
                 <Form.Control type="activity" placeholder="Enter activity" onChange={e => setNewActivity(e.target.value)}/>
               </Form.Group>
               <center>
               <ErrorMessage message={error} />
-              <Button variant="dark" onClick={newAct}>
+              <Button variant="dark" id="log-time-btn">
                 Submit
               </Button>
               </center>
@@ -188,7 +198,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
           </div>
         ): (
           <div id="time-logger">
-            <Form>
+            <Form onSubmit={logTime}>
             <Form.Group controlId="activity-select">
               <Form.Label>Select Activity</Form.Label>
               <Form.Control as="select" onChange={e => selectActivity(e.target.value)}>
@@ -218,7 +228,10 @@ export default function TimeLogger({ update, setUpdate, activities }) {
             </Form.Group>
             <ErrorMessage message={error} />
             <center>
-              <Button variant="dark" onClick={logTime}>
+              <Button 
+                variant="dark" 
+                type="submit"
+              >
                 Submit
               </Button>
             </center>
