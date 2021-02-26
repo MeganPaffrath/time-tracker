@@ -12,14 +12,10 @@ export default function AuthMenu() {
   useEffect(() => {
     const verifyUser = async () => {
       let token = localStorage.getItem("auth-token");
-      if (token === null) {
+      if (token === null || token === undefined || token === "") {
         localStorage.setItem("auth-token", "");
-        token = "";
-        // redirect user
         history.push("/login");
-      }
-
-      if (token) {
+      } else {
         try {
           // check with db if token is valid
           let ts = new Date(Date.now());
@@ -51,7 +47,6 @@ export default function AuthMenu() {
           }   
         } catch (err) {
           localStorage.setItem("auth-token", "");
-          token = "";
           // redirect user
           history.push("/login");
         }
@@ -67,10 +62,8 @@ export default function AuthMenu() {
   const logout = () => {
     // reset user context
     setUserData({
-      token: undefined,
       username: undefined,
-      id: undefined,
-      activities: undefined
+      id: undefined
     })
     // reset localStorage
     localStorage.setItem("auth-token", "");
@@ -79,7 +72,6 @@ export default function AuthMenu() {
 
 
   return (
-    // container-fluid
     <Nav className="auth-nav container-fluid">
       {
         userData.username ? (

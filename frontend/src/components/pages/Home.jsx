@@ -8,9 +8,9 @@ export default function Home() {
 
   useEffect(() => {
     let token = localStorage.getItem("auth-token");
-    if (token === "") {
-      history.push("/login");
-    }
+    // if (token === "") {
+    //   history.push("/login");
+    // }
   }, [])
 
   return (
