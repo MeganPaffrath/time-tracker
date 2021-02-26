@@ -190,7 +190,7 @@ export default function TimeLogger({ update, setUpdate, activities }) {
               </Form.Group>
               <center>
               <ErrorMessage message={error} />
-              <Button variant="dark" id="log-time-btn">
+              <Button variant="dark" type="submit">
                 Submit
               </Button>
               </center>
